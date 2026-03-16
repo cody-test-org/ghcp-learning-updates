@@ -23,13 +23,13 @@
 #
 # Researches the latest GitHub Copilot announcements, features, and documentation updates. Compares findings against the current presentation and creates a PR with updates or a research issue summarizing gaps.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"00e7e1cc75e8037f8396e4879255ea96050016e313a8a46c75585128bb4cdd10","compiler_version":"v0.47.0"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"29ee38c96f774468eb47e79bebec5bfddcb25b7d33ecff020b713362f89d4b43","compiler_version":"v0.47.0"}
 
 name: "GitHub Copilot Documentation Research & Update Agent"
 "on":
   schedule:
-  - cron: "53 8 * * *"
-    # Friendly format: daily around 9:00 (scattered)
+  - cron: "53 8 * * 1"
+    # Friendly format: weekly on monday around 9:00 (scattered)
   workflow_dispatch:
     inputs:
       focus_area:

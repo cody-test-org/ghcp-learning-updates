@@ -5,7 +5,7 @@ description: >
   a research issue summarizing gaps.
 
 on:
-  schedule: daily around 9:00
+  schedule: weekly on monday around 9:00
   workflow_dispatch:
     inputs:
       focus_area:
