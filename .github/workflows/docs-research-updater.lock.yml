@@ -23,7 +23,7 @@
 #
 # Researches the latest GitHub Copilot announcements, features, and documentation updates. Compares findings against the current presentation and creates a PR with updates or a research issue summarizing gaps.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"4d8488a434eacd0d450a9b127fc5395af597a7f0d2cafd30967d6b55bdb63335","compiler_version":"v0.47.0"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"00e7e1cc75e8037f8396e4879255ea96050016e313a8a46c75585128bb4cdd10","compiler_version":"v0.47.0"}
 
 name: "GitHub Copilot Documentation Research & Update Agent"
 "on":

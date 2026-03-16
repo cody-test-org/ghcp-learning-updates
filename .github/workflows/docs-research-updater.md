@@ -38,6 +38,7 @@ safe-outputs:
     close-older-issues: true
 
 network:
+  firewall: true
   allowed:
     - defaults
     - github.blog
