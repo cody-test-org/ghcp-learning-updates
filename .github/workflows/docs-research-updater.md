@@ -63,7 +63,7 @@ Research the latest GitHub Copilot announcements, features, and documentation up
 
 ## Step 1: Analyze Current Presentation
 
-Read `presentation.html` and extract the list of topics currently covered. Build an internal inventory of:
+Read `hackathon.html` and extract the list of topics currently covered. Build an internal inventory of:
 
 - Every section and slide topic
 - Key features and capabilities mentioned
@@ -130,7 +130,7 @@ Rank each finding by impact:
 If you find specific, factual updates that can be added to the presentation:
 
 1. Create a new branch named `docs-update/<date>-<topic>` (e.g., `docs-update/2025-01-15-agentic-workflows`)
-2. Edit `presentation.html` to add new slides or update existing ones following the existing HTML/CSS patterns
+2. Edit `hackathon.html` to add new slides or update existing ones following the existing HTML/CSS patterns
 3. Follow the existing slide structure:
    - Section dividers use `<section class="slide" data-section="..." data-title="...">` with `<h1 class="section-title">`
    - Content slides use `<h2 class="slide-title">` with card layouts using `.card`, `.card-accent`, `.card-blue`, `.card-green`, `.card-orange`

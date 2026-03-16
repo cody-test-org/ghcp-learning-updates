@@ -32,9 +32,9 @@ The repo also includes an **agentic workflow** that automatically researches the
 git clone <repo-url> && cd ghcp-learning-updates
 
 # Open the slide deck
-open presentation.html        # macOS
-start presentation.html       # Windows
-xdg-open presentation.html    # Linux
+open hackathon.html        # macOS
+start hackathon.html       # Windows
+xdg-open hackathon.html    # Linux
 ```
 
 ### ⌨️ Keyboard Navigation
@@ -133,7 +133,7 @@ An expert agent for designing, building, and deploying GitHub Copilot agentic wo
 
 ```
 ghcp-learning-updates/
-├── presentation.html                          # Interactive 33-slide deck
+├── hackathon.html                             # Interactive slide deck
 ├── AGENTS.md                                  # Agent instructions for Copilot in this repo
 ├── README.md                                  # This file
 └── .github/
@@ -161,7 +161,7 @@ Contributions to keep this resource current are welcome!
 
 ### Adding or Updating Slides
 
-1. Open `presentation.html` in a text editor
+1. Open `hackathon.html` in a text editor
 2. Each slide is a `<section>` element — add new slides following the existing pattern
 3. Update the section navigation pills if adding a new section
 4. Test in a browser to verify layout and transitions

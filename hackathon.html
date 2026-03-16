@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GitHub Copilot and SKILLS</title>
+<title>GitHub Copilot Hackathon</title>
 <style>
 /* ═══════════════════════════════════════════════════════════════
    THEME & VARIABLES
@@ -296,6 +296,63 @@ body.overview #speaker-notes { display: none; }
 .big-stat .stat-label {
   font-size: 14px; color: var(--text-muted); margin-top: 8px;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   AGENDA STYLES
+   ═══════════════════════════════════════════════════════════════ */
+.agenda-container { width: 100%; max-width: 1100px; overflow-y: auto; max-height: calc(100vh - 160px); }
+.agenda-tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+.agenda-tab {
+  padding: 10px 24px; border-radius: 8px; cursor: pointer;
+  font-size: 15px; font-weight: 600; border: 1px solid var(--border);
+  background: var(--bg-secondary); color: var(--text-muted);
+  transition: all 0.2s;
+}
+.agenda-tab.active {
+  background: rgba(139, 92, 246, 0.15); color: var(--accent);
+  border-color: var(--accent);
+}
+.agenda-tab:hover:not(.active) {
+  border-color: rgba(139, 92, 246, 0.4);
+  color: var(--text);
+}
+.agenda-day { display: none; }
+.agenda-day.active { display: block; }
+.agenda-day-subtitle {
+  font-size: 14px; color: var(--text-muted); margin-bottom: 16px;
+  font-style: italic;
+}
+.agenda-item {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 16px; border-radius: 10px;
+  border-left: 3px solid transparent;
+  transition: background 0.2s;
+}
+.agenda-item:hover { background: rgba(139, 92, 246, 0.04); }
+.agenda-item.type-session { border-left-color: var(--accent); }
+.agenda-item.type-lab { border-left-color: var(--success); }
+.agenda-item.type-hackathon { border-left-color: var(--accent-blue); }
+.agenda-item.type-break { border-left-color: var(--border); opacity: 0.7; }
+.agenda-icon { font-size: 24px; flex-shrink: 0; width: 36px; text-align: center; padding-top: 2px; }
+.agenda-time {
+  font-family: var(--font-mono); font-size: 12px; color: var(--text-muted);
+  min-width: 140px; flex-shrink: 0; padding-top: 4px;
+}
+.agenda-details { flex: 1; }
+.agenda-title { font-size: 15px; font-weight: 600; color: var(--text-title); margin-bottom: 2px; }
+.agenda-desc { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+.agenda-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--accent-blue); margin-top: 4px;
+  text-decoration: none; opacity: 0.8;
+}
+.agenda-link:hover { opacity: 1; text-decoration: underline; }
+.agenda-section-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--accent); cursor: pointer;
+  margin-top: 4px; opacity: 0.7;
+}
+.agenda-section-link:hover { opacity: 1; }
 
 .note-bar {
   margin-top: 24px; padding: 12px 20px;
@@ -693,18 +750,47 @@ body.overview #dot-tooltip { display: none; }
   <div style="text-align:center; position:relative; z-index:1;">
     <div style="font-size:64px; margin-bottom:16px;">🤖</div>
     <h1 style="font-size:clamp(36px,5.5vw,68px); font-weight:800; color:#fff; line-height:1.1; margin-bottom:8px;">
-      GitHub Copilot <span style="color:var(--accent);">&amp;</span> SKILLS
+      GitHub Copilot <span style="color:var(--accent);">Hackathon</span>
     </h1>
     <div style="width:80px; height:4px; background:linear-gradient(90deg, var(--accent), var(--accent-blue)); border-radius:2px; margin:20px auto;"></div>
     <p style="font-size:clamp(16px,2vw,22px); color:var(--text-muted); margin-top:16px;">
       Cody Carlson – Sr SE Global Black Belt, Microsoft
     </p>
   </div>
-  <div class="slide-notes">Welcome everyone! Today we'll explore GitHub Copilot Skills, custom instructions, MCP, the coding agent, and the CLI.</div>
+  <div class="slide-notes">Welcome everyone! We have an exciting 2-day hackathon ahead — Day 1 is lightning sessions and hands-on labs, Day 2 is building your own use cases.</div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 2: Feature Matrix ─────────────────────────── -->
-<section class="slide" data-slide="1" data-section="intro" data-title="Feature Matrix">
+<!-- ─────────────────────────── AGENDA SECTION ─────────────────────────── -->
+<section class="slide section-slide" data-section="agenda" data-title="Agenda">
+  <div class="glow-ring" style="top:30%; left:50%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">📅</div>
+    <h1 class="section-title">Agenda</h1>
+    <p class="section-tagline">2-Day Hackathon: Learn, Build, Ship</p>
+  </div>
+</section>
+
+<section class="slide" data-section="agenda" data-title="Schedule">
+  <div class="content agenda-container">
+    <h2 class="slide-title">Hackathon Schedule</h2>
+    <div class="agenda-tabs" id="agenda-tabs"></div>
+    <div id="agenda-days"></div>
+  </div>
+  <div class="slide-notes">The agenda is loaded from agenda.json — edit that file to customize times, sessions, and descriptions without touching the HTML.</div>
+</section>
+
+<!-- ─────────────────────────── SECTION: Copilot Overview ─────────────────────────── -->
+<section class="slide section-slide" data-section="overview" data-title="Copilot Overview">
+  <div class="glow-ring" style="top:25%; left:55%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">🧭</div>
+    <h1 class="section-title">GitHub Copilot<br>Overview</h1>
+    <p class="section-tagline">AI-powered development — from code completion to autonomous agents</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Feature Matrix ─────────────────────────── -->
+<section class="slide" data-section="overview" data-title="Feature Matrix">
   <div class="content">
     <h2 class="slide-title">Copilot Feature Matrix</h2>
     <p class="slide-subtitle">Feature support across IDEs and platforms</p>
@@ -741,6 +827,79 @@ body.overview #dot-tooltip { display: none; }
     <div class="note-bar">✅ = GA &nbsp; 🔵 = Preview &nbsp; — = Not applicable &nbsp; ⚪ = Not supported &nbsp; | &nbsp; 💡 VS Code receives updates first. This matrix is always changing — check <em>docs.github.com/copilot/reference/copilot-feature-matrix</em></div>
   </div>
   <div class="slide-notes">Updated March 2026. Neovim officially supports only code completion. Eclipse gained Agent mode, Chat, and MCP in May 2025. Source: docs.github.com/copilot/reference/copilot-feature-matrix</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
+<section class="slide" data-section="overview" data-title="Extensibility Map">
+  <div class="content">
+    <h2 class="slide-title">Copilot Extensibility Map</h2>
+    <p class="slide-subtitle">Where customization files live and what they do</p>
+    <div class="columns col-2" style="align-items:start; gap:32px;">
+
+      <!-- Left column: Repo-level .github -->
+      <div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent); font-weight:700; margin-bottom:12px;">📂 Repository Level <span class="mono" style="font-size:12px;">.github/</span></div>
+        <div style="background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; padding:16px; font-family:var(--font-mono); font-size:13px; line-height:2.2;">
+          <div style="color:var(--text-muted);">.github/</div>
+          <div style="padding-left:20px;">
+            <div><span style="color:var(--accent-blue);">copilot-instructions.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— repo-wide instructions, always loaded</span></div>
+            <div style="color:var(--text-muted);">agents/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.agent.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— custom agents for this repo</span></div>
+            <div style="color:var(--text-muted);">prompts/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.prompt.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— reusable prompt templates</span></div>
+            <div style="color:var(--text-muted);">instructions/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.instructions.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— path-specific instructions (glob)</span></div>
+            <div style="color:var(--text-muted);">skills/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*/SKILL.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— project-specific skills + scripts</span></div>
+            <div style="color:var(--text-muted);">workflows/</div>
+            <div style="padding-left:20px;"><span style="color:var(--code-orange);">*.md / *.lock.yml</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— agentic workflows (gh-aw)</span></div>
+            <div style="color:var(--text-muted);">hooks/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.sh / *.js</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— pre/post tool-call event hooks</span></div>
+          </div>
+          <div style="margin-top:4px; color:var(--text-muted);">AGENTS.md / CLAUDE.md</div>
+        </div>
+        <div style="margin-top:10px; font-size:12px; color:var(--text-muted); line-height:1.6;">
+          ✅ Version controlled &nbsp;·&nbsp; ✅ Shared with team &nbsp;·&nbsp; ✅ Works on GitHub.com
+        </div>
+      </div>
+
+      <!-- Right column: User-level ~/.copilot -->
+      <div>
+        <div style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent-blue); font-weight:700; margin-bottom:12px;">💻 User Level <span class="mono" style="font-size:12px;">~/</span></div>
+        <div style="background:var(--bg-secondary); border:1px solid var(--border); border-radius:12px; padding:16px; font-family:var(--font-mono); font-size:13px; line-height:2.2;">
+          <div style="color:var(--text-muted);">~/.copilot/</div>
+          <div style="padding-left:20px;">
+            <div><span style="color:var(--accent-blue);">copilot-instructions.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— personal global instructions</span></div>
+            <div style="color:var(--text-muted);">agents/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.agent.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— agents across all projects</span></div>
+            <div style="color:var(--text-muted);">prompts/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.prompt.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— personal prompt templates</span></div>
+            <div style="color:var(--text-muted);">skills/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*/SKILL.md</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— personal skills</span></div>
+            <div><span style="color:var(--code-orange);">mcp-config.json</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— MCP server configuration</span></div>
+            <div style="color:var(--text-muted);">hooks/</div>
+            <div style="padding-left:20px;"><span style="color:var(--success);">*.sh / *.js</span> <span style="color:var(--text-muted); font-family:var(--font-sans); font-size:12px;">— personal event hooks</span></div>
+          </div>
+          <div style="margin-top:8px; color:var(--text-muted);">~/.claude/ <span style="font-family:var(--font-sans); font-size:12px;">— same structure for Claude Code</span></div>
+        </div>
+        <div style="margin-top:10px; font-size:12px; color:var(--text-muted); line-height:1.6;">
+          🔒 Local only &nbsp;·&nbsp; 👤 Personal preferences &nbsp;·&nbsp; 🌐 Available in all repos
+        </div>
+      </div>
+    </div>
+    <div class="note-bar" style="margin-top:16px;">💡 Repo-level files are shared with your team. User-level files are personal — great for your own agents, coding style preferences, and MCP configs. Naming conflicts? Repo-level wins over user-level.</div>
+  </div>
+  <div class="slide-notes">Key point: .github/ is for the team, ~/.copilot/ is for you. Both work together — repo-level takes precedence on conflicts. The .claude/ directory follows the same structure for Claude Code users. Org/enterprise agents live in .github-private/agents/.</div>
+</section>
+
+<!-- ─────────────────────────── SECTION: Skills & Instructions ─────────────────────────── -->
+<section class="slide section-slide" data-section="skills" data-title="Skills & Instructions">
+  <div class="glow-ring" style="top:30%; left:50%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">⚡</div>
+    <h1 class="section-title">GitHub Copilot<br>Skills &amp; Instructions</h1>
+    <p class="section-tagline" style="margin-bottom:32px;">Customize Copilot with skills, instructions, prompt files, and custom agents</p>
+  </div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 3: Skills vs Instructions ─────────────────────────── -->
@@ -2255,6 +2414,8 @@ body.overview #dot-tooltip { display: none; }
   // ─── BOTTOM NAV DATA ───
   const sectionNames = {
     intro: 'Intro',
+    agenda: 'Agenda',
+    overview: 'Overview',
     skills: 'Skills & Instructions',
     mcp: 'MCP',
     'coding-agent': 'Coding Agent',
@@ -2603,6 +2764,105 @@ body.overview #dot-tooltip { display: none; }
   window.addEventListener('hashchange', handleHash);
 
   // Initialize
+  // ─── Agenda loader ───
+  (function loadAgenda() {
+    fetch('agenda.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var tabsEl = document.getElementById('agenda-tabs');
+        var daysEl = document.getElementById('agenda-days');
+        if (!tabsEl || !daysEl) return;
+
+        data.days.forEach(function(day, idx) {
+          // Tab
+          var tab = document.createElement('div');
+          tab.className = 'agenda-tab' + (idx === 0 ? ' active' : '');
+          tab.textContent = day.name;
+          tab.addEventListener('click', function() {
+            tabsEl.querySelectorAll('.agenda-tab').forEach(function(t) { t.classList.remove('active'); });
+            daysEl.querySelectorAll('.agenda-day').forEach(function(d) { d.classList.remove('active'); });
+            tab.classList.add('active');
+            document.getElementById('agenda-day-' + idx).classList.add('active');
+          });
+          tabsEl.appendChild(tab);
+
+          // Day content
+          var dayDiv = document.createElement('div');
+          dayDiv.className = 'agenda-day' + (idx === 0 ? ' active' : '');
+          dayDiv.id = 'agenda-day-' + idx;
+
+          if (day.subtitle) {
+            var sub = document.createElement('div');
+            sub.className = 'agenda-day-subtitle';
+            sub.textContent = day.subtitle;
+            dayDiv.appendChild(sub);
+          }
+
+          day.blocks.forEach(function(block) {
+            var item = document.createElement('div');
+            item.className = 'agenda-item type-' + block.type;
+
+            var icon = document.createElement('div');
+            icon.className = 'agenda-icon';
+            icon.textContent = block.icon || '';
+
+            var time = document.createElement('div');
+            time.className = 'agenda-time';
+            time.textContent = block.time;
+
+            var details = document.createElement('div');
+            details.className = 'agenda-details';
+
+            var title = document.createElement('div');
+            title.className = 'agenda-title';
+            title.textContent = block.title;
+            details.appendChild(title);
+
+            if (block.description) {
+              var desc = document.createElement('div');
+              desc.className = 'agenda-desc';
+              desc.textContent = block.description;
+              details.appendChild(desc);
+            }
+
+            if (block.labUrl) {
+              var link = document.createElement('a');
+              link.className = 'agenda-link';
+              link.href = block.labUrl;
+              link.target = '_blank';
+              link.innerHTML = '🔗 Open Lab Repository';
+              details.appendChild(link);
+            }
+
+            if (block.section) {
+              var secLink = document.createElement('div');
+              secLink.className = 'agenda-section-link';
+              secLink.innerHTML = '→ Jump to slides';
+              secLink.addEventListener('click', function() {
+                var target = document.querySelector('.slide[data-section="' + block.section + '"]');
+                if (target) {
+                  var allSlides = Array.from(document.querySelectorAll('.slide'));
+                  var targetIdx = allSlides.indexOf(target);
+                  if (targetIdx >= 0) goToSlide(targetIdx);
+                }
+              });
+              details.appendChild(secLink);
+            }
+
+            item.appendChild(icon);
+            item.appendChild(time);
+            item.appendChild(details);
+            dayDiv.appendChild(item);
+          });
+
+          daysEl.appendChild(dayDiv);
+        });
+      })
+      .catch(function(err) {
+        console.warn('Could not load agenda.json:', err);
+      });
+  })();
+
   handleHash();
   updateUI();
 })();

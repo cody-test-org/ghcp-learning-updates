@@ -15,7 +15,7 @@ This is a **learning and reference repository** for GitHub Copilot agentic workf
 
 | File | Description |
 |---|---|
-| `presentation.html` | Interactive slide deck covering all agentic workflow topics |
+| `hackathon.html` | Interactive slide deck covering all agentic workflow topics |
 | `README.md` | Repository readme |
 | `AGENTS.md` | This file — agent instructions for Copilot when working in this repo |
 

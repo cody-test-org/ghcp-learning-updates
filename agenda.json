@@ -1,0 +1,140 @@
+{
+  "title": "GitHub Copilot Hackathon",
+  "days": [
+    {
+      "name": "Day 1",
+      "subtitle": "Lightning Sessions & Hands-On Labs",
+      "blocks": [
+        {
+          "type": "session",
+          "time": "9:00 – 9:15 AM",
+          "title": "Welcome & Kickoff",
+          "description": "Introductions, logistics, and hackathon overview",
+          "icon": "👋"
+        },
+        {
+          "type": "session",
+          "time": "9:15 – 9:50 AM",
+          "title": "Skills & Custom Instructions",
+          "description": "Agent skills, custom instructions, prompt files, custom agents",
+          "icon": "⚡",
+          "section": "skills"
+        },
+        {
+          "type": "session",
+          "time": "9:50 – 10:25 AM",
+          "title": "Model Context Protocol (MCP)",
+          "description": "Resources, prompts, tools, sampling, roots, transports",
+          "icon": "🔌",
+          "section": "mcp"
+        },
+        {
+          "type": "break",
+          "time": "10:25 – 10:35 AM",
+          "title": "Break",
+          "icon": "☕"
+        },
+        {
+          "type": "session",
+          "time": "10:35 – 11:10 AM",
+          "title": "GitHub Copilot Coding Agent",
+          "description": "Agent mode, coding agent, custom agents, architecture",
+          "icon": "🤖",
+          "section": "coding-agent"
+        },
+        {
+          "type": "session",
+          "time": "11:10 – 11:45 AM",
+          "title": "Agent Management & Orchestration",
+          "description": "Sessions, sequential & parallel orchestration, handoffs",
+          "icon": "🎯",
+          "section": "agent-mgmt"
+        },
+        {
+          "type": "session",
+          "time": "11:45 – 12:15 PM",
+          "title": "GitHub Copilot CLI",
+          "description": "Terminal-native agentic development, adoption trends",
+          "icon": "⌨️",
+          "section": "cli"
+        },
+        {
+          "type": "session",
+          "time": "12:15 – 12:50 PM",
+          "title": "Customizing the CLI",
+          "description": "Hooks, lifecycle, use cases, plugins, extensions",
+          "icon": "🔧",
+          "section": "cli-customize"
+        },
+        {
+          "type": "session",
+          "time": "12:50 – 1:00 PM",
+          "title": "Lightning Sessions Wrap-Up",
+          "description": "Q&A and transition to lunch",
+          "icon": "💬"
+        },
+        {
+          "type": "break",
+          "time": "1:00 – 1:45 PM",
+          "title": "Lunch",
+          "icon": "🍽️"
+        },
+        {
+          "type": "lab",
+          "time": "1:45 – 6:00 PM",
+          "title": "Labs & Hands-On Activities",
+          "description": "Work through guided lab exercises at your own pace",
+          "icon": "🧪",
+          "labUrl": "https://github.com/ms-mfg-community/day-in-the-life-copilot-lab"
+        }
+      ]
+    },
+    {
+      "name": "Day 2",
+      "subtitle": "Hackathon — Build Your Own Use Cases",
+      "blocks": [
+        {
+          "type": "session",
+          "time": "9:00 – 9:15 AM",
+          "title": "Day 2 Kickoff & Day 1 Recap",
+          "description": "Review key takeaways, check in on teams, set hackathon goals",
+          "icon": "🔄"
+        },
+        {
+          "type": "hackathon",
+          "time": "9:15 AM – 12:00 PM",
+          "title": "Hackathon Working Session — Morning",
+          "description": "Teams break out to build their own Copilot use cases and workflows",
+          "icon": "🚀"
+        },
+        {
+          "type": "break",
+          "time": "12:00 – 12:45 PM",
+          "title": "Lunch",
+          "icon": "🍽️"
+        },
+        {
+          "type": "hackathon",
+          "time": "12:45 – 4:30 PM",
+          "title": "Hackathon Working Session — Afternoon",
+          "description": "Continue building, mentors available for guidance and troubleshooting",
+          "icon": "💻"
+        },
+        {
+          "type": "session",
+          "time": "4:30 – 5:30 PM",
+          "title": "Team Demos & Presentations",
+          "description": "Each team presents what they built — share learnings and results",
+          "icon": "🎤"
+        },
+        {
+          "type": "session",
+          "time": "5:30 – 6:00 PM",
+          "title": "Wrap-Up & Next Steps",
+          "description": "Key takeaways, resources for continued learning, feedback",
+          "icon": "🎉"
+        }
+      ]
+    }
+  ]
+}
