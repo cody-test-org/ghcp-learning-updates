@@ -9,7 +9,8 @@ on:
   workflow_dispatch:
     inputs:
       site_url:
-        description: "Override site URL to check (default: production FQDN)"
+        description: "Override production site URL to check (host must remain ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)"
+        # NOTE: The workflow firewall only allows the production host. Overrides may change path/query only.
         required: false
         type: string
 
