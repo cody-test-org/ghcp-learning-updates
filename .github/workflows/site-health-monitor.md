@@ -14,6 +14,9 @@ on:
         required: false
         type: string
 
+imports:
+  - .github/agents/ops-monitor.agent.md
+
 permissions:
   contents: read
   issues: read
