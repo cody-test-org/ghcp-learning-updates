@@ -9,11 +9,18 @@ param location string = resourceGroup().location
 @description('Container image tag')
 param imageTag string = 'latest'
 
+@description('Tags to apply to all resources')
+param tags object = {
+  CostControl: 'Ignore'
+  SecurityControl: 'Ignore'
+}
+
 module acr 'modules/acr.bicep' = {
   name: 'acr-deployment'
   params: {
     name: replace('${baseName}acr', '-', '')
     location: location
+    tags: tags
   }
 }
 
@@ -22,6 +29,7 @@ module logAnalytics 'modules/log-analytics.bicep' = {
   params: {
     name: '${baseName}-logs'
     location: location
+    tags: tags
   }
 }
 
@@ -30,6 +38,7 @@ module containerApp 'modules/container-app.bicep' = {
   params: {
     name: '${baseName}-app'
     location: location
+    tags: tags
     containerRegistryName: acr.outputs.name
     containerRegistryLoginServer: acr.outputs.loginServer
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId

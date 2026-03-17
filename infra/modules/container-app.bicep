@@ -4,6 +4,9 @@ param name string
 @description('Location')
 param location string
 
+@description('Resource tags')
+param tags object = {}
+
 @description('ACR name for managed identity access')
 param containerRegistryName string
 
@@ -19,6 +22,7 @@ param imageName string
 resource environment 'Microsoft.App/managedEnvironments@2024-03-01' = {
   name: '${name}-env'
   location: location
+  tags: tags
   properties: {
     appLogsConfiguration: {
       destination: 'log-analytics'
@@ -43,6 +47,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: name
   location: location
+  tags: tags
   identity: {
     type: 'SystemAssigned'
   }

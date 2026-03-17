@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-RESOURCE_GROUP="${1:-ghcp-hackathon-rg}"
+RESOURCE_GROUP="${1:-rg-ghcp-hackathon}"
 LOCATION="${2:-eastus2}"
 ACR_NAME="${3:-ghcphackathonacr}"
 IMAGE_TAG="${4:-latest}"
