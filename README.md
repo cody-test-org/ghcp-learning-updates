@@ -208,59 +208,33 @@ az containerapp update \
 
 ## 🩺 Monitoring & Auto-Repair
 
-The site includes automated health monitoring powered by a GitHub Agentic Workflow and Azure Application Insights.
+The site includes automated health monitoring powered by a GitHub Agentic Workflow, an SRE-specialized Copilot agent, and Azure Application Insights.
 
-### How It Works
+> 📖 **[Full monitoring documentation →](docs/monitoring.md)** — Architecture diagrams, incident response flow, agent personas, setup guide, and operational runbook.
+
+### Quick Overview
 
 ```
-Site goes down
-  → Health monitor workflow detects failure (every 15 min)
-    → Copilot CLI agent investigates via Azure MCP
-      → Agent attempts auto-repair (revision restart)
-        → Agent creates GitHub issue with full incident report
-          → You review over coffee ☕
+Site issue detected (every 15 min)
+  → ops-monitor agent investigates via Azure MCP
+    → Auto-repairs if possible (revision restart)
+      → Creates GitHub issue with full incident report
 ```
 
-### Components
-
-| Layer | What | How |
-|-------|------|-----|
-| **Detect** | Application Insights + Availability Tests | Bicep module — pings site every 5 min from 3 US locations |
-| **Investigate** | Agentic workflow + Azure MCP | Copilot CLI runs headless in Actions, queries container app status and logs |
-| **Repair** | Auto-restart via Azure MCP | Restarts unhealthy revisions automatically |
-| **Report** | GitHub Issues | Creates `[incident]` issues with diagnosis, repair attempts, and recommendations |
-
-### Agentic Workflow: Site Health Monitor
-
-The workflow at `.github/workflows/site-health-monitor.md` runs every 15 minutes and:
-
-1. **Health checks** — HTTP 200 status, content verification, agenda.json validation
-2. **Investigates failures** — Container App status, revision health, container logs via Azure MCP
-3. **Auto-repairs** — Restarts unhealthy revisions
-4. **Reports** — Creates/updates GitHub issues with full incident details
+| Layer | Component | Details |
+|-------|-----------|---------|
+| **Detect** | App Insights + Availability Tests | Pings every 5 min from 3 US locations |
+| **Investigate** | ops-monitor agent + Azure MCP | Headless Copilot CLI queries container status & logs |
+| **Repair** | Automated revision restart | Self-healing for common failures |
+| **Report** | GitHub Issues | `[incident]` issues with diagnosis & recommendations |
 
 ```bash
-# Trigger a manual health check (uses the default site_url)
+# Manual health check
 gh aw run site-health-monitor
 
-# Trigger a health check with a custom URL
-gh aw run site-health-monitor -f site_url=https://your-custom-url.com
-
-# (Optional) Compile to a GitHub Actions workflow, then run via gh workflow:
-# gh aw compile .github/workflows/site-health-monitor.md
-# gh workflow run site-health-monitor --field site_url=https://your-custom-url.com
-```
-
-### Ad-Hoc Debugging with Copilot CLI
-
-For interactive investigation, use the Azure MCP server locally:
-
-```bash
-# In Copilot CLI (Azure MCP is configured in .vscode/mcp.json)
+# Ad-hoc debugging via Copilot CLI
 copilot
-
-# Then ask:
-"Check the health of ghcp-hackathon-app in rg-ghcp-hackathon and show me recent logs"
+> "Check the health of ghcp-hackathon-app and show me recent logs"
 ```
 
 ---
@@ -280,11 +254,19 @@ ghcp-learning-updates/
 │       ├── app-insights.bicep              # Application Insights + availability test
 │       ├── container-app.bicep             # Container Apps + environment
 │       └── log-analytics.bicep             # Log Analytics workspace
+├── docs/                                   # Extended documentation
+│   └── monitoring.md                       # Monitoring architecture & runbook
 ├── .github/
-│   ├── ...
-│   └── workflows/
-│       ├── docs-research-updater.md        # Weekly docs research workflow
-│       └── site-health-monitor.md          # Site health monitor (every 15 min)
+│   ├── agents/                             # Custom Copilot agents
+│   │   ├── agentic-workflows-builder.agent.md
+│   │   └── ops-monitor.agent.md            # SRE/operations agent
+│   ├── workflows/
+│   │   ├── docs-research-updater.md        # Weekly docs research workflow
+│   │   └── site-health-monitor.md          # Site health monitor (every 15 min)
+│   ├── copilot-instructions.md             # Repo-wide Copilot instructions
+│   ├── instructions/                       # Path-specific instructions
+│   ├── prompts/                            # Reusable prompt templates
+│   └── plugins.json                        # Plugin references
 ├── Dockerfile                              # nginx:alpine container
 ├── nginx.conf                              # Custom nginx configuration
 ├── docker-compose.yml                      # Local dev with live reload
