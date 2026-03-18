@@ -1,0 +1,82 @@
+name: Site Health Check
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check site availability
+        id: check
+        run: |
+          SITE_URL="https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io"
+          AGENDA_URL="${SITE_URL}/agenda.json"
+
+          echo "🔍 Checking site: $SITE_URL"
+
+          # Check main page
+          HTTP_STATUS=$(curl -s -o /tmp/response.html -w '%{http_code}' --max-time 30 "$SITE_URL" 2>/dev/null || echo "000")
+          RESPONSE_TIME=$(curl -s -o /dev/null -w '%{time_total}' --max-time 30 "$SITE_URL" 2>/dev/null || echo "0")
+          echo "site_status=$HTTP_STATUS" >> "$GITHUB_OUTPUT"
+          echo "response_time=$RESPONSE_TIME" >> "$GITHUB_OUTPUT"
+
+          # Check content
+          if [ "$HTTP_STATUS" = "200" ] && grep -q "GitHub Copilot" /tmp/response.html 2>/dev/null; then
+            echo "content_ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "content_ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Check agenda endpoint
+          AGENDA_STATUS=$(curl -s -o /tmp/agenda.json -w '%{http_code}' --max-time 15 "$AGENDA_URL" 2>/dev/null || echo "000")
+          if [ "$AGENDA_STATUS" = "200" ] && jq -e '.days' /tmp/agenda.json >/dev/null 2>&1; then
+            echo "agenda_ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "agenda_ok=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Determine overall health
+          if [ "$HTTP_STATUS" = "200" ] && grep -q "GitHub Copilot" /tmp/response.html 2>/dev/null && [ "$AGENDA_STATUS" = "200" ]; then
+            echo "healthy=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Site is healthy (HTTP $HTTP_STATUS, ${RESPONSE_TIME}s)"
+          else
+            echo "healthy=false" >> "$GITHUB_OUTPUT"
+            echo "❌ Site is DOWN or degraded (HTTP $HTTP_STATUS)"
+          fi
+
+      - name: Dispatch agentic repair workflow
+        if: steps.check.outputs.healthy == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "🚨 Site is unhealthy — dispatching auto-repair agent"
+          gh workflow run "site-health-monitor.lock.yml" \
+            --repo "${{ github.repository }}" \
+            -f site_status="${{ steps.check.outputs.site_status }}" \
+            -f response_time="${{ steps.check.outputs.response_time }}" \
+            -f content_ok="${{ steps.check.outputs.content_ok }}" \
+            -f agenda_ok="${{ steps.check.outputs.agenda_ok }}"
+
+      - name: Summary
+        run: |
+          echo "### Site Health Check Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ steps.check.outputs.healthy }}" = "true" ]; then
+            echo "✅ **All checks passed**" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "❌ **Site is unhealthy — repair agent dispatched**" >> "$GITHUB_STEP_SUMMARY"
+          fi
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Check | Result |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|-------|--------|" >> "$GITHUB_STEP_SUMMARY"
+          echo "| HTTP Status | ${{ steps.check.outputs.site_status }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Response Time | ${{ steps.check.outputs.response_time }}s |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Content OK | ${{ steps.check.outputs.content_ok }} |" >> "$GITHUB_STEP_SUMMARY"
+          echo "| Agenda OK | ${{ steps.check.outputs.agenda_ok }} |" >> "$GITHUB_STEP_SUMMARY"

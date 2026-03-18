@@ -1,16 +1,26 @@
 ---
 description: >
-  Monitors the GitHub Copilot Hackathon site health every 15 minutes. Checks HTTP availability,
-  diagnoses issues using Azure MCP, attempts auto-repair via revision restart, and creates
-  GitHub issues for incident tracking.
+  Investigates and auto-repairs the GitHub Copilot Hackathon site when health checks fail.
+  Triggered by the site-health-check workflow when the site is detected as down.
+  Uses Azure MCP to diagnose infrastructure issues and attempt self-healing.
 
 on:
-  schedule: every 15 minutes
   workflow_dispatch:
     inputs:
-      site_url:
-        description: "Override production site URL to check (host must remain ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)"
-        # NOTE: The workflow firewall only allows the production host. Overrides may change path/query only.
+      site_status:
+        description: "HTTP status code from health check (e.g., 200, 503, 000 for timeout)"
+        required: false
+        type: string
+      response_time:
+        description: "Response time in seconds from health check"
+        required: false
+        type: string
+      content_ok:
+        description: "Whether the HTML content contained expected text (true/false)"
+        required: false
+        type: string
+      agenda_ok:
+        description: "Whether agenda.json returned valid JSON (true/false)"
         required: false
         type: string
 
@@ -20,7 +30,6 @@ permissions:
   actions: read
 
 tools:
-  web-fetch:
   bash: ["echo", "curl", "date", "jq"]
   github:
     toolsets: [repos, issues]
@@ -75,7 +84,17 @@ labels: [monitoring, automation]
 
 ## Purpose
 
-Monitor the GitHub Copilot Hackathon site for availability and performance issues. When problems are detected, automatically investigate root causes using Azure infrastructure tools, attempt self-healing, and report findings.
+The site-health-check workflow has detected that the GitHub Copilot Hackathon site is DOWN or degraded. Your job is to investigate the root cause using Azure infrastructure tools, attempt auto-repair, and report findings.
+
+## Health Check Results (from the dispatcher)
+
+The following health check data was collected by the dispatcher workflow:
+- **HTTP Status:** "${{ github.event.inputs.site_status }}" (expect 200; 000 means connection timeout)
+- **Response Time:** "${{ github.event.inputs.response_time }}" seconds
+- **Content OK:** "${{ github.event.inputs.content_ok }}" (true = HTML contains "GitHub Copilot")
+- **Agenda OK:** "${{ github.event.inputs.agenda_ok }}" (true = /agenda.json returns valid JSON)
+
+If no inputs are provided (manual dispatch), assume the site needs investigation.
 
 ## Site Details
 
@@ -84,27 +103,13 @@ Monitor the GitHub Copilot Hackathon site for availability and performance issue
 - **Container App:** ghcp-hackathon-app
 - **Container App Environment:** ghcp-hackathon-app-env
 - **ACR:** ghcphackathonacr
+- **Azure Subscription ID:** 2a1b501e-d398-4fb5-8680-01acff08b7d2
 
-If a `site_url` input is provided via workflow_dispatch, use that URL instead: "${{ github.event.inputs.site_url }}"
+## Step 1: Investigate
 
-## Step 1: Health Check
+Use the Azure MCP server to investigate the infrastructure:
 
-**CRITICAL: You MUST perform these checks. Network access to the production URL IS allowed through the firewall. Do NOT skip or assume network is blocked. Use the web-fetch tool directly.**
-
-Perform these checks against the production URL:
-
-1. **HTTP availability** — Use `web-fetch` to fetch the site URL. Expect HTTP 200 status. If web-fetch fails with a network error, retry once after 5 seconds using bash `curl -s -o /dev/null -w '%{http_code}' <URL>`.
-2. **Content verification** — Verify the response contains expected content (e.g., "GitHub Copilot" in the HTML body).
-3. **Agenda endpoint** — Fetch `/agenda.json` and verify it returns valid JSON with a `days` array.
-4. **Response time** — Note if the response takes longer than 5 seconds (cold start is expected on first request after scale-to-zero, but subsequent requests should be fast).
-
-If ALL checks pass, log a brief "all healthy" status and exit — do NOT create an issue for healthy checks.
-
-## Step 2: Investigate (only if health check fails)
-
-If any check fails, use the Azure MCP server to investigate:
-
-1. **Container App status** — Query the container app provisioning state and running state
+1. **Container App status** — Query the container app provisioning state and running status
 2. **Revision status** — Check if the active revision is healthy, provisioned, and running
 3. **Recent logs** — Pull container logs to look for errors (nginx errors, crash loops, OOM kills)
 4. **Container App Environment health** — Verify the environment is operational
@@ -113,47 +118,47 @@ If any check fails, use the Azure MCP server to investigate:
 
 Document all findings with specific details — error messages, timestamps, states.
 
-## Step 3: Auto-Repair (only if issue found)
+## Step 2: Auto-Repair
 
 Based on the investigation, attempt these repairs in order:
 
-1. **If container app is deactivated or has 0 active revisions** — Use the Azure MCP `container_apps` tool to create a new revision or reactivate the app. Alternatively, use bash: `curl` the Azure Resource Manager REST API with the OIDC bearer token to restart the container app.
-2. **If revision is unhealthy or stopped** — Attempt to restart by deploying a new revision via Azure MCP or the Container Apps management API
+1. **If container app is deactivated or has 0 active revisions** — Use the Azure MCP `container_apps` tools to reactivate the app or create a new revision
+2. **If revision is unhealthy or stopped** — Attempt to restart by deploying a new revision via Azure MCP
 3. **If container is crash-looping** — Note the error but do NOT attempt image rebuild (flag for human review)
 4. **If environment is unhealthy** — Flag for human review (do not attempt environment-level changes)
 5. **If ACR image is missing** — Flag for human review
 
-After any repair attempt, wait 30 seconds and re-run the health check to verify the fix worked.
+After any repair attempt, wait 60 seconds, then use web-fetch or bash curl to verify the site is back up:
+```
+curl -s -o /dev/null -w '%{http_code}' https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io
+```
 
-## Step 4: Report
+## Step 3: Report
 
-### If site is DOWN and could NOT be auto-repaired:
+### If site could NOT be auto-repaired:
 Create an issue with:
 - **Title:** `Site Down — <brief description of failure>`
 - **Body:**
   - 🔴 **Status:** DOWN
-  - **Failure type:** (HTTP error, timeout, content mismatch, container crash, etc.)
-  - **Investigation findings:** (all details from Step 2)
+  - **Health check data:** (from inputs above)
+  - **Failure type:** (container stopped, crash loop, environment issue, ACR image missing, etc.)
+  - **Investigation findings:** (all details from Step 1)
   - **Repair attempts:** (what was tried, what happened)
   - **Recommended action:** (what a human should do)
-  - **Timestamp:** when the issue was detected
+  - **Timestamp:** when the issue was detected (UTC)
 
-### If site was DOWN but auto-repair SUCCEEDED:
+### If auto-repair SUCCEEDED:
 Create an issue with:
 - **Title:** `Site Recovered — <what was fixed>`
 - **Body:**
   - 🟡 **Status:** RECOVERED (auto-repaired)
-  - **Original failure:** (what went wrong)
+  - **Original failure:** (health check data + what was wrong)
   - **Repair action:** (what fixed it)
-  - **Current status:** (health check results after repair)
+  - **Current status:** (verification result after repair)
   - **Root cause analysis:** (best guess at why it failed)
-
-### If site is HEALTHY:
-Do NOT create an issue. Simply log completion.
 
 ## Constraints
 
-- Do NOT create issues for healthy checks — only for failures or recoveries
 - Do NOT attempt destructive operations (delete resources, recreate environment)
 - Do NOT modify the Docker image or Bicep infrastructure
 - Keep investigation focused — don't explore unrelated Azure resources
