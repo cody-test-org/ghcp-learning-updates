@@ -15,6 +15,7 @@ on:
         type: string
 
 permissions:
+  id-token: write
   contents: read
   issues: read
   actions: read
@@ -27,8 +28,14 @@ tools:
 
 mcp-servers:
   azure:
-    command: "npx"
-    args: ["-y", "@azure/mcp@latest", "server", "start"]
+    container: "mcr.microsoft.com/azure-sdk/azure-mcp"
+    version: "latest"
+    entrypointArgs: ["server", "start", "--read-only"]
+    env:
+      AZURE_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
+      AZURE_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
+      AZURE_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
+      AZURE_USE_OIDC: "true"
     allowed: ["*"]
 
 safe-outputs:
@@ -53,6 +60,7 @@ network:
     - "graph.microsoft.com"
     - "eastus2.management.azure.com"
     - "management.core.windows.net"
+    - containers
     - "centralus-2.in.applicationinsights.azure.com"
     - "westus-0.in.applicationinsights.azure.com"
     - "169.254.169.254"
