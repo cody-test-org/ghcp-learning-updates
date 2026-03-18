@@ -206,6 +206,39 @@ az containerapp update \
 
 ---
 
+## 🩺 Monitoring & Auto-Repair
+
+The site includes automated health monitoring powered by a GitHub Agentic Workflow, an SRE-specialized Copilot agent, and Azure Application Insights.
+
+> 📖 **[Full monitoring documentation →](docs/monitoring.md)** — Architecture diagrams, incident response flow, agent personas, setup guide, and operational runbook.
+
+### Quick Overview
+
+```
+Site issue detected (every 15 min)
+  → ops-monitor agent investigates via Azure MCP
+    → Auto-repairs if possible (revision restart)
+      → Creates GitHub issue with full incident report
+```
+
+| Layer | Component | Details |
+|-------|-----------|---------|
+| **Detect** | App Insights + Availability Tests | Pings every 5 min from 3 US locations |
+| **Investigate** | ops-monitor agent + Azure MCP | Headless Copilot CLI queries container status & logs |
+| **Repair** | Automated revision restart | Self-healing for common failures |
+| **Report** | GitHub Issues | `[incident]` issues with diagnosis & recommendations |
+
+```bash
+# Manual health check
+gh aw run site-health-monitor
+
+# Ad-hoc debugging via Copilot CLI
+copilot
+> "Check the health of ghcp-hackathon-app and show me recent logs"
+```
+
+---
+
 ## 📁 Repository Structure
 
 ```
@@ -218,11 +251,22 @@ ghcp-learning-updates/
 │   ├── main.bicepparam                     # Default parameters
 │   └── modules/
 │       ├── acr.bicep                       # Container Registry
+│       ├── app-insights.bicep              # Application Insights + availability test
 │       ├── container-app.bicep             # Container Apps + environment
 │       └── log-analytics.bicep             # Log Analytics workspace
+├── docs/                                   # Extended documentation
+│   └── monitoring.md                       # Monitoring architecture & runbook
 ├── .github/
-│   └── workflows/
-│       └── docs-research-updater.md        # Agentic workflow source
+│   ├── agents/                             # Custom Copilot agents
+│   │   ├── agentic-workflows-builder.agent.md
+│   │   └── ops-monitor.agent.md            # SRE/operations agent
+│   ├── workflows/
+│   │   ├── docs-research-updater.md        # Weekly docs research workflow
+│   │   └── site-health-monitor.md          # Site health monitor (every 15 min)
+│   ├── copilot-instructions.md             # Repo-wide Copilot instructions
+│   ├── instructions/                       # Path-specific instructions
+│   ├── prompts/                            # Reusable prompt templates
+│   └── plugins.json                        # Plugin references
 ├── Dockerfile                              # nginx:alpine container
 ├── nginx.conf                              # Custom nginx configuration
 ├── docker-compose.yml                      # Local dev with live reload

@@ -15,6 +15,16 @@ param tags object = {
   SecurityControl: 'Ignore'
 }
 
+@description('GitHub repo for alert-triggered workflow dispatch (owner/repo)')
+param githubRepo string = 'cody-test-org/ghcp-learning-updates'
+
+@description('GitHub workflow file to dispatch on alert')
+param githubWorkflowFile string = 'site-health-monitor.lock.yml'
+
+@secure()
+@description('GitHub PAT with Actions:write scope for workflow dispatch')
+param githubDispatchToken string = ''
+
 module acr 'modules/acr.bicep' = {
   name: 'acr-deployment'
   params: {
@@ -43,9 +53,25 @@ module containerApp 'modules/container-app.bicep' = {
     containerRegistryLoginServer: acr.outputs.loginServer
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
     imageName: '${acr.outputs.loginServer}/hackathon:${imageTag}'
+    createAcrPullRole: false
+  }
+}
+
+module appInsights 'modules/app-insights.bicep' = {
+  name: 'app-insights-deployment'
+  params: {
+    name: '${baseName}-insights'
+    location: location
+    tags: tags
+    logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
+    availabilityTestUrl: 'https://${containerApp.outputs.fqdn}'
+    githubRepo: githubRepo
+    githubWorkflowFile: githubWorkflowFile
+    githubDispatchToken: githubDispatchToken
   }
 }
 
 output appUrl string = containerApp.outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
+output appInsightsInstrumentationKey string = appInsights.outputs.instrumentationKey

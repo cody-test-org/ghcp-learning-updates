@@ -87,7 +87,11 @@ resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
 }
 
 // Grant ACR pull permission to the container app's managed identity
-resource acrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+// Uses a fixed name derived from resource IDs for idempotency
+@description('Whether to create the ACR pull role assignment (set false if it already exists)')
+param createAcrPullRole bool = true
+
+resource acrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = if (createAcrPullRole) {
   name: guid(acr.id, containerApp.id, '7f951dda-4ed3-4680-a7ca-43fe172d538d')
   scope: acr
   properties: {
