@@ -25,19 +25,25 @@ Traditional monitoring alerts you when something is wrong. This system **investi
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                     DETECTION LAYER                              │
+│                     DETECTION LAYER (Two-Tier)                    │
 │                                                                  │
+│  Tier 1: FAST DETECT              Tier 2: SMART CHECK            │
 │  ┌──────────────────┐    ┌─────────────────────────────────┐    │
 │  │  App Insights     │    │  Agentic Workflow (every 15 min) │    │
 │  │  Availability     │    │  ┌───────────────────────────┐  │    │
 │  │  Tests            │    │  │ HTTP 200 check            │  │    │
-│  │  (every 5 min)    │    │  │ Content verification      │  │    │
+│  │  (every 1 min)    │    │  │ Content verification      │  │    │
 │  │  3 US locations   │    │  │ agenda.json validation    │  │    │
-│  └──────────────────┘    │  │ Response time check       │  │    │
-│                           │  └───────────────────────────┘  │    │
-│                           └─────────────────────────────────┘    │
+│  │        │          │    │  │ Response time check       │  │    │
+│  │        ▼          │    │  └───────────────────────────┘  │    │
+│  │  Alert Rule       │    │                                  │    │
+│  │  (2 failures)     │    │                                  │    │
+│  │        │          │    │                                  │    │
+│  │        ▼          │    │                                  │    │
+│  │  Webhook ─────────│───▶│  workflow_dispatch (on-demand)   │    │
+│  └──────────────────┘    └─────────────────────────────────┘    │
 └─────────────────────────────────┬───────────────────────────────┘
-                                  │ Failure detected
+                                  │ Failure detected (~2 min or 15 min)
                                   ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                   INVESTIGATION LAYER                             │
@@ -86,9 +92,12 @@ Traditional monitoring alerts you when something is wrong. This system **investi
 
 ```mermaid
 flowchart TD
-    subgraph Detection["🔍 Detection Layer"]
-        AI["App Insights<br/>Availability Tests<br/>(every 5 min, 3 locations)"]
+    subgraph Detection["🔍 Detection Layer (Two-Tier)"]
+        AI["App Insights<br/>Availability Tests<br/>(every 1 min, 3 locations)"]
+        Alert["Alert Rule<br/>(2 consecutive failures)"]
         AW["Agentic Workflow<br/>Health Checks<br/>(every 15 min)"]
+        AI -->|"failure"| Alert
+        Alert -->|"webhook<br/>workflow_dispatch"| AW
     end
 
     subgraph Investigation["🔎 Investigation Layer"]
@@ -109,7 +118,7 @@ flowchart TD
     end
 
     AW -->|"failure detected"| Agent
-    AI -->|"alert (future)"| Agent
+    AI -.->|"direct alerts (Azure Portal)"| Issue
     Agent -->|"fixable"| Restart
     Agent -->|"needs human"| Flag
     Restart -->|"recovered"| Issue
@@ -135,14 +144,25 @@ flowchart TD
 
 | Setting | Value |
 |---------|-------|
-| Test frequency | Every 5 minutes |
+| Test frequency | Every **1 minute** |
 | Locations | Virginia, Chicago, San Jose |
 | Validation | HTTP 200 + SSL certificate health |
 | SSL expiry warning | 7 days before expiration |
+| Alert trigger | 2 failed locations within 5 min window |
+| Alert action | Webhook → GitHub `workflow_dispatch` |
 | Data retention | 30 days |
 | Cost | Free (under 5GB/month ingestion) |
 
 **What it catches:** Complete outages, SSL certificate expiry, DNS failures, regional availability issues.
+
+**Two-tier detection pattern:**
+
+```
+Tier 1 — FAST (App Insights):    ping every 1 min → alert after ~2 min → webhook → workflow_dispatch
+Tier 2 — SMART (Agentic Workflow): full AI check every 15 min (content, JSON, latency)
+```
+
+Both paths trigger the same `site-health-monitor.md` workflow. Tier 1 catches hard outages fast. Tier 2 catches subtle issues (broken content, corrupt JSON, degraded performance).
 
 ### 2. Site Health Monitor Workflow
 
@@ -245,7 +265,15 @@ mcp-servers:
 ### Automated (no human needed)
 
 ```
- 15-min check fails
+ 15-min scheduled check fails
+        │
+        ▼
+                                    OR
+                              
+ App Insights ping fails ×2
+        │
+        ▼
+ Webhook fires workflow_dispatch
         │
         ▼
  ┌──────────────────┐
@@ -350,18 +378,24 @@ The monitoring system follows gh-aw's defense-in-depth security:
 | [Docker](https://www.docker.com/) | Build container images |
 | GitHub Copilot subscription | Agent execution |
 
-### Step 1: Deploy Application Insights
+### Step 1: Deploy Application Insights (with alert-triggered dispatch)
 
-If you haven't deployed the latest infra (with App Insights), run:
+If you haven't deployed the latest infra (with App Insights + alert webhook), run:
 
 ```bash
 az deployment group create \
   --resource-group rg-ghcp-hackathon \
   --template-file infra/main.bicep \
-  --parameters baseName=ghcp-hackathon
+  --parameters baseName=ghcp-hackathon \
+  --parameters githubDispatchToken=<YOUR_PAT>
 ```
 
-This deploys the Application Insights instance and availability test alongside the existing resources.
+This deploys:
+- Application Insights + 1-minute availability test
+- Alert rule (fires after 2 consecutive failures)
+- Action group with webhook to trigger `workflow_dispatch`
+
+> **Note:** The `githubDispatchToken` is a `@secure()` parameter — it won't be stored in deployment history. You can also pass it via a parameter file or Key Vault reference.
 
 ### Step 2: Compile the Health Monitor Workflow
 
@@ -373,9 +407,12 @@ This generates `.github/workflows/site-health-monitor.lock.yml` from the markdow
 
 ### Step 3: Configure Secrets
 
-Ensure `COPILOT_GITHUB_TOKEN` is set in your repository's Settings → Secrets and variables → Actions.
+| Secret | Where | Purpose |
+|--------|-------|---------|
+| `COPILOT_GITHUB_TOKEN` | Repo → Settings → Secrets → Actions | Copilot engine auth for agentic workflows |
+| `WORKFLOW_DISPATCH_TOKEN` | Repo → Settings → Secrets → Actions | Fine-grained PAT (Actions: write) for Azure alert webhook |
 
-For Azure MCP access, the workflow uses the GitHub Actions runner's Azure authentication context.
+The `WORKFLOW_DISPATCH_TOKEN` is passed to Bicep during deployment and used by the Azure alert action group to trigger `workflow_dispatch` on the health monitor workflow.
 
 ### Step 4: Commit & Push
 

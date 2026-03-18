@@ -15,6 +15,16 @@ param tags object = {
   SecurityControl: 'Ignore'
 }
 
+@description('GitHub repo for alert-triggered workflow dispatch (owner/repo)')
+param githubRepo string = 'cody-test-org/ghcp-learning-updates'
+
+@description('GitHub workflow file to dispatch on alert')
+param githubWorkflowFile string = 'site-health-monitor.lock.yml'
+
+@secure()
+@description('GitHub PAT with Actions:write scope for workflow dispatch')
+param githubDispatchToken string = ''
+
 module acr 'modules/acr.bicep' = {
   name: 'acr-deployment'
   params: {
@@ -54,6 +64,9 @@ module appInsights 'modules/app-insights.bicep' = {
     tags: tags
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
     availabilityTestUrl: 'https://${containerApp.outputs.fqdn}'
+    githubRepo: githubRepo
+    githubWorkflowFile: githubWorkflowFile
+    githubDispatchToken: githubDispatchToken
   }
 }
 
