@@ -46,7 +46,7 @@ resource availabilityTest 'Microsoft.Insights/webtests@2022-06-15' = {
     SyntheticMonitorId: '${name}-ping'
     Name: '${name} Availability Test'
     Enabled: true
-    Frequency: 60
+    Frequency: 300
     Timeout: 30
     Kind: 'standard'
     RetryEnabled: true

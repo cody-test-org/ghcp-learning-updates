@@ -14,9 +14,6 @@ on:
         required: false
         type: string
 
-imports:
-  - .github/agents/ops-monitor.agent.md
-
 permissions:
   contents: read
   issues: read
@@ -53,7 +50,9 @@ network:
     - "management.azure.com"
     - "login.microsoftonline.com"
 
-engine: copilot
+engine:
+  id: copilot
+  agent: ops-monitor
 
 timeout-minutes: 10
 

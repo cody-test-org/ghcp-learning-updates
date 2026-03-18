@@ -53,6 +53,7 @@ module containerApp 'modules/container-app.bicep' = {
     containerRegistryLoginServer: acr.outputs.loginServer
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
     imageName: '${acr.outputs.loginServer}/hackathon:${imageTag}'
+    createAcrPullRole: false
   }
 }
 

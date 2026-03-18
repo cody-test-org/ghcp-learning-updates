@@ -32,7 +32,7 @@ Traditional monitoring alerts you when something is wrong. This system **investi
 │  │  App Insights     │    │  Agentic Workflow (every 15 min) │    │
 │  │  Availability     │    │  ┌───────────────────────────┐  │    │
 │  │  Tests            │    │  │ HTTP 200 check            │  │    │
-│  │  (every 1 min)    │    │  │ Content verification      │  │    │
+│  │  (every 5 min)    │    │  │ Content verification      │  │    │
 │  │  3 US locations   │    │  │ agenda.json validation    │  │    │
 │  │        │          │    │  │ Response time check       │  │    │
 │  │        ▼          │    │  └───────────────────────────┘  │    │
@@ -43,7 +43,7 @@ Traditional monitoring alerts you when something is wrong. This system **investi
 │  │  Webhook ─────────│───▶│  workflow_dispatch (on-demand)   │    │
 │  └──────────────────┘    └─────────────────────────────────┘    │
 └─────────────────────────────────┬───────────────────────────────┘
-                                  │ Failure detected (~2 min or 15 min)
+                                  │ Failure detected (~5 min or 15 min)
                                   ▼
 ┌─────────────────────────────────────────────────────────────────┐
 │                   INVESTIGATION LAYER                             │
@@ -93,7 +93,7 @@ Traditional monitoring alerts you when something is wrong. This system **investi
 ```mermaid
 flowchart TD
     subgraph Detection["🔍 Detection Layer (Two-Tier)"]
-        AI["App Insights<br/>Availability Tests<br/>(every 1 min, 3 locations)"]
+        AI["App Insights<br/>Availability Tests<br/>(every 5 min, 3 locations)"]
         Alert["Alert Rule<br/>(2 consecutive failures)"]
         AW["Agentic Workflow<br/>Health Checks<br/>(every 15 min)"]
         AI -->|"failure"| Alert
@@ -158,7 +158,7 @@ flowchart TD
 **Two-tier detection pattern:**
 
 ```
-Tier 1 — FAST (App Insights):    ping every 1 min → alert after ~2 min → webhook → workflow_dispatch
+Tier 1 — FAST (App Insights):    ping every 5 min → alert after ~2 min → webhook → workflow_dispatch
 Tier 2 — SMART (Agentic Workflow): full AI check every 15 min (content, JSON, latency)
 ```
 
