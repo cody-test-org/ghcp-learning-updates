@@ -892,6 +892,87 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Key point: .github/ is for the team, ~/.copilot/ is for you. Both work together — repo-level takes precedence on conflicts. The .claude/ directory follows the same structure for Claude Code users. Org/enterprise agents live in .github-private/agents/.</div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Copilot vs Foundry Decision Tree ─────────────────────────── -->
+<section class="slide" data-section="overview" data-title="Copilot vs Foundry">
+  <div class="content">
+    <h2 class="slide-title">GitHub Copilot vs Azure AI Foundry</h2>
+    <p class="slide-subtitle">They are not competitors — ask: <strong style="color:var(--code-orange);">who is the end user?</strong></p>
+    <div class="columns col-3" style="align-items:start;">
+
+      <!-- Copilot -->
+      <div class="card card-blue">
+        <span class="card-icon">👩‍💻</span>
+        <h3 style="color:var(--accent-blue);">GitHub Copilot</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;"><strong style="color:var(--accent-blue);">End user:</strong> Developer</p>
+        <p style="font-size:13px; margin-bottom:12px;">If your agent helps you <strong>build software</strong> → use Copilot</p>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin-bottom:8px;">Use when building</div>
+        <ul class="clean" style="font-size:13px;">
+          <li>Coding agents</li>
+          <li>CI/CD &amp; infra automation</li>
+          <li>Code gen, refactoring, testing</li>
+          <li>Internal engineering tools</li>
+          <li>Dev automation workflows</li>
+        </ul>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin:12px 0 8px;">Why it wins</div>
+        <ul class="bullet" style="font-size:13px;">
+          <li><span class="b">▸</span> Lives in VS Code, GitHub, CLI</li>
+          <li><span class="b">▸</span> Fast iteration loop</li>
+          <li><span class="b">▸</span> Integrated into SDLC</li>
+          <li><span class="b">▸</span> Minimal infra setup</li>
+        </ul>
+      </div>
+
+      <!-- Use Both -->
+      <div class="card card-orange">
+        <span class="card-icon">🔗</span>
+        <h3 style="color:var(--code-orange);">Use Both</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;"><strong style="color:var(--code-orange);">Rule:</strong> Copilot builds the system. Foundry runs the system.</p>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin-bottom:8px;">Architecture Pattern</div>
+        <div style="background:var(--accent-blue-dim); border:1px solid rgba(88,166,255,0.3); border-radius:8px; padding:12px; margin-bottom:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--accent-blue); margin-bottom:4px;">↑ Copilot — Build layer</div>
+          <div style="font-size:12px; color:var(--text-muted);">Generate code · Build APIs · Write prompts · Set up infra</div>
+        </div>
+        <div style="text-align:center; font-size:14px; color:var(--text-muted); margin:-4px 0;">↓ deploy to</div>
+        <div style="background:rgba(63,185,80,0.1); border:1px solid rgba(63,185,80,0.3); border-radius:8px; padding:12px; margin-top:8px;">
+          <div style="font-size:12px; font-weight:600; color:var(--success); margin-bottom:4px;">↑ Foundry — Run layer</div>
+          <div style="font-size:12px; color:var(--text-muted);">Orchestration · Tool calling · Observability · Governance</div>
+        </div>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin:16px 0 8px;">CTO mental model</div>
+        <ul class="bullet" style="font-size:13px;">
+          <li><span class="b">▸</span> Copilot accelerates engineers</li>
+          <li><span class="b">▸</span> Foundry creates products</li>
+        </ul>
+      </div>
+
+      <!-- Foundry -->
+      <div class="card card-green">
+        <span class="card-icon">🏭</span>
+        <h3 style="color:var(--success);">Azure AI Foundry</h3>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:12px;"><strong style="color:var(--success);">End user:</strong> Business User / Customer</p>
+        <p style="font-size:13px; margin-bottom:12px;">If your agent delivers <strong>business value</strong> → use Foundry</p>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin-bottom:8px;">Use when building</div>
+        <ul class="clean" style="font-size:13px;">
+          <li>Customer-facing AI apps</li>
+          <li>Enterprise copilots (HR, ops, finance)</li>
+          <li>Multi-agent systems</li>
+          <li>RAG over enterprise data</li>
+          <li>Cross-system workflow automation</li>
+        </ul>
+        <div style="font-size:11px; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); font-weight:700; margin:12px 0 8px;">Why it wins</div>
+        <ul class="bullet" style="font-size:13px;">
+          <li><span class="b">▸</span> Full orchestration + multi-agent</li>
+          <li><span class="b">▸</span> Data connectors, grounding, memory</li>
+          <li><span class="b">▸</span> Governance, compliance, VNet isolation</li>
+          <li><span class="b">▸</span> Bring your own model, scale globally</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="note-bar" style="margin-top:20px;">💡 They sit at different layers of the stack. Copilot is your development accelerator; Foundry is your production AI platform. Most real-world projects use both.</div>
+  </div>
+  <div class="slide-notes">Key question: "Who is the end user of the agent?" If it's a developer → Copilot. If it's a business user or customer → Foundry. Most enterprise projects use both: Copilot to build, Foundry to run. They are complementary, not competing.</div>
+</section>
+
 <!-- ─────────────────────────── SECTION: Skills & Instructions ─────────────────────────── -->
 <section class="slide section-slide" data-section="skills" data-title="Skills & Instructions">
   <div class="glow-ring" style="top:30%; left:50%;"></div>
