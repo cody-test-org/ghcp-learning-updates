@@ -15,7 +15,6 @@ on:
         type: string
 
 permissions:
-  id-token: write
   contents: read
   issues: read
   actions: read
@@ -33,8 +32,7 @@ mcp-servers:
     env:
       AZURE_TENANT_ID: "${{ secrets.AZURE_TENANT_ID }}"
       AZURE_CLIENT_ID: "${{ secrets.AZURE_CLIENT_ID }}"
-      AZURE_SUBSCRIPTION_ID: "${{ secrets.AZURE_SUBSCRIPTION_ID }}"
-      AZURE_USE_OIDC: "true"
+      AZURE_CLIENT_SECRET: "${{ secrets.AZURE_CLIENT_SECRET }}"
     allowed: ["*"]
 
 safe-outputs:
@@ -91,9 +89,11 @@ If a `site_url` input is provided via workflow_dispatch, use that URL instead: "
 
 ## Step 1: Health Check
 
+**CRITICAL: You MUST perform these checks. Network access to the production URL IS allowed through the firewall. Do NOT skip or assume network is blocked. Use the web-fetch tool directly.**
+
 Perform these checks against the production URL:
 
-1. **HTTP availability** — Fetch the site URL. Expect HTTP 200 status.
+1. **HTTP availability** — Use `web-fetch` to fetch the site URL. Expect HTTP 200 status. If web-fetch fails with a network error, retry once after 5 seconds using bash `curl -s -o /dev/null -w '%{http_code}' <URL>`.
 2. **Content verification** — Verify the response contains expected content (e.g., "GitHub Copilot" in the HTML body).
 3. **Agenda endpoint** — Fetch `/agenda.json` and verify it returns valid JSON with a `days` array.
 4. **Response time** — Note if the response takes longer than 5 seconds (cold start is expected on first request after scale-to-zero, but subsequent requests should be fast).
@@ -117,10 +117,11 @@ Document all findings with specific details — error messages, timestamps, stat
 
 Based on the investigation, attempt these repairs in order:
 
-1. **If revision is unhealthy or stopped** — Attempt to restart the active revision using Azure MCP or CLI
-2. **If container is crash-looping** — Note the error but do NOT attempt image rebuild (flag for human review)
-3. **If environment is unhealthy** — Flag for human review (do not attempt environment-level changes)
-4. **If ACR image is missing** — Flag for human review
+1. **If container app is deactivated or has 0 active revisions** — Use the Azure MCP `container_apps` tool to create a new revision or reactivate the app. Alternatively, use bash: `curl` the Azure Resource Manager REST API with the OIDC bearer token to restart the container app.
+2. **If revision is unhealthy or stopped** — Attempt to restart by deploying a new revision via Azure MCP or the Container Apps management API
+3. **If container is crash-looping** — Note the error but do NOT attempt image rebuild (flag for human review)
+4. **If environment is unhealthy** — Flag for human review (do not attempt environment-level changes)
+5. **If ACR image is missing** — Flag for human review
 
 After any repair attempt, wait 30 seconds and re-run the health check to verify the fix worked.
 
