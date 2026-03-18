@@ -53,6 +53,9 @@ network:
     - "graph.microsoft.com"
     - "eastus2.management.azure.com"
     - "management.core.windows.net"
+    - "centralus-2.in.applicationinsights.azure.com"
+    - "westus-0.in.applicationinsights.azure.com"
+    - "169.254.169.254"
 
 engine:
   id: copilot
