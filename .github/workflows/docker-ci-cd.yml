@@ -1,0 +1,144 @@
+# CI/CD pipeline for the hackathon slide deck container.
+# - PR path: build → smoke test → push to ACR → deploy to dev Container App
+# - Main push path: push to ACR → deploy to production Container App
+name: Docker CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "Dockerfile"
+      - "nginx.conf"
+      - "docker-compose.yml"
+  push:
+    branches: [main]
+    paths:
+      - "site/**"
+      - "Dockerfile"
+      - "nginx.conf"
+      - "docker-compose.yml"
+
+permissions:
+  id-token: write
+  contents: read
+
+# ──────────────────────────────────────────────
+# PR path – validate the image, then deploy to dev
+# ──────────────────────────────────────────────
+jobs:
+  build-and-test:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t ghcp-learning:test .
+
+      - name: Run container for smoke test
+        run: |
+          docker run -d --name smoke-test -p 8080:80 ghcp-learning:test
+          # Give nginx a moment to start
+          sleep 5
+
+      - name: Smoke test – verify the site loads
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:8080)
+          echo "HTTP status: $STATUS"
+          if [ "$STATUS" -ne 200 ]; then
+            echo "::error::Smoke test failed with status $STATUS"
+            docker logs smoke-test
+            exit 1
+          fi
+
+      - name: Cleanup container
+        if: always()
+        run: docker rm -f smoke-test || true
+
+  push-and-deploy-dev:
+    if: github.event_name == 'pull_request'
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Authenticate to Azure via OIDC (dev service principal)
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push image to ACR
+        run: |
+          SHORT_SHA="${{ github.sha }}"
+          SHORT_SHA="${SHORT_SHA:0:7}"
+          IMAGE_TAG="pr-${{ github.event.pull_request.number }}-${SHORT_SHA}"
+          IMAGE="${{ vars.ACR_LOGIN_SERVER }}/hackathon:${IMAGE_TAG}"
+
+          az acr build \
+            --registry ${{ vars.ACR_NAME }} \
+            --image "hackathon:${IMAGE_TAG}" \
+            --file Dockerfile .
+
+          echo "IMAGE=${IMAGE}" >> "$GITHUB_ENV"
+
+      - name: Deploy to dev Container App
+        run: |
+          az containerapp update \
+            --name ${{ vars.CONTAINER_APP_NAME }} \
+            --resource-group ${{ vars.RESOURCE_GROUP }} \
+            --image "$IMAGE"
+
+  # ──────────────────────────────────────────────
+  # Main push path – push to ACR, then deploy to production
+  # ──────────────────────────────────────────────
+  build-and-push:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: dev # uses the dev SP for ACR push access
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Authenticate to Azure via OIDC (dev service principal)
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push image to ACR (SHA + latest)
+        run: |
+          az acr build \
+            --registry ${{ vars.ACR_NAME }} \
+            --image "hackathon:${{ github.sha }}" \
+            --image "hackathon:latest" \
+            --file Dockerfile .
+
+  deploy-prod:
+    if: github.event_name == 'push'
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      # Authenticate to Azure via OIDC (production service principal)
+      - name: Azure Login (OIDC)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to production Container App
+        run: |
+          az containerapp update \
+            --name ${{ vars.CONTAINER_APP_NAME }} \
+            --resource-group ${{ vars.RESOURCE_GROUP }} \
+            --image "${{ vars.ACR_LOGIN_SERVER }}/hackathon:${{ github.sha }}"

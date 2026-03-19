@@ -12,6 +12,9 @@ param location string = resourceGroup().location
 @description('Container image tag')
 param imageTag string = 'latest'
 
+@description('Deployment environments sharing ACR and Log Analytics')
+param environments array = ['dev', 'prod']
+
 @description('Tags to apply to all resources')
 param tags object = {
   CostControl: 'Ignore'
@@ -47,19 +50,19 @@ module logAnalytics 'modules/log-analytics.bicep' = {
   }
 }
 
-module containerApp 'modules/container-app.bicep' = {
-  name: 'container-app-deployment'
+module containerApps 'modules/container-app.bicep' = [for env in environments: {
+  name: 'container-app-${env}-deployment'
   params: {
-    name: '${baseName}-app'
+    name: '${baseName}-${env}-app'
+    environmentName: env
     location: location
     tags: tags
     containerRegistryName: acr.outputs.name
     containerRegistryLoginServer: acr.outputs.loginServer
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
     imageName: '${acr.outputs.loginServer}/hackathon:${imageTag}'
-    createAcrPullRole: false
   }
-}
+}]
 
 module appInsights 'modules/app-insights.bicep' = {
   name: 'app-insights-deployment'
@@ -68,14 +71,19 @@ module appInsights 'modules/app-insights.bicep' = {
     location: location
     tags: tags
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
-    availabilityTestUrl: 'https://${containerApp.outputs.fqdn}'
+    availabilityTestUrl: 'https://${containerApps[length(environments) - 1].outputs.fqdn}'
     githubRepo: githubRepo
     githubWorkflowFile: githubWorkflowFile
     githubDispatchToken: githubDispatchToken
   }
 }
 
-output appUrl string = containerApp.outputs.fqdn
+output appUrls array = [for (env, i) in environments: {
+  environment: env
+  fqdn: containerApps[i].outputs.fqdn
+}]
+// Backward-compatible single URL pointing to the last (prod) environment
+output appUrl string = containerApps[length(environments) - 1].outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
 output appInsightsInstrumentationKey string = appInsights.outputs.instrumentationKey
@@ -83,4 +91,4 @@ output appInsightsInstrumentationKey string = appInsights.outputs.instrumentatio
 // azd-required outputs
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer
 output AZURE_CONTAINER_REGISTRY_NAME string = acr.outputs.name
-output SERVICE_WEB_ENDPOINT_URL string = 'https://${containerApp.outputs.fqdn}'
+output SERVICE_WEB_ENDPOINT_URL string = 'https://${containerApps[length(environments) - 1].outputs.fqdn}'

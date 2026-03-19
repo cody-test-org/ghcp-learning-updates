@@ -1,6 +1,9 @@
 @description('Container App name')
 param name string
 
+@description('Environment name (e.g., dev, prod) used for tagging')
+param environmentName string = 'prod'
+
 @description('Location')
 param location string
 
@@ -47,7 +50,7 @@ resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' existing = {
 resource containerApp 'Microsoft.App/containerApps@2024-03-01' = {
   name: name
   location: location
-  tags: union(tags, { 'azd-service-name': 'web' })
+  tags: union(tags, { 'azd-service-name': 'web-${environmentName}', environment: environmentName })
   identity: {
     type: 'SystemAssigned'
   }
