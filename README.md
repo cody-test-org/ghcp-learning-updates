@@ -9,6 +9,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-3fb950.svg)](LICENSE)
 [![Slides](https://img.shields.io/badge/Slides-33-f0883e?logo=slides&logoColor=white)](#-presentation-topics)
 
+### 🌐 [**View the Live Presentation →**](https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)
+
 </div>
 
 ---
@@ -159,6 +161,8 @@ docker compose up
 
 The site deploys to **Azure Container Apps** (Consumption tier) with **Azure Container Registry** (Basic SKU) for ~$5-7/month.
 
+> 🌐 **Currently deployed at:** [https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io](https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)
+
 ### Architecture
 
 | Resource | SKU | ~Cost/mo |
@@ -166,42 +170,41 @@ The site deploys to **Azure Container Apps** (Consumption tier) with **Azure Con
 | Azure Container Registry | Basic | $5 |
 | Azure Container Apps | Consumption | $0-2 |
 | Log Analytics Workspace | Free tier | $0 |
+| Application Insights | Free tier | $0 |
 | **Total** | | **~$5-7** |
 
-### Deploy
+### Deploy with Azure Developer CLI (`azd up`)
+
+The recommended way to deploy — handles infra provisioning, Docker build, image push, and container app update in one command:
 
 ```bash
-# Prerequisites: Azure CLI, Docker, and an Azure subscription
+# Prerequisites: Azure CLI, azd CLI, Docker
 
-# One-command deploy
+# Initialize the azd environment (first time only)
+azd init -e ghcp-hackathon
+
+# Deploy everything (infra + app)
+azd up
+```
+
+Subsequent deploys (code changes only):
+```bash
+azd deploy
+```
+
+Infrastructure changes only:
+```bash
+azd provision
+```
+
+### Alternative: Manual Deploy Script
+
+```bash
+# One-command deploy (uses az CLI directly)
 ./deploy.sh
 
 # Or specify custom values
 ./deploy.sh <resource-group> <location> <acr-name> <image-tag>
-```
-
-### Manual Deploy Steps
-
-```bash
-# 1. Create resource group
-az group create --name ghcp-hackathon-rg --location eastus2
-
-# 2. Deploy infrastructure
-az deployment group create \
-  --resource-group ghcp-hackathon-rg \
-  --template-file infra/main.bicep \
-  --parameters baseName=ghcp-hackathon
-
-# 3. Build and push image
-az acr login --name ghcphackathonacr
-docker build -t ghcphackathonacr.azurecr.io/hackathon:latest .
-docker push ghcphackathonacr.azurecr.io/hackathon:latest
-
-# 4. Update container app
-az containerapp update \
-  --name ghcp-hackathon-app \
-  --resource-group ghcp-hackathon-rg \
-  --image ghcphackathonacr.azurecr.io/hackathon:latest
 ```
 
 ---
@@ -215,26 +218,27 @@ The site includes automated health monitoring powered by a GitHub Agentic Workfl
 ### Quick Overview
 
 ```
-Site issue detected (every 15 min)
-  → ops-monitor agent investigates via Azure MCP
-    → Auto-repairs if possible (revision restart)
-      → Creates GitHub issue with full incident report
+Site health check (every 15 min, standard curl)
+  → Site healthy? → silent pass (7 sec)
+  → Site down? → dispatch agentic repair workflow
+    → ops-monitor agent investigates via Azure MCP
+      → Auto-repairs if possible (revision restart)
+        → Creates GitHub issue with full incident report
 ```
 
 | Layer | Component | Details |
 |-------|-----------|---------|
-| **Detect** | App Insights + Availability Tests | Pings every 5 min from 3 US locations |
+| **Detect** | Health Check workflow + App Insights | `curl` every 15 min + availability tests from 3 US locations |
 | **Investigate** | ops-monitor agent + Azure MCP | Headless Copilot CLI queries container status & logs |
 | **Repair** | Automated revision restart | Self-healing for common failures |
 | **Report** | GitHub Issues | `[incident]` issues with diagnosis & recommendations |
 
 ```bash
 # Manual health check
-gh aw run site-health-monitor
+gh workflow run "Site Health Check"
 
-# Ad-hoc debugging via Copilot CLI
-copilot
-> "Check the health of ghcp-hackathon-app and show me recent logs"
+# Direct repair agent trigger (for testing)
+gh workflow run "Site Health Monitor & Auto-Repair Agent"
 ```
 
 ---
@@ -262,7 +266,8 @@ ghcp-learning-updates/
 │   │   └── ops-monitor.agent.md            # SRE/operations agent
 │   ├── workflows/
 │   │   ├── docs-research-updater.md        # Weekly docs research workflow
-│   │   └── site-health-monitor.md          # Site health monitor (every 15 min)
+│   │   ├── site-health-check.yml           # Deterministic health check (every 15 min)
+│   │   └── site-health-monitor.md          # Agentic repair agent (dispatched on failure)
 │   ├── copilot-instructions.md             # Repo-wide Copilot instructions
 │   ├── instructions/                       # Path-specific instructions
 │   ├── prompts/                            # Reusable prompt templates
@@ -270,7 +275,8 @@ ghcp-learning-updates/
 ├── Dockerfile                              # nginx:alpine container
 ├── nginx.conf                              # Custom nginx configuration
 ├── docker-compose.yml                      # Local dev with live reload
-├── deploy.sh                               # One-command Azure deploy
+├── azure.yaml                              # Azure Developer CLI (azd) project config
+├── deploy.sh                               # Alternative manual deploy script
 ├── AGENTS.md                               # Copilot agent instructions
 └── README.md                               # This file
 ```
@@ -286,8 +292,9 @@ ghcp-learning-updates/
 | **[GitHub CLI (`gh`)](https://cli.github.com/)** | Running agentic workflows |
 | **[`gh-aw` extension](https://github.com/github/gh-aw)** | Compiling & running agentic workflows |
 | **GitHub Copilot CLI** | Using the `agentic-workflows-builder` agent in terminal |
-| [Docker](https://www.docker.com/) | Container builds | Docker, Azure deploy |
-| [Azure CLI](https://learn.microsoft.com/cli/azure/) | Azure resource management | Azure deploy |
+| [Azure Developer CLI (`azd`)](https://learn.microsoft.com/azure/developer/azure-developer-cli/) | `azd up` deployment |
+| [Docker](https://www.docker.com/) | Container builds |
+| [Azure CLI](https://learn.microsoft.com/cli/azure/) | Azure resource management |
 
 ---
 

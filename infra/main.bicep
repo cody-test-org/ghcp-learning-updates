@@ -1,7 +1,10 @@
 targetScope = 'resourceGroup'
 
-@description('Base name for all resources')
-param baseName string = 'ghcp-hackathon'
+@description('Name of the azd environment (used as base name for resources)')
+param environmentName string = 'ghcp-hackathon'
+
+@description('Base name for all resources (alias for environmentName)')
+param baseName string = environmentName
 
 @description('Location for all resources')
 param location string = resourceGroup().location
@@ -13,6 +16,7 @@ param imageTag string = 'latest'
 param tags object = {
   CostControl: 'Ignore'
   SecurityControl: 'Ignore'
+  'azd-env-name': environmentName
 }
 
 @description('GitHub repo for alert-triggered workflow dispatch (owner/repo)')
@@ -75,3 +79,8 @@ output appUrl string = containerApp.outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
 output appInsightsInstrumentationKey string = appInsights.outputs.instrumentationKey
+
+// azd-required outputs
+output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer
+output AZURE_CONTAINER_REGISTRY_NAME string = acr.outputs.name
+output SERVICE_WEB_ENDPOINT_URL string = 'https://${containerApp.outputs.fqdn}'

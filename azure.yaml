@@ -1,0 +1,12 @@
+name: ghcp-hackathon
+metadata:
+  template: ghcp-hackathon@0.0.1
+services:
+  web:
+    host: containerapp
+    project: .
+    docker:
+      path: Dockerfile
+infra:
+  provider: bicep
+  path: infra

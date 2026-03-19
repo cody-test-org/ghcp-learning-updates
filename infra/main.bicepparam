@@ -1,4 +1,4 @@
 using 'main.bicep'
 
-param baseName = 'ghcp-hackathon'
+param environmentName = 'ghcp-hackathon'
 param imageTag = 'latest'

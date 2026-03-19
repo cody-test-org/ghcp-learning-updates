@@ -23,3 +23,4 @@ node_modules/
 
 # Azure
 .azure/
+infra/*.json
