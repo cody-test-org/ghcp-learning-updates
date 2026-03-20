@@ -134,6 +134,43 @@ flowchart TD
 
 ---
 
+## Multi-Environment Monitoring
+
+The monitoring stack covers both **dev** and **prod** Container App environments:
+
+### Environment Endpoints
+
+| Environment | Container App | URL | App Insights |
+|---|---|---|---|
+| Dev | `ghcp-hackathon-dev-app` | [ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io](https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io) | `ghcp-hackathon-dev-insights` |
+| Prod | `ghcp-hackathon-prod-app` | [ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io](https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io) | `ghcp-hackathon-prod-insights` |
+
+### How It Works
+
+1. **Scheduled health checks** (`site-health-check.yml`) run every 15 minutes using a matrix strategy, checking both dev and prod independently
+2. **Azure App Insights** availability tests run from multiple US locations for each environment
+3. When a health check fails, it dispatches the **agentic repair workflow** (`site-health-monitor.md`) with the affected environment name
+4. The **ops-monitor agent** investigates the specific Container App, attempts auto-repair, and creates a GitHub issue tagged with the environment
+
+### Alert Routing
+
+```
+Health Check (matrix: dev, prod)
+  → dev fails? → dispatch repair with environment=dev → ops-monitor investigates ghcp-hackathon-dev-app
+  → prod fails? → dispatch repair with environment=prod → ops-monitor investigates ghcp-hackathon-prod-app
+```
+
+### Adding a New Environment
+
+1. Add the environment name to `infra/main.bicepparam` `environments` array
+2. Run `infra/bootstrap.sh` or `az deployment group create` to provision the new Container App + App Insights
+3. Add the FQDN to `site-health-monitor.md` network allowlist and Site Details table
+4. Recompile: `gh aw compile .github/workflows/site-health-monitor.md`
+5. Add `SITE_URL` variable to the new GitHub Environment
+6. The health check matrix in `site-health-check.yml` will need a new entry
+
+---
+
 ## Components in Detail
 
 ### 1. Application Insights + Availability Tests
@@ -317,7 +354,8 @@ When you need to investigate interactively:
 copilot
 
 # Ask the agent to investigate
-> "Check the health of ghcp-hackathon-app in rg-ghcp-hackathon"
+> "Check the health of ghcp-hackathon-dev-app in rg-ghcp-hackathon"
+> "Check the health of ghcp-hackathon-prod-app in rg-ghcp-hackathon"
 > "Show me container logs from the last hour"
 > "What's the revision status? Is anything crash-looping?"
 > "Restart the active revision"

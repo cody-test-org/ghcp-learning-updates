@@ -64,19 +64,19 @@ module containerApps 'modules/container-app.bicep' = [for env in environments: {
   }
 }]
 
-module appInsights 'modules/app-insights.bicep' = {
-  name: 'app-insights-deployment'
+module appInsights 'modules/app-insights.bicep' = [for (env, i) in environments: {
+  name: 'app-insights-${env}-deployment'
   params: {
-    name: '${baseName}-insights'
+    name: '${baseName}-${env}-insights'
     location: location
     tags: tags
     logAnalyticsWorkspaceId: logAnalytics.outputs.workspaceId
-    availabilityTestUrl: 'https://${containerApps[length(environments) - 1].outputs.fqdn}'
+    availabilityTestUrl: 'https://${containerApps[i].outputs.fqdn}'
     githubRepo: githubRepo
     githubWorkflowFile: githubWorkflowFile
     githubDispatchToken: githubDispatchToken
   }
-}
+}]
 
 output appUrls array = [for (env, i) in environments: {
   environment: env
@@ -86,7 +86,10 @@ output appUrls array = [for (env, i) in environments: {
 output appUrl string = containerApps[length(environments) - 1].outputs.fqdn
 output acrLoginServer string = acr.outputs.loginServer
 output acrName string = acr.outputs.name
-output appInsightsInstrumentationKey string = appInsights.outputs.instrumentationKey
+output appInsightsInstrumentationKeys array = [for (env, i) in environments: {
+  environment: env
+  instrumentationKey: appInsights[i].outputs.instrumentationKey
+}]
 
 // azd-required outputs
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = acr.outputs.loginServer

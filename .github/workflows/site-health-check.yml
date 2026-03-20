@@ -4,6 +4,15 @@ on:
   schedule:
     - cron: "*/15 * * * *"
   workflow_dispatch:
+    inputs:
+      environment:
+        description: "Which environment to check"
+        type: choice
+        options:
+          - both
+          - dev
+          - prod
+        default: both
 
 permissions:
   actions: write
@@ -11,15 +20,31 @@ permissions:
 
 jobs:
   health-check:
+    name: health-check (${{ matrix.name }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: dev
+            environment: dev
+            url: https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io
+            container_app: ghcp-hackathon-dev-app
+          - name: prod
+            environment: production
+            url: https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io
+            container_app: ghcp-hackathon-prod-app
+        exclude:
+          - name: ${{ github.event.inputs.environment == 'prod' && 'dev' || 'NONE' }}
+          - name: ${{ github.event.inputs.environment == 'dev' && 'prod' || 'NONE' }}
     steps:
       - name: Check site availability
         id: check
         run: |
-          SITE_URL="https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io"
+          SITE_URL="${{ matrix.url }}"
           AGENDA_URL="${SITE_URL}/agenda.json"
 
-          echo "🔍 Checking site: $SITE_URL"
+          echo "🔍 Checking ${{ matrix.name }} site: $SITE_URL"
 
           # Check main page
           HTTP_STATUS=$(curl -s -o /tmp/response.html -w '%{http_code}' --max-time 30 "$SITE_URL" 2>/dev/null || echo "000")
@@ -45,10 +70,10 @@ jobs:
           # Determine overall health
           if [ "$HTTP_STATUS" = "200" ] && grep -q "GitHub Copilot" /tmp/response.html 2>/dev/null && [ "$AGENDA_STATUS" = "200" ]; then
             echo "healthy=true" >> "$GITHUB_OUTPUT"
-            echo "✅ Site is healthy (HTTP $HTTP_STATUS, ${RESPONSE_TIME}s)"
+            echo "✅ ${{ matrix.name }} site is healthy (HTTP $HTTP_STATUS, ${RESPONSE_TIME}s)"
           else
             echo "healthy=false" >> "$GITHUB_OUTPUT"
-            echo "❌ Site is DOWN or degraded (HTTP $HTTP_STATUS)"
+            echo "❌ ${{ matrix.name }} site is DOWN or degraded (HTTP $HTTP_STATUS)"
           fi
 
       - name: Dispatch agentic repair workflow
@@ -56,17 +81,22 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          echo "🚨 Site is unhealthy — dispatching auto-repair agent"
+          echo "🚨 ${{ matrix.name }} site is unhealthy — dispatching auto-repair agent"
           gh workflow run "site-health-monitor.lock.yml" \
             --repo "${{ github.repository }}" \
             -f site_status="${{ steps.check.outputs.site_status }}" \
             -f response_time="${{ steps.check.outputs.response_time }}" \
             -f content_ok="${{ steps.check.outputs.content_ok }}" \
-            -f agenda_ok="${{ steps.check.outputs.agenda_ok }}"
+            -f agenda_ok="${{ steps.check.outputs.agenda_ok }}" \
+            -f environment="${{ matrix.name }}"
 
       - name: Summary
         run: |
-          echo "### Site Health Check Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "### Site Health Check Results — ${{ matrix.name }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Environment:** ${{ matrix.name }} (${{ matrix.environment }})" >> "$GITHUB_STEP_SUMMARY"
+          echo "**URL:** ${{ matrix.url }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "**Container App:** ${{ matrix.container_app }}" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
           if [ "${{ steps.check.outputs.healthy }}" = "true" ]; then
             echo "✅ **All checks passed**" >> "$GITHUB_STEP_SUMMARY"
