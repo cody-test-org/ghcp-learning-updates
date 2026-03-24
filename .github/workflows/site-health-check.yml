@@ -34,11 +34,20 @@ jobs:
             environment: production
             url: https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io
             container_app: ghcp-hackathon-prod-app
-        exclude:
-          - name: ${{ github.event.inputs.environment == 'prod' && 'dev' || 'NONE' }}
-          - name: ${{ github.event.inputs.environment == 'dev' && 'prod' || 'NONE' }}
     steps:
+      - name: Check if this environment should run
+        id: gate
+        run: |
+          INPUT_ENV="${{ github.event.inputs.environment || 'both' }}"
+          if [ "$INPUT_ENV" = "both" ] || [ "$INPUT_ENV" = "${{ matrix.name }}" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "⏭️ Skipping ${{ matrix.name }} (only running $INPUT_ENV)"
+          fi
+
       - name: Check site availability
+        if: steps.gate.outputs.skip == 'false'
         id: check
         run: |
           SITE_URL="${{ matrix.url }}"
@@ -77,7 +86,7 @@ jobs:
           fi
 
       - name: Dispatch agentic repair workflow
-        if: steps.check.outputs.healthy == 'false'
+        if: steps.gate.outputs.skip == 'false' && steps.check.outputs.healthy == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -91,6 +100,7 @@ jobs:
             -f environment="${{ matrix.name }}"
 
       - name: Summary
+        if: steps.gate.outputs.skip == 'false'
         run: |
           echo "### Site Health Check Results — ${{ matrix.name }}" >> "$GITHUB_STEP_SUMMARY"
           echo "" >> "$GITHUB_STEP_SUMMARY"
