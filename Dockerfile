@@ -1,5 +1,8 @@
 FROM nginx:alpine
 
+LABEL maintainer="cody-test-org" \
+      description="GHCP Learning & Reference Hub slide deck"
+
 # Copy static site files
 COPY site/hackathon.html /usr/share/nginx/html/index.html
 COPY site/hackathon.html /usr/share/nginx/html/hackathon.html

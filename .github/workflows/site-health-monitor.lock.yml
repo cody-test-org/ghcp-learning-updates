@@ -23,7 +23,7 @@
 #
 # Investigates and auto-repairs the GitHub Copilot Hackathon site when health checks fail. Triggered by the site-health-check workflow when the site is detected as down. Uses Azure MCP to diagnose infrastructure issues and attempt self-healing.
 #
-# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"2b1f9568df1e90aba9847cd598aef6778a2ebf72b3c78bbd8756ceda0967a3df","compiler_version":"v0.47.0"}
+# gh-aw-metadata: {"schema_version":"v1","frontmatter_hash":"628e59c713f5d767ceaba52160b14731b2a9bf864052d38a68666e63cf7139c2","compiler_version":"v0.47.0"}
 
 name: "Site Health Monitor & Auto-Repair Agent"
 "on":
@@ -35,6 +35,11 @@ name: "Site Health Monitor & Auto-Repair Agent"
         type: string
       content_ok:
         description: Whether the HTML content contained expected text (true/false)
+        required: false
+        type: string
+      environment:
+        default: prod
+        description: Which environment is affected (dev or prod)
         required: false
         type: string
       response_time:
@@ -101,6 +106,7 @@ jobs:
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
           GH_AW_GITHUB_EVENT_INPUTS_AGENDA_OK: ${{ github.event.inputs.agenda_ok }}
           GH_AW_GITHUB_EVENT_INPUTS_CONTENT_OK: ${{ github.event.inputs.content_ok }}
+          GH_AW_GITHUB_EVENT_INPUTS_ENVIRONMENT: ${{ github.event.inputs.environment }}
           GH_AW_GITHUB_EVENT_INPUTS_RESPONSE_TIME: ${{ github.event.inputs.response_time }}
           GH_AW_GITHUB_EVENT_INPUTS_SITE_STATUS: ${{ github.event.inputs.site_status }}
           GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -186,6 +192,7 @@ jobs:
           GH_AW_PROMPT: /tmp/gh-aw/aw-prompts/prompt.txt
           GH_AW_GITHUB_EVENT_INPUTS_AGENDA_OK: ${{ github.event.inputs.agenda_ok }}
           GH_AW_GITHUB_EVENT_INPUTS_CONTENT_OK: ${{ github.event.inputs.content_ok }}
+          GH_AW_GITHUB_EVENT_INPUTS_ENVIRONMENT: ${{ github.event.inputs.environment }}
           GH_AW_GITHUB_EVENT_INPUTS_RESPONSE_TIME: ${{ github.event.inputs.response_time }}
           GH_AW_GITHUB_EVENT_INPUTS_SITE_STATUS: ${{ github.event.inputs.site_status }}
         with:
@@ -203,6 +210,7 @@ jobs:
           GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: ${{ github.event.discussion.number }}
           GH_AW_GITHUB_EVENT_INPUTS_AGENDA_OK: ${{ github.event.inputs.agenda_ok }}
           GH_AW_GITHUB_EVENT_INPUTS_CONTENT_OK: ${{ github.event.inputs.content_ok }}
+          GH_AW_GITHUB_EVENT_INPUTS_ENVIRONMENT: ${{ github.event.inputs.environment }}
           GH_AW_GITHUB_EVENT_INPUTS_RESPONSE_TIME: ${{ github.event.inputs.response_time }}
           GH_AW_GITHUB_EVENT_INPUTS_SITE_STATUS: ${{ github.event.inputs.site_status }}
           GH_AW_GITHUB_EVENT_ISSUE_NUMBER: ${{ github.event.issue.number }}
@@ -228,6 +236,7 @@ jobs:
                 GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER: process.env.GH_AW_GITHUB_EVENT_DISCUSSION_NUMBER,
                 GH_AW_GITHUB_EVENT_INPUTS_AGENDA_OK: process.env.GH_AW_GITHUB_EVENT_INPUTS_AGENDA_OK,
                 GH_AW_GITHUB_EVENT_INPUTS_CONTENT_OK: process.env.GH_AW_GITHUB_EVENT_INPUTS_CONTENT_OK,
+                GH_AW_GITHUB_EVENT_INPUTS_ENVIRONMENT: process.env.GH_AW_GITHUB_EVENT_INPUTS_ENVIRONMENT,
                 GH_AW_GITHUB_EVENT_INPUTS_RESPONSE_TIME: process.env.GH_AW_GITHUB_EVENT_INPUTS_RESPONSE_TIME,
                 GH_AW_GITHUB_EVENT_INPUTS_SITE_STATUS: process.env.GH_AW_GITHUB_EVENT_INPUTS_SITE_STATUS,
                 GH_AW_GITHUB_EVENT_ISSUE_NUMBER: process.env.GH_AW_GITHUB_EVENT_ISSUE_NUMBER,
@@ -343,7 +352,7 @@ jobs:
               actor: context.actor,
               event_name: context.eventName,
               staged: false,
-              allowed_domains: ["defaults","node","ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io","eastus2.azurecontainerapps.io","management.azure.com","login.microsoftonline.com","graph.microsoft.com","eastus2.management.azure.com","management.core.windows.net","containers","centralus-2.in.applicationinsights.azure.com","westus-0.in.applicationinsights.azure.com","169.254.169.254"],
+              allowed_domains: ["defaults","node","ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io","ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io","eastus2.azurecontainerapps.io","management.azure.com","login.microsoftonline.com","graph.microsoft.com","eastus2.management.azure.com","management.core.windows.net","containers","centralus-2.in.applicationinsights.azure.com","westus-0.in.applicationinsights.azure.com","169.254.169.254"],
               firewall_enabled: true,
               awf_version: "v0.20.1",
               awmg_version: "v0.1.4",
@@ -754,7 +763,7 @@ jobs:
         timeout-minutes: 10
         run: |
           set -o pipefail
-          sudo -E awf --env-all --container-workdir "${GITHUB_WORKSPACE}" --allow-domains '*.docker.com,*.docker.io,*.jsr.io,169.254.169.254,api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,api.npms.io,api.snapcraft.io,archive.ubuntu.com,auth.docker.io,azure.archive.ubuntu.com,bun.sh,centralus-2.in.applicationinsights.azure.com,crl.geotrust.com,crl.globalsign.com,crl.identrust.com,crl.sectigo.com,crl.thawte.com,crl.usertrust.com,crl.verisign.com,crl3.digicert.com,crl4.digicert.com,crls.ssl.com,deb.nodesource.com,deno.land,dl.k8s.io,eastus2.azurecontainerapps.io,eastus2.management.azure.com,gcr.io,get.pnpm.io,ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io,ghcr.io,github.com,graph.microsoft.com,host.docker.internal,json-schema.org,json.schemastore.org,jsr.io,keyserver.ubuntu.com,login.microsoftonline.com,management.azure.com,management.core.windows.net,mcr.microsoft.com,nodejs.org,npm.pkg.github.com,npmjs.com,npmjs.org,ocsp.digicert.com,ocsp.geotrust.com,ocsp.globalsign.com,ocsp.identrust.com,ocsp.sectigo.com,ocsp.ssl.com,ocsp.thawte.com,ocsp.usertrust.com,ocsp.verisign.com,packagecloud.io,packages.cloud.google.com,packages.microsoft.com,pkgs.k8s.io,ppa.launchpad.net,production.cloudflare.docker.com,quay.io,raw.githubusercontent.com,registry.bower.io,registry.hub.docker.com,registry.npmjs.com,registry.npmjs.org,registry.yarnpkg.com,repo.yarnpkg.com,s.symcb.com,s.symcd.com,security.ubuntu.com,skimdb.npmjs.com,telemetry.enterprise.githubcopilot.com,ts-crl.ws.symantec.com,ts-ocsp.ws.symantec.com,westus-0.in.applicationinsights.azure.com,www.npmjs.com,www.npmjs.org,yarnpkg.com' --log-level info --proxy-logs-dir /tmp/gh-aw/sandbox/firewall/logs --enable-host-access --image-tag 0.20.1 --skip-pull --enable-api-proxy \
+          sudo -E awf --env-all --container-workdir "${GITHUB_WORKSPACE}" --allow-domains '*.docker.com,*.docker.io,*.jsr.io,169.254.169.254,api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,api.npms.io,api.snapcraft.io,archive.ubuntu.com,auth.docker.io,azure.archive.ubuntu.com,bun.sh,centralus-2.in.applicationinsights.azure.com,crl.geotrust.com,crl.globalsign.com,crl.identrust.com,crl.sectigo.com,crl.thawte.com,crl.usertrust.com,crl.verisign.com,crl3.digicert.com,crl4.digicert.com,crls.ssl.com,deb.nodesource.com,deno.land,dl.k8s.io,eastus2.azurecontainerapps.io,eastus2.management.azure.com,gcr.io,get.pnpm.io,ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io,ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io,ghcr.io,github.com,graph.microsoft.com,host.docker.internal,json-schema.org,json.schemastore.org,jsr.io,keyserver.ubuntu.com,login.microsoftonline.com,management.azure.com,management.core.windows.net,mcr.microsoft.com,nodejs.org,npm.pkg.github.com,npmjs.com,npmjs.org,ocsp.digicert.com,ocsp.geotrust.com,ocsp.globalsign.com,ocsp.identrust.com,ocsp.sectigo.com,ocsp.ssl.com,ocsp.thawte.com,ocsp.usertrust.com,ocsp.verisign.com,packagecloud.io,packages.cloud.google.com,packages.microsoft.com,pkgs.k8s.io,ppa.launchpad.net,production.cloudflare.docker.com,quay.io,raw.githubusercontent.com,registry.bower.io,registry.hub.docker.com,registry.npmjs.com,registry.npmjs.org,registry.yarnpkg.com,repo.yarnpkg.com,s.symcb.com,s.symcd.com,security.ubuntu.com,skimdb.npmjs.com,telemetry.enterprise.githubcopilot.com,ts-crl.ws.symantec.com,ts-ocsp.ws.symantec.com,westus-0.in.applicationinsights.azure.com,www.npmjs.com,www.npmjs.org,yarnpkg.com' --log-level info --proxy-logs-dir /tmp/gh-aw/sandbox/firewall/logs --enable-host-access --image-tag 0.20.1 --skip-pull --enable-api-proxy \
             -- /bin/bash -c '/usr/local/bin/copilot --add-dir /tmp/gh-aw/ --log-level all --log-dir /tmp/gh-aw/sandbox/agent/logs/ --add-dir "${GITHUB_WORKSPACE}" --disable-builtin-mcps --agent ops-monitor --allow-tool azure --allow-tool '\''azure(*)'\'' --allow-tool github --allow-tool safeoutputs --allow-tool '\''shell(cat)'\'' --allow-tool '\''shell(curl)'\'' --allow-tool '\''shell(date)'\'' --allow-tool '\''shell(echo)'\'' --allow-tool '\''shell(grep)'\'' --allow-tool '\''shell(head)'\'' --allow-tool '\''shell(jq)'\'' --allow-tool '\''shell(ls)'\'' --allow-tool '\''shell(pwd)'\'' --allow-tool '\''shell(sort)'\'' --allow-tool '\''shell(tail)'\'' --allow-tool '\''shell(uniq)'\'' --allow-tool '\''shell(wc)'\'' --allow-tool '\''shell(yq)'\'' --allow-tool write --allow-all-paths --share /tmp/gh-aw/sandbox/agent/logs/conversation.md --prompt "$(cat /tmp/gh-aw/aw-prompts/prompt.txt)"${GH_AW_MODEL_AGENT_COPILOT:+ --model "$GH_AW_MODEL_AGENT_COPILOT"}' 2>&1 | tee -a /tmp/gh-aw/agent-stdio.log
         env:
           COPILOT_AGENT_RUNNER_TYPE: STANDALONE
@@ -836,7 +845,7 @@ jobs:
         uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
         env:
           GH_AW_SAFE_OUTPUTS: ${{ env.GH_AW_SAFE_OUTPUTS }}
-          GH_AW_ALLOWED_DOMAINS: "*.docker.com,*.docker.io,*.jsr.io,169.254.169.254,api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,api.npms.io,api.snapcraft.io,archive.ubuntu.com,auth.docker.io,azure.archive.ubuntu.com,bun.sh,centralus-2.in.applicationinsights.azure.com,crl.geotrust.com,crl.globalsign.com,crl.identrust.com,crl.sectigo.com,crl.thawte.com,crl.usertrust.com,crl.verisign.com,crl3.digicert.com,crl4.digicert.com,crls.ssl.com,deb.nodesource.com,deno.land,dl.k8s.io,eastus2.azurecontainerapps.io,eastus2.management.azure.com,gcr.io,get.pnpm.io,ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io,ghcr.io,github.com,graph.microsoft.com,host.docker.internal,json-schema.org,json.schemastore.org,jsr.io,keyserver.ubuntu.com,login.microsoftonline.com,management.azure.com,management.core.windows.net,mcr.microsoft.com,nodejs.org,npm.pkg.github.com,npmjs.com,npmjs.org,ocsp.digicert.com,ocsp.geotrust.com,ocsp.globalsign.com,ocsp.identrust.com,ocsp.sectigo.com,ocsp.ssl.com,ocsp.thawte.com,ocsp.usertrust.com,ocsp.verisign.com,packagecloud.io,packages.cloud.google.com,packages.microsoft.com,pkgs.k8s.io,ppa.launchpad.net,production.cloudflare.docker.com,quay.io,raw.githubusercontent.com,registry.bower.io,registry.hub.docker.com,registry.npmjs.com,registry.npmjs.org,registry.yarnpkg.com,repo.yarnpkg.com,s.symcb.com,s.symcd.com,security.ubuntu.com,skimdb.npmjs.com,telemetry.enterprise.githubcopilot.com,ts-crl.ws.symantec.com,ts-ocsp.ws.symantec.com,westus-0.in.applicationinsights.azure.com,www.npmjs.com,www.npmjs.org,yarnpkg.com"
+          GH_AW_ALLOWED_DOMAINS: "*.docker.com,*.docker.io,*.jsr.io,169.254.169.254,api.business.githubcopilot.com,api.enterprise.githubcopilot.com,api.github.com,api.githubcopilot.com,api.individual.githubcopilot.com,api.npms.io,api.snapcraft.io,archive.ubuntu.com,auth.docker.io,azure.archive.ubuntu.com,bun.sh,centralus-2.in.applicationinsights.azure.com,crl.geotrust.com,crl.globalsign.com,crl.identrust.com,crl.sectigo.com,crl.thawte.com,crl.usertrust.com,crl.verisign.com,crl3.digicert.com,crl4.digicert.com,crls.ssl.com,deb.nodesource.com,deno.land,dl.k8s.io,eastus2.azurecontainerapps.io,eastus2.management.azure.com,gcr.io,get.pnpm.io,ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io,ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io,ghcr.io,github.com,graph.microsoft.com,host.docker.internal,json-schema.org,json.schemastore.org,jsr.io,keyserver.ubuntu.com,login.microsoftonline.com,management.azure.com,management.core.windows.net,mcr.microsoft.com,nodejs.org,npm.pkg.github.com,npmjs.com,npmjs.org,ocsp.digicert.com,ocsp.geotrust.com,ocsp.globalsign.com,ocsp.identrust.com,ocsp.sectigo.com,ocsp.ssl.com,ocsp.thawte.com,ocsp.usertrust.com,ocsp.verisign.com,packagecloud.io,packages.cloud.google.com,packages.microsoft.com,pkgs.k8s.io,ppa.launchpad.net,production.cloudflare.docker.com,quay.io,raw.githubusercontent.com,registry.bower.io,registry.hub.docker.com,registry.npmjs.com,registry.npmjs.org,registry.yarnpkg.com,repo.yarnpkg.com,s.symcb.com,s.symcd.com,security.ubuntu.com,skimdb.npmjs.com,telemetry.enterprise.githubcopilot.com,ts-crl.ws.symantec.com,ts-ocsp.ws.symantec.com,westus-0.in.applicationinsights.azure.com,www.npmjs.com,www.npmjs.org,yarnpkg.com"
           GITHUB_SERVER_URL: ${{ github.server_url }}
           GITHUB_API_URL: ${{ github.api_url }}
         with:

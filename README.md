@@ -9,7 +9,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-3fb950.svg)](LICENSE)
 [![Slides](https://img.shields.io/badge/Slides-33-f0883e?logo=slides&logoColor=white)](#-presentation-topics)
 
-### 🌐 [**View the Live Presentation →**](https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)
+| Environment | Link |
+|-------------|------|
+| 🟢 **Production** | [**View Live Presentation →**](https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io) |
+| 🟡 **Dev (PR preview)** | [**View Dev Preview →**](https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io) |
 
 </div>
 
@@ -161,7 +164,12 @@ docker compose up
 
 The site deploys to **Azure Container Apps** (Consumption tier) with **Azure Container Registry** (Basic SKU) for ~$5-7/month.
 
-> 🌐 **Currently deployed at:** [https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io](https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io)
+> 🌐 **Deployed environments:**
+>
+> | Environment | Endpoint |
+> |-------------|----------|
+> | 🟢 Production | [ghcp-hackathon-prod-app](https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io) |
+> | 🟡 Dev | [ghcp-hackathon-dev-app](https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io) |
 
 ### Architecture
 
@@ -197,15 +205,17 @@ Infrastructure changes only:
 azd provision
 ```
 
-### Alternative: Manual Deploy Script
+### Bootstrap Infrastructure (First Time)
 
 ```bash
-# One-command deploy (uses az CLI directly)
-./deploy.sh
+# Deploy Azure resources (ACR, Container Apps, Log Analytics)
+./infra/bootstrap.sh
 
 # Or specify custom values
-./deploy.sh <resource-group> <location> <acr-name> <image-tag>
+./infra/bootstrap.sh <resource-group> <location>
 ```
+
+> After bootstrapping, all subsequent deployments are handled automatically by the CI/CD pipeline on PR merge.
 
 ---
 
@@ -259,12 +269,14 @@ ghcp-learning-updates/
 │       ├── container-app.bicep             # Container Apps + environment
 │       └── log-analytics.bicep             # Log Analytics workspace
 ├── docs/                                   # Extended documentation
-│   └── monitoring.md                       # Monitoring architecture & runbook
+│   ├── monitoring.md                       # Monitoring architecture & runbook
+│   └── AZURE_OIDC_SETUP.md                # OIDC auth setup for CI/CD pipeline
 ├── .github/
 │   ├── agents/                             # Custom Copilot agents
 │   │   ├── agentic-workflows-builder.agent.md
 │   │   └── ops-monitor.agent.md            # SRE/operations agent
 │   ├── workflows/
+│   │   ├── docker-ci-cd.yml                # CI/CD: build, test, push ACR, deploy dev/prod
 │   │   ├── docs-research-updater.md        # Weekly docs research workflow
 │   │   ├── site-health-check.yml           # Deterministic health check (every 15 min)
 │   │   └── site-health-monitor.md          # Agentic repair agent (dispatched on failure)
@@ -276,7 +288,7 @@ ghcp-learning-updates/
 ├── nginx.conf                              # Custom nginx configuration
 ├── docker-compose.yml                      # Local dev with live reload
 ├── azure.yaml                              # Azure Developer CLI (azd) project config
-├── deploy.sh                               # Alternative manual deploy script
+├── infra/bootstrap.sh                      # One-time infrastructure setup
 ├── AGENTS.md                               # Copilot agent instructions
 └── README.md                               # This file
 ```

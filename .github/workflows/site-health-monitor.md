@@ -23,6 +23,11 @@ on:
         description: "Whether agenda.json returned valid JSON (true/false)"
         required: false
         type: string
+      environment:
+        description: "Which environment is affected (dev or prod)"
+        required: false
+        type: string
+        default: "prod"
 
 permissions:
   contents: read
@@ -59,7 +64,8 @@ network:
   allowed:
     - defaults
     - node
-    - "ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io"
+    - "ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io"
+    - "ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io"
     - "eastus2.azurecontainerapps.io"
     - "management.azure.com"
     - "login.microsoftonline.com"
@@ -98,12 +104,19 @@ If no inputs are provided (manual dispatch), assume the site needs investigation
 
 ## Site Details
 
-- **Production URL:** https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io
+**Target Environment:** "${{ github.event.inputs.environment }}" (defaults to "prod" if not specified)
+
+### Environment Reference
+| Environment | URL | Container App | Container App Environment |
+|---|---|---|---|
+| dev | https://ghcp-hackathon-dev-app.icybush-ed45e635.eastus2.azurecontainerapps.io | ghcp-hackathon-dev-app | ghcp-hackathon-dev-app-env |
+| prod | https://ghcp-hackathon-prod-app.ambitiousbeach-052ceef7.eastus2.azurecontainerapps.io | ghcp-hackathon-prod-app | ghcp-hackathon-prod-app-env |
+
 - **Resource Group:** rg-ghcp-hackathon
-- **Container App:** ghcp-hackathon-app
-- **Container App Environment:** ghcp-hackathon-app-env
 - **ACR:** ghcphackathonacr
 - **Azure Subscription ID:** 2a1b501e-d398-4fb5-8680-01acff08b7d2
+
+**IMPORTANT:** Use the environment specified in the `environment` input to determine which Container App to investigate and repair. If no environment is specified, default to "prod".
 
 ## Step 1: Investigate
 
@@ -128,16 +141,16 @@ Based on the investigation, attempt these repairs in order:
 4. **If environment is unhealthy** — Flag for human review (do not attempt environment-level changes)
 5. **If ACR image is missing** — Flag for human review
 
-After any repair attempt, wait 60 seconds, then use web-fetch or bash curl to verify the site is back up:
+After any repair attempt, wait 60 seconds, then use web-fetch or bash curl to verify the site is back up. Use the URL from the Environment Reference table matching the target environment:
 ```
-curl -s -o /dev/null -w '%{http_code}' https://ghcp-hackathon-app.bravegrass-130ae164.eastus2.azurecontainerapps.io
+curl -s -o /dev/null -w '%{http_code}' <URL for the target environment from the table above>
 ```
 
 ## Step 3: Report
 
 ### If site could NOT be auto-repaired:
 Create an issue with:
-- **Title:** `Site Down — <brief description of failure>`
+- **Title:** `Site Down [${{ github.event.inputs.environment }}] — <brief description of failure>`
 - **Body:**
   - 🔴 **Status:** DOWN
   - **Health check data:** (from inputs above)
@@ -149,7 +162,7 @@ Create an issue with:
 
 ### If auto-repair SUCCEEDED:
 Create an issue with:
-- **Title:** `Site Recovered — <what was fixed>`
+- **Title:** `Site Recovered [${{ github.event.inputs.environment }}] — <what was fixed>`
 - **Body:**
   - 🟡 **Status:** RECOVERED (auto-repaired)
   - **Original failure:** (health check data + what was wrong)
