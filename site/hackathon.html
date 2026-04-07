@@ -1031,6 +1031,495 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Key question: "Who is the end user of the agent?" If it's a developer → Copilot. If it's a business user or customer → Foundry. Most enterprise projects use both: Copilot to build, Foundry to run. They are complementary, not competing.</div>
 </section>
 
+<!-- ─────────────────────────── SLIDE 23: Section - CLI ─────────────────────────── -->
+<section class="slide section-slide" data-slide="22" data-section="cli" data-title="GitHub Copilot CLI">
+  <div class="glow-ring" style="top:25%; left:55%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">⌨️</div>
+    <h1 class="section-title">GitHub Copilot CLI</h1>
+    <p class="section-tagline" style="margin-bottom:32px;">The full agentic platform in your terminal</p>
+    <div style="max-width:500px; margin:0 auto;">
+      <div class="link-row"><span class="link-icon">📰</span><span class="link-text">GitHub Blog: CLI General Availability</span></div>
+      <div class="link-row"><span class="link-icon">🤖</span><span class="link-text">GitHub Blog: Agentic Workflows</span></div>
+      <div class="link-row"><span class="link-icon">💡</span><span class="link-text">GitHub Blog: Idea to PR Guide</span></div>
+      <div class="link-row"><span class="link-icon">📖</span><span class="link-text">Official CLI Documentation</span></div>
+      <div class="link-row"><span class="link-icon">📊</span><span class="link-text">Feature Matrix &amp; More</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 24: Why CLI ─────────────────────────── -->
+<section class="slide" data-slide="23" data-section="cli" data-title="Why CLI">
+  <div class="content">
+    <h2 class="slide-title">Why GitHub Copilot CLI?</h2>
+    <p class="slide-subtitle">A full agentic platform in your terminal</p>
+    <div class="feature-grid">
+      <div class="feature-item">
+        <span class="fi-code">/fleet</span>
+        <span class="fi-desc">Parallel multi-agent orchestration</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">/delegate</span>
+        <span class="fi-desc">Async handoff to cloud coding agent</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">--yolo</span>
+        <span class="fi-desc">Fully autonomous autopilot mode</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">/research</span>
+        <span class="fi-desc">Multi-step deep research with citations</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">--continue</span>
+        <span class="fi-desc">Session persistence &amp; resume</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">/compact</span>
+        <span class="fi-desc">Compress session history</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">-p "task"</span>
+        <span class="fi-desc">Scriptable headless mode for CI/CD</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">models</span>
+        <span class="fi-desc">Per-subagent model selection</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">CLAUDE.md</span>
+        <span class="fi-desc">CLAUDE.md / GEMINI.md support</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi-code">LSP</span>
+        <span class="fi-desc">Custom LSP integration</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 25: Stats ─────────────────────────── -->
+<section class="slide" data-slide="24" data-section="cli" data-title="Stats">
+  <div class="content">
+    <h2 class="slide-title">More Devs Choosing the CLI</h2>
+    <p class="slide-subtitle">The terminal-first revolution</p>
+    <div class="stats-grid" style="margin:0 auto;">
+      <div class="card big-stat">
+        <div class="stat-num">69%</div>
+        <div class="stat-label">of developers keep a terminal always open</div>
+      </div>
+      <div class="card big-stat">
+        <div class="stat-num">70%+</div>
+        <div class="stat-label">use terminal as primary daily tool</div>
+      </div>
+      <div class="card big-stat">
+        <div class="stat-num">20-40%</div>
+        <div class="stat-label">productivity improvement with terminal-first AI</div>
+      </div>
+      <div class="card big-stat">
+        <div class="stat-num">75%</div>
+        <div class="stat-label">reduction in PR completion time<br><span style="font-size:12px; color:var(--text-muted);">9.6 → 2.4 days</span></div>
+      </div>
+    </div>
+    <div class="note-bar" style="text-align:center; max-width:600px; margin:24px auto 0;">
+      🚀 Every major AI lab shipped a CLI-first agent in 2025
+    </div>
+    <div class="note-bar blue-note" style="text-align:center; max-width:600px; margin:12px auto 0;">
+      <strong>TL;DR:</strong> The CLI isn't just a chat window — it's a full agentic platform.
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 26: CLI Agent vs gh-aw ─────────────────────────── -->
+<section class="slide" data-slide="25" data-section="cli" data-title="gh-aw Platform">
+  <div class="content">
+    <h2 class="slide-title">CLI Agent vs gh-aw Platform</h2>
+    <p class="slide-subtitle">Two complementary agentic execution modes</p>
+    <div class="columns col-2 comparison" style="position:relative;">
+      <div class="card card-accent">
+        <span class="card-icon" style="font-size:36px;">⌨️</span>
+        <h3><span class="mono">gh copilot</span> CLI</h3>
+        <ul class="clean" style="margin-top:16px;">
+          <li>Interactive terminal agent</li>
+          <li>Runs locally on your machine</li>
+          <li>Real-time, you're in the loop</li>
+          <li><span class="mono">/fleet</span> for parallel sub-agents</li>
+          <li><span class="mono">/delegate</span> hands off to cloud</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon" style="font-size:36px;">☁️</span>
+        <h3><span class="mono">gh-aw</span> Platform</h3>
+        <ul class="clean" style="margin-top:16px;">
+          <li>GitHub Actions-hosted agent runner</li>
+          <li>Event-triggered, runs in cloud</li>
+          <li>Async — fire and forget</li>
+          <li>Powers the Coding Agent</li>
+          <li>Server-side orchestration layer</li>
+          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
+        </ul>
+      </div>
+      <div class="vs-badge">→</div>
+    </div>
+    <div class="note-bar" style="margin-top:20px;">
+      💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
+    </div>
+  </div>
+  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
+<section class="slide" data-section="cli" data-title="gh-aw Safe Outputs">
+  <div class="content">
+    <h2 class="slide-title">gh-aw Safe Outputs Architecture</h2>
+    <p class="slide-subtitle">Four-layer security model for trustworthy autonomous writes</p>
+    <div class="columns col-2" style="align-items:start; gap:24px;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🔍</div>
+          <div class="row-content">
+            <h4>AI Agent — Read Only</h4>
+            <p>Agent runs with <span class="mono">contents: read</span> only — cannot directly create issues, PRs, or comments</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📄</div>
+          <div class="row-content">
+            <h4>NDJSON Output File</h4>
+            <p>Agent calls MCP tools that write structured actions to a NDJSON file — one JSON object per line</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⚙️</div>
+          <div class="row-content">
+            <h4>Separate Execution Jobs</h4>
+            <p>After the agent completes, dedicated jobs (with write permissions) process the output file</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Prompt Injection Protection</h4>
+            <p>AI reasoning and write operations are fully separated — malicious instructions cannot trigger unauthorized writes</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-blue" style="margin-bottom:16px;">
+          <h4 style="margin-bottom:10px;">Safe Output Types</h4>
+          <div class="tool-pills" style="justify-content:flex-start; flex-wrap:wrap; gap:6px;">
+            <span class="pill blue">create-issue</span>
+            <span class="pill blue">add-comment</span>
+            <span class="pill blue">create-pull-request</span>
+            <span class="pill blue">create-discussion</span>
+            <span class="pill blue">remove-labels</span>
+            <span class="pill blue">append-only-comments</span>
+          </div>
+        </div>
+        <div class="card card-accent">
+          <h4 style="margin-bottom:10px;">Why It Matters</h4>
+          <ul class="clean" style="font-size:13px;">
+            <li>Safe for production use</li>
+            <li>Auditable write operations</li>
+            <li>PRs auto-close with <span class="mono">expires</span></li>
+            <li>DIFC proxy for full audit trail</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Source: github.com/github/gh-aw — scratchpad/safe-outputs-specification.md</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 27: Section - Customizing CLI ─────────────────────────── -->
+<section class="slide section-slide" data-slide="25" data-section="cli-customize" data-title="Customizing CLI">
+  <div class="glow-ring" style="top:35%; left:50%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">🎨</div>
+    <h1 class="section-title">Customizing<br>GitHub Copilot CLI</h1>
+    <p class="section-tagline">Hooks, Plugins, and Custom Agents</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 27: Hooks Overview ─────────────────────────── -->
+<section class="slide" data-slide="26" data-section="cli-customize" data-title="Hooks Overview">
+  <div class="content">
+    <h2 class="slide-title">Hooks Overview</h2>
+    <p class="slide-subtitle">Deterministic control at agent lifecycle events</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div>
+        <div class="icon-row">
+          <div class="icon">⚡</div>
+          <div class="row-content">
+            <h4>Custom Shell Scripts</h4>
+            <p>Execute at agent lifecycle events — real code, not AI-mediated</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Runs Outside the AI Loop</h4>
+            <p>Unlike skills/agents, hooks are <strong>imperative code</strong> running OUTSIDE the AI</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🎯</div>
+          <div class="row-content">
+            <h4>Deterministic Control</h4>
+            <p>Only mechanism providing deterministic, non-AI-mediated control over the agent</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Gate MCP Tool Calls</h4>
+            <p>Use <span class="mono">preToolUse</span> to intercept and validate tool calls before execution</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:12px;">
+          <div style="font-size:13px; color:var(--text-muted);">Hooks fire during subagent execution and can be bundled inside plugins.</div>
+        </div>
+        <div class="link-row"><span class="link-icon">📖</span><span class="link-text">Hooks Configuration Reference</span></div>
+        <div class="link-row"><span class="link-icon">🔧</span><span class="link-text">Using Hooks with CLI</span></div>
+        <div class="link-row"><span class="link-icon">📚</span><span class="link-text">Official Hooks Tutorial</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 28: Hooks Details ─────────────────────────── -->
+<section class="slide" data-slide="27" data-section="cli-customize" data-title="Hooks Lifecycle">
+  <div class="content">
+    <h2 class="slide-title">Hooks Lifecycle</h2>
+    <p class="slide-subtitle">When hooks fire during agent execution</p>
+    <div style="max-width:600px; width:100%; margin:0 auto;">
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
+          <span style="color:var(--accent); font-weight:700;">PreToolUse</span>
+          <span style="color:var(--text-muted); font-size:12px;"> — Before any tool call</span>
+        </div>
+      </div>
+      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent-blue); flex-shrink:0;"></div>
+        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
+          <span style="color:var(--accent-blue); font-weight:700;">PostToolUse</span>
+          <span style="color:var(--text-muted); font-size:12px;"> — After tool execution</span>
+        </div>
+      </div>
+      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:var(--success); flex-shrink:0;"></div>
+        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
+          <span style="color:var(--success); font-weight:700;">Notification</span>
+          <span style="color:var(--text-muted); font-size:12px;"> — On agent notifications</span>
+        </div>
+      </div>
+      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
+      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:var(--code-orange); flex-shrink:0;"></div>
+        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
+          <span style="color:var(--code-orange); font-weight:700;">Stop</span>
+          <span style="color:var(--text-muted); font-size:12px;"> — When agent stops/completes</span>
+        </div>
+      </div>
+      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <div style="width:14px; height:14px; border-radius:50%; background:var(--text-muted); flex-shrink:0;"></div>
+        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
+          <span style="color:var(--text-muted); font-weight:700;">SubagentStop</span>
+          <span style="color:var(--text-muted); font-size:12px;"> — When subagent finishes</span>
+        </div>
+      </div>
+    </div>
+    <div class="note-bar" style="max-width:600px; margin:24px auto 0;">
+      Hooks return exit codes: <span class="mono">0</span> = allow, <span class="mono">non-0</span> = block the action
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 29: Hooks Use Cases 1 ─────────────────────────── -->
+<section class="slide" data-slide="28" data-section="cli-customize" data-title="Hooks Use Cases 1">
+  <div class="content">
+    <h2 class="slide-title">Hooks Use Cases <span class="muted" style="font-size:20px;">Part 1</span></h2>
+    <p class="slide-subtitle">Practical applications for hooks</p>
+    <div class="columns col-2">
+      <div class="card card-accent">
+        <span class="card-icon">🔒</span>
+        <h3>Security Guardrails</h3>
+        <p>Block dangerous commands like <span class="mono">rm -rf</span>, <span class="mono">DROP TABLE</span>, or access to sensitive paths. Validate tool inputs before execution.</p>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">📊</span>
+        <h3>Audit Logging</h3>
+        <p>Log every tool call, file edit, and terminal command to an audit trail. Essential for compliance and debugging.</p>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">✅</span>
+        <h3>Auto-Format &amp; Lint</h3>
+        <p>Run formatters after every file edit. Ensure code style compliance without relying on the AI to remember.</p>
+      </div>
+      <div class="card card-orange">
+        <span class="card-icon">🔔</span>
+        <h3>Notifications</h3>
+        <p>Send Slack/Teams messages or desktop notifications when agent completes tasks or encounters errors.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 30: Hooks Use Cases 2 ─────────────────────────── -->
+<section class="slide" data-slide="29" data-section="cli-customize" data-title="Hooks Use Cases 2">
+  <div class="content">
+    <h2 class="slide-title">Hooks Use Cases <span class="muted" style="font-size:20px;">Part 2</span></h2>
+    <p class="slide-subtitle">More powerful patterns</p>
+    <div class="columns col-2">
+      <div class="card card-accent">
+        <span class="card-icon">🧪</span>
+        <h3>Auto-Test on Edit</h3>
+        <p>Run relevant tests after each file modification. Catch regressions immediately, not at the end of a session.</p>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">📝</span>
+        <h3>Changelog Generation</h3>
+        <p>Auto-append changes to a changelog file. Build documentation automatically as the agent works.</p>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">💾</span>
+        <h3>Auto-Commit</h3>
+        <p>Create git commits at checkpoints. Enable rollback to any stable state during long sessions.</p>
+      </div>
+      <div class="card card-orange">
+        <span class="card-icon">🚫</span>
+        <h3>Rate Limiting</h3>
+        <p>Prevent runaway agent behavior by limiting tool calls per minute or total operations per session.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 31: Plugins Overview ─────────────────────────── -->
+<section class="slide" data-slide="30" data-section="cli-customize" data-title="Plugins Overview">
+  <div class="content">
+    <h2 class="slide-title">Plugins Overview</h2>
+    <p class="slide-subtitle">Distributable AI capability packages</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div>
+        <div class="icon-row">
+          <div class="icon">📦</div>
+          <div class="row-content">
+            <h4>Top-Level Packaging</h4>
+            <p>Installable bundle with custom agents, skills, tools, and hooks</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔌</div>
+          <div class="row-content">
+            <h4>Distributable</h4>
+            <p>Think of it as an npm package for AI capabilities — share and reuse</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🧩</div>
+          <div class="row-content">
+            <h4>6 Extension Types</h4>
+            <p>Agents, Skills, Tools, Hooks, MCP Servers, and Slash Commands</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-content:center;">
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent);">
+          <div style="font-size:24px;">🤖</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">Agents</div>
+        </div>
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent-blue);">
+          <div style="font-size:24px;">⚡</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">Skills</div>
+        </div>
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--success);">
+          <div style="font-size:24px;">🔧</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">Tools</div>
+        </div>
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--code-orange);">
+          <div style="font-size:24px;">⚡</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">Hooks</div>
+        </div>
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent);">
+          <div style="font-size:24px;">🔌</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">MCP Servers</div>
+        </div>
+        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent-blue);">
+          <div style="font-size:24px;">⌨️</div>
+          <div style="font-size:13px; font-weight:600; margin-top:6px;">Slash Commands</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 32: Plugins Details ─────────────────────────── -->
+<section class="slide" data-slide="31" data-section="cli-customize" data-title="Plugin Structure">
+  <div class="content">
+    <h2 class="slide-title">Plugin Structure</h2>
+    <p class="slide-subtitle">Anatomy of a plugin package</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div class="card" style="background:var(--bg-tertiary); font-family:var(--font-mono); font-size:14px; line-height:2.2;">
+        <div style="color:var(--accent-blue); font-weight:600;">my-plugin/</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--code-orange);">plugin.json</span></div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">agents/</span></div>
+        <div style="padding-left:40px;">│   └── reviewer.md</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">skills/</span></div>
+        <div style="padding-left:40px;">│   └── deploy/</div>
+        <div style="padding-left:60px;">│       └── SKILL.md</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">hooks/</span></div>
+        <div style="padding-left:40px;">│   └── pre-tool.sh</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">tools/</span></div>
+        <div style="padding-left:40px;">│   └── analyze.py</div>
+        <div style="padding-left:20px;">└── <span style="color:var(--text);">mcp/</span></div>
+        <div style="padding-left:40px;">    └── server.js</div>
+      </div>
+      <div>
+        <div class="card card-accent" style="margin-bottom:12px;">
+          <h3 style="font-size:15px;">📄 plugin.json</h3>
+          <p style="font-size:13px;">Manifest declaring name, version, capabilities, and dependencies.</p>
+        </div>
+        <div class="card card-blue" style="margin-bottom:12px;">
+          <h3 style="font-size:15px;">🔧 Composable</h3>
+          <p style="font-size:13px;">Mix and match extension types. Not every plugin needs all 6 types.</p>
+        </div>
+        <div class="card card-green">
+          <h3 style="font-size:15px;">📤 Shareable</h3>
+          <p style="font-size:13px;">Publish to registries or share via git. Teams can standardize on the same plugin set.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 33: Thank You ─────────────────────────── -->
+<section class="slide section-slide" data-slide="32" data-section="cli-customize" data-title="Thank You">
+  <div class="glow-ring" style="top:30%; left:45%;"></div>
+  <div class="glow-ring" style="top:50%; left:60%; width:250px; height:250px; animation-delay:1.5s;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:72px; margin-bottom:20px;">🚀</div>
+    <h1 class="section-title">Thank You!</h1>
+    <p class="section-tagline" style="margin-bottom:32px;">Start building with GitHub Copilot Skills today</p>
+    <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
+      <span class="pill" style="font-size:14px; padding:8px 20px;">agentskills.io</span>
+      <span class="pill blue" style="font-size:14px; padding:8px 20px;">github.com/copilot</span>
+      <span class="pill" style="font-size:14px; padding:8px 20px; background:rgba(63,185,80,0.15); color:var(--success); border-color:rgba(63,185,80,0.3);">docs.github.com</span>
+    </div>
+    <div style="margin-top:40px; color:var(--text-muted); font-size:16px;">
+      <strong style="color:var(--text-title);">Cody Carlson</strong>
+      <br>Sr SE Global Black Belt, Microsoft
+    </div>
+  </div>
+  <div class="slide-notes">Thank you for attending! Check out agentskills.io for the open standard and github.com/copilot for the latest features.</div>
+</section>
+
 <!-- ─────────────────────────── SECTION: Skills & Instructions ─────────────────────────── -->
 <section class="slide section-slide" data-section="skills" data-title="Skills & Instructions">
   <div class="glow-ring" style="top:30%; left:50%;"></div>
@@ -2302,494 +2791,6 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">The handoff document is your insurance policy against context loss. Treat it as the single source of truth between sessions.</div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 23: Section - CLI ─────────────────────────── -->
-<section class="slide section-slide" data-slide="22" data-section="cli" data-title="GitHub Copilot CLI">
-  <div class="glow-ring" style="top:25%; left:55%;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:64px; margin-bottom:20px;">⌨️</div>
-    <h1 class="section-title">GitHub Copilot CLI</h1>
-    <p class="section-tagline" style="margin-bottom:32px;">The full agentic platform in your terminal</p>
-    <div style="max-width:500px; margin:0 auto;">
-      <div class="link-row"><span class="link-icon">📰</span><span class="link-text">GitHub Blog: CLI General Availability</span></div>
-      <div class="link-row"><span class="link-icon">🤖</span><span class="link-text">GitHub Blog: Agentic Workflows</span></div>
-      <div class="link-row"><span class="link-icon">💡</span><span class="link-text">GitHub Blog: Idea to PR Guide</span></div>
-      <div class="link-row"><span class="link-icon">📖</span><span class="link-text">Official CLI Documentation</span></div>
-      <div class="link-row"><span class="link-icon">📊</span><span class="link-text">Feature Matrix &amp; More</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 24: Why CLI ─────────────────────────── -->
-<section class="slide" data-slide="23" data-section="cli" data-title="Why CLI">
-  <div class="content">
-    <h2 class="slide-title">Why GitHub Copilot CLI?</h2>
-    <p class="slide-subtitle">A full agentic platform in your terminal</p>
-    <div class="feature-grid">
-      <div class="feature-item">
-        <span class="fi-code">/fleet</span>
-        <span class="fi-desc">Parallel multi-agent orchestration</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">/delegate</span>
-        <span class="fi-desc">Async handoff to cloud coding agent</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">--yolo</span>
-        <span class="fi-desc">Fully autonomous autopilot mode</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">/research</span>
-        <span class="fi-desc">Multi-step deep research with citations</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">--continue</span>
-        <span class="fi-desc">Session persistence &amp; resume</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">/compact</span>
-        <span class="fi-desc">Compress session history</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">-p "task"</span>
-        <span class="fi-desc">Scriptable headless mode for CI/CD</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">models</span>
-        <span class="fi-desc">Per-subagent model selection</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">CLAUDE.md</span>
-        <span class="fi-desc">CLAUDE.md / GEMINI.md support</span>
-      </div>
-      <div class="feature-item">
-        <span class="fi-code">LSP</span>
-        <span class="fi-desc">Custom LSP integration</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 25: Stats ─────────────────────────── -->
-<section class="slide" data-slide="24" data-section="cli" data-title="Stats">
-  <div class="content">
-    <h2 class="slide-title">More Devs Choosing the CLI</h2>
-    <p class="slide-subtitle">The terminal-first revolution</p>
-    <div class="stats-grid" style="margin:0 auto;">
-      <div class="card big-stat">
-        <div class="stat-num">69%</div>
-        <div class="stat-label">of developers keep a terminal always open</div>
-      </div>
-      <div class="card big-stat">
-        <div class="stat-num">70%+</div>
-        <div class="stat-label">use terminal as primary daily tool</div>
-      </div>
-      <div class="card big-stat">
-        <div class="stat-num">20-40%</div>
-        <div class="stat-label">productivity improvement with terminal-first AI</div>
-      </div>
-      <div class="card big-stat">
-        <div class="stat-num">75%</div>
-        <div class="stat-label">reduction in PR completion time<br><span style="font-size:12px; color:var(--text-muted);">9.6 → 2.4 days</span></div>
-      </div>
-    </div>
-    <div class="note-bar" style="text-align:center; max-width:600px; margin:24px auto 0;">
-      🚀 Every major AI lab shipped a CLI-first agent in 2025
-    </div>
-    <div class="note-bar blue-note" style="text-align:center; max-width:600px; margin:12px auto 0;">
-      <strong>TL;DR:</strong> The CLI isn't just a chat window — it's a full agentic platform.
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 26: CLI Agent vs gh-aw ─────────────────────────── -->
-<section class="slide" data-slide="25" data-section="cli" data-title="gh-aw Platform">
-  <div class="content">
-    <h2 class="slide-title">CLI Agent vs gh-aw Platform</h2>
-    <p class="slide-subtitle">Two complementary agentic execution modes</p>
-    <div class="columns col-2 comparison" style="position:relative;">
-      <div class="card card-accent">
-        <span class="card-icon" style="font-size:36px;">⌨️</span>
-        <h3><span class="mono">gh copilot</span> CLI</h3>
-        <ul class="clean" style="margin-top:16px;">
-          <li>Interactive terminal agent</li>
-          <li>Runs locally on your machine</li>
-          <li>Real-time, you're in the loop</li>
-          <li><span class="mono">/fleet</span> for parallel sub-agents</li>
-          <li><span class="mono">/delegate</span> hands off to cloud</li>
-        </ul>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon" style="font-size:36px;">☁️</span>
-        <h3><span class="mono">gh-aw</span> Platform</h3>
-        <ul class="clean" style="margin-top:16px;">
-          <li>GitHub Actions-hosted agent runner</li>
-          <li>Event-triggered, runs in cloud</li>
-          <li>Async — fire and forget</li>
-          <li>Powers the Coding Agent</li>
-          <li>Server-side orchestration layer</li>
-          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
-        </ul>
-      </div>
-      <div class="vs-badge">→</div>
-    </div>
-    <div class="note-bar" style="margin-top:20px;">
-      💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
-    </div>
-  </div>
-  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
-<section class="slide" data-section="cli" data-title="gh-aw Safe Outputs">
-  <div class="content">
-    <h2 class="slide-title">gh-aw Safe Outputs Architecture</h2>
-    <p class="slide-subtitle">Four-layer security model for trustworthy autonomous writes</p>
-    <div class="columns col-2" style="align-items:start; gap:24px;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🔍</div>
-          <div class="row-content">
-            <h4>AI Agent — Read Only</h4>
-            <p>Agent runs with <span class="mono">contents: read</span> only — cannot directly create issues, PRs, or comments</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">📄</div>
-          <div class="row-content">
-            <h4>NDJSON Output File</h4>
-            <p>Agent calls MCP tools that write structured actions to a NDJSON file — one JSON object per line</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">⚙️</div>
-          <div class="row-content">
-            <h4>Separate Execution Jobs</h4>
-            <p>After the agent completes, dedicated jobs (with write permissions) process the output file</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🛡️</div>
-          <div class="row-content">
-            <h4>Prompt Injection Protection</h4>
-            <p>AI reasoning and write operations are fully separated — malicious instructions cannot trigger unauthorized writes</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="card card-blue" style="margin-bottom:16px;">
-          <h4 style="margin-bottom:10px;">Safe Output Types</h4>
-          <div class="tool-pills" style="justify-content:flex-start; flex-wrap:wrap; gap:6px;">
-            <span class="pill blue">create-issue</span>
-            <span class="pill blue">add-comment</span>
-            <span class="pill blue">create-pull-request</span>
-            <span class="pill blue">create-discussion</span>
-            <span class="pill blue">remove-labels</span>
-            <span class="pill blue">append-only-comments</span>
-          </div>
-        </div>
-        <div class="card card-accent">
-          <h4 style="margin-bottom:10px;">Why It Matters</h4>
-          <ul class="clean" style="font-size:13px;">
-            <li>Safe for production use</li>
-            <li>Auditable write operations</li>
-            <li>PRs auto-close with <span class="mono">expires</span></li>
-            <li>DIFC proxy for full audit trail</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Source: github.com/github/gh-aw — scratchpad/safe-outputs-specification.md</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 27: Section - Customizing CLI ─────────────────────────── -->
-<section class="slide section-slide" data-slide="25" data-section="cli-customize" data-title="Customizing CLI">
-  <div class="glow-ring" style="top:35%; left:50%;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:64px; margin-bottom:20px;">🎨</div>
-    <h1 class="section-title">Customizing<br>GitHub Copilot CLI</h1>
-    <p class="section-tagline">Hooks, Plugins, and Custom Agents</p>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 27: Hooks Overview ─────────────────────────── -->
-<section class="slide" data-slide="26" data-section="cli-customize" data-title="Hooks Overview">
-  <div class="content">
-    <h2 class="slide-title">Hooks Overview</h2>
-    <p class="slide-subtitle">Deterministic control at agent lifecycle events</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div>
-        <div class="icon-row">
-          <div class="icon">⚡</div>
-          <div class="row-content">
-            <h4>Custom Shell Scripts</h4>
-            <p>Execute at agent lifecycle events — real code, not AI-mediated</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔒</div>
-          <div class="row-content">
-            <h4>Runs Outside the AI Loop</h4>
-            <p>Unlike skills/agents, hooks are <strong>imperative code</strong> running OUTSIDE the AI</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🎯</div>
-          <div class="row-content">
-            <h4>Deterministic Control</h4>
-            <p>Only mechanism providing deterministic, non-AI-mediated control over the agent</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🛡️</div>
-          <div class="row-content">
-            <h4>Gate MCP Tool Calls</h4>
-            <p>Use <span class="mono">preToolUse</span> to intercept and validate tool calls before execution</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="card" style="margin-bottom:12px;">
-          <div style="font-size:13px; color:var(--text-muted);">Hooks fire during subagent execution and can be bundled inside plugins.</div>
-        </div>
-        <div class="link-row"><span class="link-icon">📖</span><span class="link-text">Hooks Configuration Reference</span></div>
-        <div class="link-row"><span class="link-icon">🔧</span><span class="link-text">Using Hooks with CLI</span></div>
-        <div class="link-row"><span class="link-icon">📚</span><span class="link-text">Official Hooks Tutorial</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 28: Hooks Details ─────────────────────────── -->
-<section class="slide" data-slide="27" data-section="cli-customize" data-title="Hooks Lifecycle">
-  <div class="content">
-    <h2 class="slide-title">Hooks Lifecycle</h2>
-    <p class="slide-subtitle">When hooks fire during agent execution</p>
-    <div style="max-width:600px; width:100%; margin:0 auto;">
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--accent); font-weight:700;">PreToolUse</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — Before any tool call</span>
-        </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent-blue); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--accent-blue); font-weight:700;">PostToolUse</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — After tool execution</span>
-        </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--success); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--success); font-weight:700;">Notification</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — On agent notifications</span>
-        </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--code-orange); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--code-orange); font-weight:700;">Stop</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — When agent stops/completes</span>
-        </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--text-muted); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--text-muted); font-weight:700;">SubagentStop</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — When subagent finishes</span>
-        </div>
-      </div>
-    </div>
-    <div class="note-bar" style="max-width:600px; margin:24px auto 0;">
-      Hooks return exit codes: <span class="mono">0</span> = allow, <span class="mono">non-0</span> = block the action
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 29: Hooks Use Cases 1 ─────────────────────────── -->
-<section class="slide" data-slide="28" data-section="cli-customize" data-title="Hooks Use Cases 1">
-  <div class="content">
-    <h2 class="slide-title">Hooks Use Cases <span class="muted" style="font-size:20px;">Part 1</span></h2>
-    <p class="slide-subtitle">Practical applications for hooks</p>
-    <div class="columns col-2">
-      <div class="card card-accent">
-        <span class="card-icon">🔒</span>
-        <h3>Security Guardrails</h3>
-        <p>Block dangerous commands like <span class="mono">rm -rf</span>, <span class="mono">DROP TABLE</span>, or access to sensitive paths. Validate tool inputs before execution.</p>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">📊</span>
-        <h3>Audit Logging</h3>
-        <p>Log every tool call, file edit, and terminal command to an audit trail. Essential for compliance and debugging.</p>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">✅</span>
-        <h3>Auto-Format &amp; Lint</h3>
-        <p>Run formatters after every file edit. Ensure code style compliance without relying on the AI to remember.</p>
-      </div>
-      <div class="card card-orange">
-        <span class="card-icon">🔔</span>
-        <h3>Notifications</h3>
-        <p>Send Slack/Teams messages or desktop notifications when agent completes tasks or encounters errors.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 30: Hooks Use Cases 2 ─────────────────────────── -->
-<section class="slide" data-slide="29" data-section="cli-customize" data-title="Hooks Use Cases 2">
-  <div class="content">
-    <h2 class="slide-title">Hooks Use Cases <span class="muted" style="font-size:20px;">Part 2</span></h2>
-    <p class="slide-subtitle">More powerful patterns</p>
-    <div class="columns col-2">
-      <div class="card card-accent">
-        <span class="card-icon">🧪</span>
-        <h3>Auto-Test on Edit</h3>
-        <p>Run relevant tests after each file modification. Catch regressions immediately, not at the end of a session.</p>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">📝</span>
-        <h3>Changelog Generation</h3>
-        <p>Auto-append changes to a changelog file. Build documentation automatically as the agent works.</p>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">💾</span>
-        <h3>Auto-Commit</h3>
-        <p>Create git commits at checkpoints. Enable rollback to any stable state during long sessions.</p>
-      </div>
-      <div class="card card-orange">
-        <span class="card-icon">🚫</span>
-        <h3>Rate Limiting</h3>
-        <p>Prevent runaway agent behavior by limiting tool calls per minute or total operations per session.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 31: Plugins Overview ─────────────────────────── -->
-<section class="slide" data-slide="30" data-section="cli-customize" data-title="Plugins Overview">
-  <div class="content">
-    <h2 class="slide-title">Plugins Overview</h2>
-    <p class="slide-subtitle">Distributable AI capability packages</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div>
-        <div class="icon-row">
-          <div class="icon">📦</div>
-          <div class="row-content">
-            <h4>Top-Level Packaging</h4>
-            <p>Installable bundle with custom agents, skills, tools, and hooks</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔌</div>
-          <div class="row-content">
-            <h4>Distributable</h4>
-            <p>Think of it as an npm package for AI capabilities — share and reuse</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🧩</div>
-          <div class="row-content">
-            <h4>6 Extension Types</h4>
-            <p>Agents, Skills, Tools, Hooks, MCP Servers, and Slash Commands</p>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-content:center;">
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent);">
-          <div style="font-size:24px;">🤖</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">Agents</div>
-        </div>
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent-blue);">
-          <div style="font-size:24px;">⚡</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">Skills</div>
-        </div>
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--success);">
-          <div style="font-size:24px;">🔧</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">Tools</div>
-        </div>
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--code-orange);">
-          <div style="font-size:24px;">⚡</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">Hooks</div>
-        </div>
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent);">
-          <div style="font-size:24px;">🔌</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">MCP Servers</div>
-        </div>
-        <div class="card" style="padding:14px 20px; text-align:center; min-width:130px; border-top:3px solid var(--accent-blue);">
-          <div style="font-size:24px;">⌨️</div>
-          <div style="font-size:13px; font-weight:600; margin-top:6px;">Slash Commands</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 32: Plugins Details ─────────────────────────── -->
-<section class="slide" data-slide="31" data-section="cli-customize" data-title="Plugin Structure">
-  <div class="content">
-    <h2 class="slide-title">Plugin Structure</h2>
-    <p class="slide-subtitle">Anatomy of a plugin package</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div class="card" style="background:var(--bg-tertiary); font-family:var(--font-mono); font-size:14px; line-height:2.2;">
-        <div style="color:var(--accent-blue); font-weight:600;">my-plugin/</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--code-orange);">plugin.json</span></div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">agents/</span></div>
-        <div style="padding-left:40px;">│   └── reviewer.md</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">skills/</span></div>
-        <div style="padding-left:40px;">│   └── deploy/</div>
-        <div style="padding-left:60px;">│       └── SKILL.md</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">hooks/</span></div>
-        <div style="padding-left:40px;">│   └── pre-tool.sh</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">tools/</span></div>
-        <div style="padding-left:40px;">│   └── analyze.py</div>
-        <div style="padding-left:20px;">└── <span style="color:var(--text);">mcp/</span></div>
-        <div style="padding-left:40px;">    └── server.js</div>
-      </div>
-      <div>
-        <div class="card card-accent" style="margin-bottom:12px;">
-          <h3 style="font-size:15px;">📄 plugin.json</h3>
-          <p style="font-size:13px;">Manifest declaring name, version, capabilities, and dependencies.</p>
-        </div>
-        <div class="card card-blue" style="margin-bottom:12px;">
-          <h3 style="font-size:15px;">🔧 Composable</h3>
-          <p style="font-size:13px;">Mix and match extension types. Not every plugin needs all 6 types.</p>
-        </div>
-        <div class="card card-green">
-          <h3 style="font-size:15px;">📤 Shareable</h3>
-          <p style="font-size:13px;">Publish to registries or share via git. Teams can standardize on the same plugin set.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 33: Thank You ─────────────────────────── -->
-<section class="slide section-slide" data-slide="32" data-section="cli-customize" data-title="Thank You">
-  <div class="glow-ring" style="top:30%; left:45%;"></div>
-  <div class="glow-ring" style="top:50%; left:60%; width:250px; height:250px; animation-delay:1.5s;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:72px; margin-bottom:20px;">🚀</div>
-    <h1 class="section-title">Thank You!</h1>
-    <p class="section-tagline" style="margin-bottom:32px;">Start building with GitHub Copilot Skills today</p>
-    <div style="display:inline-flex; gap:12px; flex-wrap:wrap; justify-content:center;">
-      <span class="pill" style="font-size:14px; padding:8px 20px;">agentskills.io</span>
-      <span class="pill blue" style="font-size:14px; padding:8px 20px;">github.com/copilot</span>
-      <span class="pill" style="font-size:14px; padding:8px 20px; background:rgba(63,185,80,0.15); color:var(--success); border-color:rgba(63,185,80,0.3);">docs.github.com</span>
-    </div>
-    <div style="margin-top:40px; color:var(--text-muted); font-size:16px;">
-      <strong style="color:var(--text-title);">Cody Carlson</strong>
-      <br>Sr SE Global Black Belt, Microsoft
-    </div>
-  </div>
-  <div class="slide-notes">Thank you for attending! Check out agentskills.io for the open standard and github.com/copilot for the latest features.</div>
-</section>
 
 </div><!-- end slides-wrapper -->
 
@@ -2818,12 +2819,12 @@ body.overview #dot-tooltip { display: none; }
     intro: 'Intro',
     agenda: 'Agenda',
     overview: 'Overview',
+    cli: 'CLI',
+    'cli-customize': 'Customizing CLI',
     skills: 'Skills & Instructions',
     mcp: 'MCP',
     'coding-agent': 'Coding Agent',
-    'agent-mgmt': 'Agent Mgmt',
-    cli: 'CLI',
-    'cli-customize': 'Customizing CLI'
+    'agent-mgmt': 'Agent Mgmt'
   };
 
   // Parsed section structure: [ { key, name, slides: [{index, title}] } ]
