@@ -353,6 +353,21 @@ body.overview #speaker-notes { display: none; }
   margin-top: 4px; opacity: 0.7;
 }
 .agenda-section-link:hover { opacity: 1; }
+.agenda-tz-bar {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  font-size: 13px; color: var(--text-muted);
+}
+.agenda-tz-bar select {
+  appearance: none; -webkit-appearance: none;
+  background: var(--bg-secondary); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 28px 5px 10px; font-size: 13px; font-family: var(--font-mono);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b8b8b'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center;
+}
+.agenda-tz-bar select:hover { border-color: rgba(139, 92, 246, 0.4); }
+.agenda-tz-bar select:focus { outline: none; border-color: var(--accent); }
 
 .note-bar {
   margin-top: 24px; padding: 12px 20px;
@@ -773,10 +788,21 @@ body.overview #dot-tooltip { display: none; }
 <section class="slide" data-section="agenda" data-title="Schedule">
   <div class="content agenda-container">
     <h2 class="slide-title">Hackathon Schedule</h2>
+    <div class="agenda-tz-bar">
+      <span>🌐 Timezone:</span>
+      <select id="agenda-tz">
+        <option value="America/New_York">Eastern (ET)</option>
+        <option value="America/Chicago" selected>Central (CT)</option>
+        <option value="America/Denver">Mountain (MT)</option>
+        <option value="America/Los_Angeles">Pacific (PT)</option>
+        <option value="America/Anchorage">Alaska (AKT)</option>
+        <option value="Pacific/Honolulu">Hawaii (HT)</option>
+      </select>
+    </div>
     <div class="agenda-tabs" id="agenda-tabs"></div>
     <div id="agenda-days"></div>
   </div>
-  <div class="slide-notes">The agenda is loaded from agenda.json — edit that file to customize times, sessions, and descriptions without touching the HTML.</div>
+  <div class="slide-notes">The agenda is loaded from agenda.json — edit that file to customize times, sessions, and descriptions without touching the HTML. Use the timezone dropdown to adjust for your audience.</div>
 </section>
 
 <!-- ─────────────────────────── SECTION: Copilot Overview ─────────────────────────── -->
@@ -3167,99 +3193,153 @@ body.overview #dot-tooltip { display: none; }
   window.addEventListener('hashchange', handleHash);
 
   // Initialize
-  // ─── Agenda loader ───
+  // ─── Agenda loader with timezone support ───
   (function loadAgenda() {
+    var baseTz = 'America/Chicago';
+    var agendaData = null;
+
+    function formatTime24(h24, m) {
+      var suffix = h24 >= 12 ? 'PM' : 'AM';
+      var h12 = h24 % 12 || 12;
+      return h12 + ':' + (m < 10 ? '0' : '') + m + ' ' + suffix;
+    }
+
+    function convertTime(timeStr, fromTz, toTz) {
+      // Build a Date in the base timezone, then read it in the target timezone
+      var parts = timeStr.split(':');
+      var h = parseInt(parts[0], 10);
+      var m = parseInt(parts[1], 10);
+      // Use a fixed reference date to avoid DST edge cases
+      var refDate = new Date('2026-06-15T00:00:00');
+      refDate.setHours(h, m, 0, 0);
+      // Format in base tz to get the "wall clock" anchor
+      var baseStr = refDate.toLocaleString('en-US', { timeZone: fromTz, hour: 'numeric', minute: '2-digit', hour12: false });
+      var targetStr = refDate.toLocaleString('en-US', { timeZone: toTz, hour: 'numeric', minute: '2-digit', hour12: false });
+      // Compute offset in minutes between base rendering and target
+      var baseParts = baseStr.split(':');
+      var targetParts = targetStr.split(':');
+      var baseMin = parseInt(baseParts[0], 10) * 60 + parseInt(baseParts[1], 10);
+      var targetMin = parseInt(targetParts[0], 10) * 60 + parseInt(targetParts[1], 10);
+      var offsetMin = targetMin - baseMin;
+      // Handle day wrap
+      if (offsetMin > 720) offsetMin -= 1440;
+      if (offsetMin < -720) offsetMin += 1440;
+      var newTotal = h * 60 + m + offsetMin;
+      if (newTotal < 0) newTotal += 1440;
+      if (newTotal >= 1440) newTotal -= 1440;
+      var newH = Math.floor(newTotal / 60);
+      var newM = newTotal % 60;
+      return formatTime24(newH, newM);
+    }
+
+    function blockTimeStr(block, tz) {
+      return convertTime(block.start, baseTz, tz) + ' – ' + convertTime(block.end, baseTz, tz);
+    }
+
+    function renderAgenda(tz) {
+      var tabsEl = document.getElementById('agenda-tabs');
+      var daysEl = document.getElementById('agenda-days');
+      if (!tabsEl || !daysEl || !agendaData) return;
+      tabsEl.innerHTML = '';
+      daysEl.innerHTML = '';
+
+      agendaData.days.forEach(function(day, idx) {
+        var tab = document.createElement('div');
+        tab.className = 'agenda-tab' + (idx === 0 ? ' active' : '');
+        tab.textContent = day.name;
+        tab.addEventListener('click', function() {
+          tabsEl.querySelectorAll('.agenda-tab').forEach(function(t) { t.classList.remove('active'); });
+          daysEl.querySelectorAll('.agenda-day').forEach(function(d) { d.classList.remove('active'); });
+          tab.classList.add('active');
+          document.getElementById('agenda-day-' + idx).classList.add('active');
+        });
+        tabsEl.appendChild(tab);
+
+        var dayDiv = document.createElement('div');
+        dayDiv.className = 'agenda-day' + (idx === 0 ? ' active' : '');
+        dayDiv.id = 'agenda-day-' + idx;
+
+        if (day.subtitle) {
+          var sub = document.createElement('div');
+          sub.className = 'agenda-day-subtitle';
+          sub.textContent = day.subtitle;
+          dayDiv.appendChild(sub);
+        }
+
+        day.blocks.forEach(function(block) {
+          var item = document.createElement('div');
+          item.className = 'agenda-item type-' + block.type;
+
+          var icon = document.createElement('div');
+          icon.className = 'agenda-icon';
+          icon.textContent = block.icon || '';
+
+          var time = document.createElement('div');
+          time.className = 'agenda-time';
+          time.textContent = blockTimeStr(block, tz);
+
+          var details = document.createElement('div');
+          details.className = 'agenda-details';
+
+          var title = document.createElement('div');
+          title.className = 'agenda-title';
+          title.textContent = block.title;
+          details.appendChild(title);
+
+          if (block.description) {
+            var desc = document.createElement('div');
+            desc.className = 'agenda-desc';
+            desc.textContent = block.description;
+            details.appendChild(desc);
+          }
+
+          if (block.labUrl) {
+            var link = document.createElement('a');
+            link.className = 'agenda-link';
+            link.href = block.labUrl;
+            link.target = '_blank';
+            link.innerHTML = '🔗 Open Lab Repository';
+            details.appendChild(link);
+          }
+
+          if (block.section) {
+            var secLink = document.createElement('div');
+            secLink.className = 'agenda-section-link';
+            secLink.innerHTML = '→ Jump to slides';
+            secLink.addEventListener('click', function() {
+              var target = document.querySelector('.slide[data-section="' + block.section + '"]');
+              if (target) {
+                var allSlides = Array.from(document.querySelectorAll('.slide'));
+                var targetIdx = allSlides.indexOf(target);
+                if (targetIdx >= 0) goToSlide(targetIdx);
+              }
+            });
+            details.appendChild(secLink);
+          }
+
+          item.appendChild(icon);
+          item.appendChild(time);
+          item.appendChild(details);
+          dayDiv.appendChild(item);
+        });
+
+        daysEl.appendChild(dayDiv);
+      });
+    }
+
+    var tzSelect = document.getElementById('agenda-tz');
+    if (tzSelect) {
+      tzSelect.addEventListener('change', function() {
+        renderAgenda(tzSelect.value);
+      });
+    }
+
     fetch('agenda.json')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var tabsEl = document.getElementById('agenda-tabs');
-        var daysEl = document.getElementById('agenda-days');
-        if (!tabsEl || !daysEl) return;
-
-        data.days.forEach(function(day, idx) {
-          // Tab
-          var tab = document.createElement('div');
-          tab.className = 'agenda-tab' + (idx === 0 ? ' active' : '');
-          tab.textContent = day.name;
-          tab.addEventListener('click', function() {
-            tabsEl.querySelectorAll('.agenda-tab').forEach(function(t) { t.classList.remove('active'); });
-            daysEl.querySelectorAll('.agenda-day').forEach(function(d) { d.classList.remove('active'); });
-            tab.classList.add('active');
-            document.getElementById('agenda-day-' + idx).classList.add('active');
-          });
-          tabsEl.appendChild(tab);
-
-          // Day content
-          var dayDiv = document.createElement('div');
-          dayDiv.className = 'agenda-day' + (idx === 0 ? ' active' : '');
-          dayDiv.id = 'agenda-day-' + idx;
-
-          if (day.subtitle) {
-            var sub = document.createElement('div');
-            sub.className = 'agenda-day-subtitle';
-            sub.textContent = day.subtitle;
-            dayDiv.appendChild(sub);
-          }
-
-          day.blocks.forEach(function(block) {
-            var item = document.createElement('div');
-            item.className = 'agenda-item type-' + block.type;
-
-            var icon = document.createElement('div');
-            icon.className = 'agenda-icon';
-            icon.textContent = block.icon || '';
-
-            var time = document.createElement('div');
-            time.className = 'agenda-time';
-            time.textContent = block.time;
-
-            var details = document.createElement('div');
-            details.className = 'agenda-details';
-
-            var title = document.createElement('div');
-            title.className = 'agenda-title';
-            title.textContent = block.title;
-            details.appendChild(title);
-
-            if (block.description) {
-              var desc = document.createElement('div');
-              desc.className = 'agenda-desc';
-              desc.textContent = block.description;
-              details.appendChild(desc);
-            }
-
-            if (block.labUrl) {
-              var link = document.createElement('a');
-              link.className = 'agenda-link';
-              link.href = block.labUrl;
-              link.target = '_blank';
-              link.innerHTML = '🔗 Open Lab Repository';
-              details.appendChild(link);
-            }
-
-            if (block.section) {
-              var secLink = document.createElement('div');
-              secLink.className = 'agenda-section-link';
-              secLink.innerHTML = '→ Jump to slides';
-              secLink.addEventListener('click', function() {
-                var target = document.querySelector('.slide[data-section="' + block.section + '"]');
-                if (target) {
-                  var allSlides = Array.from(document.querySelectorAll('.slide'));
-                  var targetIdx = allSlides.indexOf(target);
-                  if (targetIdx >= 0) goToSlide(targetIdx);
-                }
-              });
-              details.appendChild(secLink);
-            }
-
-            item.appendChild(icon);
-            item.appendChild(time);
-            item.appendChild(details);
-            dayDiv.appendChild(item);
-          });
-
-          daysEl.appendChild(dayDiv);
-        });
+        baseTz = data.baseTz || 'America/Chicago';
+        agendaData = data;
+        renderAgenda(tzSelect ? tzSelect.value : baseTz);
       })
       .catch(function(err) {
         console.warn('Could not load agenda.json:', err);
