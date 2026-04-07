@@ -3204,32 +3204,30 @@ body.overview #dot-tooltip { display: none; }
       return h12 + ':' + (m < 10 ? '0' : '') + m + ' ' + suffix;
     }
 
+    var offsetCache = {};
+    function getOffsetMinutes(tz) {
+      if (tz in offsetCache) return offsetCache[tz];
+      // Find UTC offset for a timezone using Intl.DateTimeFormat.formatToParts
+      var d = new Date(Date.UTC(2026, 5, 15, 12, 0, 0)); // June 15 noon UTC
+      var parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(d);
+      var h = 0, m = 0;
+      parts.forEach(function(p) {
+        if (p.type === 'hour') h = parseInt(p.value, 10);
+        if (p.type === 'minute') m = parseInt(p.value, 10);
+      });
+      offsetCache[tz] = (h * 60 + m) - 720; // minutes from UTC
+      return offsetCache[tz];
+    }
+
     function convertTime(timeStr, fromTz, toTz) {
-      // Build a Date in the base timezone, then read it in the target timezone
       var parts = timeStr.split(':');
-      var h = parseInt(parts[0], 10);
-      var m = parseInt(parts[1], 10);
-      // Use a fixed reference date to avoid DST edge cases
-      var refDate = new Date('2026-06-15T00:00:00');
-      refDate.setHours(h, m, 0, 0);
-      // Format in base tz to get the "wall clock" anchor
-      var baseStr = refDate.toLocaleString('en-US', { timeZone: fromTz, hour: 'numeric', minute: '2-digit', hour12: false });
-      var targetStr = refDate.toLocaleString('en-US', { timeZone: toTz, hour: 'numeric', minute: '2-digit', hour12: false });
-      // Compute offset in minutes between base rendering and target
-      var baseParts = baseStr.split(':');
-      var targetParts = targetStr.split(':');
-      var baseMin = parseInt(baseParts[0], 10) * 60 + parseInt(baseParts[1], 10);
-      var targetMin = parseInt(targetParts[0], 10) * 60 + parseInt(targetParts[1], 10);
-      var offsetMin = targetMin - baseMin;
-      // Handle day wrap
-      if (offsetMin > 720) offsetMin -= 1440;
-      if (offsetMin < -720) offsetMin += 1440;
-      var newTotal = h * 60 + m + offsetMin;
-      if (newTotal < 0) newTotal += 1440;
-      if (newTotal >= 1440) newTotal -= 1440;
-      var newH = Math.floor(newTotal / 60);
-      var newM = newTotal % 60;
-      return formatTime24(newH, newM);
+      var totalMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      totalMin += getOffsetMinutes(toTz) - getOffsetMinutes(fromTz);
+      if (totalMin < 0) totalMin += 1440;
+      if (totalMin >= 1440) totalMin -= 1440;
+      return formatTime24(Math.floor(totalMin / 60), totalMin % 60);
     }
 
     function blockTimeStr(block, tz) {
