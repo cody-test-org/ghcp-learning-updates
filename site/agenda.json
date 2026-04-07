@@ -8,16 +8,16 @@
       "blocks": [
         {
           "type": "session",
-          "start": "09:00",
-          "end": "09:15",
+          "start": "08:00",
+          "end": "08:15",
           "title": "Welcome & Kickoff",
           "description": "Introductions, logistics, and hackathon overview",
           "icon": "👋"
         },
         {
           "type": "session",
-          "start": "09:15",
-          "end": "09:50",
+          "start": "08:15",
+          "end": "08:50",
           "title": "GitHub Copilot CLI",
           "description": "Terminal-native agentic development, adoption trends",
           "icon": "⌨️",
@@ -25,8 +25,8 @@
         },
         {
           "type": "session",
-          "start": "09:50",
-          "end": "10:25",
+          "start": "08:50",
+          "end": "09:25",
           "title": "Customizing the CLI",
           "description": "Hooks, lifecycle, use cases, plugins, extensions",
           "icon": "🔧",
@@ -34,15 +34,15 @@
         },
         {
           "type": "break",
-          "start": "10:25",
-          "end": "10:35",
+          "start": "09:25",
+          "end": "09:35",
           "title": "Break",
           "icon": "☕"
         },
         {
           "type": "session",
-          "start": "10:35",
-          "end": "11:10",
+          "start": "09:35",
+          "end": "10:10",
           "title": "Skills & Custom Instructions",
           "description": "Agent skills, custom instructions, prompt files, custom agents",
           "icon": "⚡",
@@ -50,8 +50,8 @@
         },
         {
           "type": "session",
-          "start": "11:10",
-          "end": "11:45",
+          "start": "10:10",
+          "end": "10:45",
           "title": "Model Context Protocol (MCP)",
           "description": "Resources, prompts, tools, sampling, roots, transports",
           "icon": "🔌",
@@ -59,8 +59,8 @@
         },
         {
           "type": "session",
-          "start": "11:45",
-          "end": "12:20",
+          "start": "10:45",
+          "end": "11:20",
           "title": "GitHub Copilot Coding Agent",
           "description": "Agent mode, coding agent, custom agents, architecture",
           "icon": "🤖",
@@ -68,8 +68,8 @@
         },
         {
           "type": "session",
-          "start": "12:20",
-          "end": "12:50",
+          "start": "11:20",
+          "end": "11:50",
           "title": "Agent Management & Orchestration",
           "description": "Sessions, sequential & parallel orchestration, handoffs",
           "icon": "🎯",
@@ -77,23 +77,23 @@
         },
         {
           "type": "session",
-          "start": "12:50",
-          "end": "13:00",
+          "start": "11:50",
+          "end": "12:00",
           "title": "Lightning Sessions Wrap-Up",
           "description": "Q&A and transition to lunch",
           "icon": "💬"
         },
         {
           "type": "break",
-          "start": "13:00",
-          "end": "13:45",
+          "start": "12:00",
+          "end": "12:45",
           "title": "Lunch",
           "icon": "🍽️"
         },
         {
           "type": "lab",
-          "start": "13:45",
-          "end": "18:00",
+          "start": "12:45",
+          "end": "17:00",
           "title": "Labs & Hands-On Activities",
           "description": "Work through guided lab exercises at your own pace",
           "icon": "🧪",
@@ -107,47 +107,47 @@
       "blocks": [
         {
           "type": "session",
-          "start": "09:00",
-          "end": "09:15",
+          "start": "08:00",
+          "end": "08:15",
           "title": "Day 2 Kickoff & Day 1 Recap",
           "description": "Review key takeaways, check in on teams, set hackathon goals",
           "icon": "🔄"
         },
         {
           "type": "hackathon",
-          "start": "09:15",
-          "end": "12:00",
+          "start": "08:15",
+          "end": "11:00",
           "title": "Hackathon Working Session — Morning",
           "description": "Teams break out to build their own Copilot use cases and workflows",
           "icon": "🚀"
         },
         {
           "type": "break",
-          "start": "12:00",
-          "end": "12:45",
+          "start": "11:00",
+          "end": "11:45",
           "title": "Lunch",
           "icon": "🍽️"
         },
         {
           "type": "hackathon",
-          "start": "12:45",
-          "end": "16:30",
+          "start": "11:45",
+          "end": "15:30",
           "title": "Hackathon Working Session — Afternoon",
           "description": "Continue building, mentors available for guidance and troubleshooting",
           "icon": "💻"
         },
         {
           "type": "session",
-          "start": "16:30",
-          "end": "17:30",
+          "start": "15:30",
+          "end": "16:30",
           "title": "Team Demos & Presentations",
           "description": "Each team presents what they built — share learnings and results",
           "icon": "🎤"
         },
         {
           "type": "session",
-          "start": "17:30",
-          "end": "18:00",
+          "start": "16:30",
+          "end": "17:00",
           "title": "Wrap-Up & Next Steps",
           "description": "Key takeaways, resources for continued learning, feedback",
           "icon": "🎉"
