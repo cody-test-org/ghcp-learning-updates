@@ -353,6 +353,21 @@ body.overview #speaker-notes { display: none; }
   margin-top: 4px; opacity: 0.7;
 }
 .agenda-section-link:hover { opacity: 1; }
+.agenda-tz-bar {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+  font-size: 13px; color: var(--text-muted);
+}
+.agenda-tz-bar select {
+  appearance: none; -webkit-appearance: none;
+  background: var(--bg-secondary); color: var(--text);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 5px 28px 5px 10px; font-size: 13px; font-family: var(--font-mono);
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238b8b8b'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 8px center;
+}
+.agenda-tz-bar select:hover { border-color: rgba(139, 92, 246, 0.4); }
+.agenda-tz-bar select:focus { outline: none; border-color: var(--accent); }
 
 .note-bar {
   margin-top: 24px; padding: 12px 20px;
@@ -773,10 +788,21 @@ body.overview #dot-tooltip { display: none; }
 <section class="slide" data-section="agenda" data-title="Schedule">
   <div class="content agenda-container">
     <h2 class="slide-title">Hackathon Schedule</h2>
+    <div class="agenda-tz-bar">
+      <span>🌐 Timezone:</span>
+      <select id="agenda-tz">
+        <option value="America/New_York">Eastern (ET)</option>
+        <option value="America/Chicago" selected>Central (CT)</option>
+        <option value="America/Denver">Mountain (MT)</option>
+        <option value="America/Los_Angeles">Pacific (PT)</option>
+        <option value="America/Anchorage">Alaska (AKT)</option>
+        <option value="Pacific/Honolulu">Hawaii (HT)</option>
+      </select>
+    </div>
     <div class="agenda-tabs" id="agenda-tabs"></div>
     <div id="agenda-days"></div>
   </div>
-  <div class="slide-notes">The agenda is loaded from agenda.json — edit that file to customize times, sessions, and descriptions without touching the HTML.</div>
+  <div class="slide-notes">The agenda is loaded from agenda.json — edit that file to customize times, sessions, and descriptions without touching the HTML. Use the timezone dropdown to adjust for your audience.</div>
 </section>
 
 <!-- ─────────────────────────── SECTION: Copilot Overview ─────────────────────────── -->
@@ -814,19 +840,20 @@ body.overview #dot-tooltip { display: none; }
           <tr><td>Custom instructions</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-preview">🔵</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-preview">🔵</td><td class="mx-preview">🔵</td><td class="mx-yes">✅</td></tr>
           <tr><td>Next edit suggestions</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-preview">🔵</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-preview">🔵</td><td class="mx-preview">🔵</td><td class="mx-no">⚪</td></tr>
           <tr><td>Edit mode</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td></tr>
-          <tr><td>Vision</td><td class="mx-preview">🔵</td><td class="mx-no">⚪</td><td class="mx-preview">🔵</td><td class="mx-preview">🔵</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td></tr>
+          <tr><td>Vision</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td></tr>
           <tr><td>Prompt files</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-preview">🔵</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-preview">🔵</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td></tr>
           <tr><td>Code referencing</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td></tr>
           <tr><td>PR summaries</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Text completions</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Copilot Spaces</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Copilot Coding Agent</td><td class="mx-yes">✅</td><td class="mx-yes">✅ <span style="font-size:10px;color:var(--text-muted)">(delegate)</span></td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
+          <tr><td>Issues &amp; Discussions</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
         </tbody>
       </table>
     </div>
-    <div class="note-bar">✅ = GA &nbsp; 🔵 = Preview &nbsp; — = Not applicable &nbsp; ⚪ = Not supported &nbsp; | &nbsp; 💡 VS Code receives updates first. This matrix is always changing — check <em>docs.github.com/copilot/reference/copilot-feature-matrix</em></div>
+    <div class="note-bar">✅ = GA &nbsp; 🔵 = Preview &nbsp; — = Not applicable &nbsp; ⚪ = Not supported &nbsp; | &nbsp; 💡 VS Code receives updates first. This matrix is always changing — check <em>docs.github.com/copilot/reference/copilot-feature-matrix</em> &nbsp;·&nbsp; 📱 GitHub Mobile also includes Copilot Chat</div>
   </div>
-  <div class="slide-notes">Updated March 2026. Neovim officially supports only code completion. Eclipse gained Agent mode, Chat, and MCP in May 2025. Source: docs.github.com/copilot/reference/copilot-feature-matrix</div>
+  <div class="slide-notes">Updated April 2026. Vision graduated to GA in VS Code, JetBrains, and Visual Studio. Neovim officially supports only code completion. Eclipse gained Agent mode, Chat, and MCP in May 2025. Issues &amp; Discussions (summarizing threads, drafting responses) is a GitHub.com-only feature. GitHub Mobile also includes Copilot Chat. Source: docs.github.com/copilot/reference/copilot-feature-matrix</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Plan Tiers ─────────────────────────── -->
@@ -843,7 +870,7 @@ body.overview #dot-tooltip { display: none; }
           <li>2,000 code completions/mo</li>
           <li>50 chat messages/mo</li>
           <li>VS Code &amp; JetBrains</li>
-          <li>GPT-4o, Claude 3.5</li>
+          <li>GPT-4o, Claude 3.5 Sonnet</li>
         </ul>
       </div>
       <div class="card card-accent">
@@ -874,15 +901,16 @@ body.overview #dot-tooltip { display: none; }
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$39/user/mo — org-wide</p>
         <ul class="clean" style="font-size:13px;">
           <li>Everything in Business</li>
-          <li>Custom fine-tuning</li>
+          <li>Custom fine-tuning (GA)</li>
           <li>Coding Agent (GA)</li>
+          <li>Multi-repo context</li>
           <li>Advanced security controls</li>
         </ul>
       </div>
     </div>
-    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em></div>
+    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em> &nbsp;·&nbsp; 🏢 GHES customers have a separate feature availability timeline — check <em>docs.github.com/en/enterprise-server</em></div>
   </div>
-  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models and the Coding Agent. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models (now GA), multi-repo context, and the Coding Agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
@@ -1027,1172 +1055,6 @@ body.overview #dot-tooltip { display: none; }
     <div class="note-bar" style="margin-top:20px;">💡 They sit at different layers of the stack. Copilot is your development accelerator; Foundry is your production AI platform. Most real-world projects use both.</div>
   </div>
   <div class="slide-notes">Key question: "Who is the end user of the agent?" If it's a developer → Copilot. If it's a business user or customer → Foundry. Most enterprise projects use both: Copilot to build, Foundry to run. They are complementary, not competing.</div>
-</section>
-
-<!-- ─────────────────────────── SECTION: Skills & Instructions ─────────────────────────── -->
-<section class="slide section-slide" data-section="skills" data-title="Skills & Instructions">
-  <div class="glow-ring" style="top:30%; left:50%;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:64px; margin-bottom:20px;">⚡</div>
-    <h1 class="section-title">GitHub Copilot<br>Skills &amp; Instructions</h1>
-    <p class="section-tagline" style="margin-bottom:32px;">Customize Copilot with skills, instructions, prompt files, and custom agents</p>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 3: Skills vs Instructions ─────────────────────────── -->
-<section class="slide" data-slide="2" data-section="skills" data-title="Skills vs Instructions">
-  <div class="content">
-    <h2 class="slide-title">Skills vs Custom Instructions</h2>
-    <p class="slide-subtitle">Two complementary customization approaches</p>
-    <div class="columns col-2 comparison" style="position:relative;">
-      <div class="card card-accent">
-        <span class="card-icon" style="font-size:36px;">⚡</span>
-        <h3>Agent Skills</h3>
-        <table style="width:100%; font-size:14px; border-collapse:collapse;">
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border); width:110px;">Purpose</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Teach specialized capabilities &amp; workflows</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">VS Code, Copilot CLI, &amp; coding agent</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Content</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Instructions, scripts, examples &amp; resources</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Scope</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Task-specific, loaded on-demand</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0;">Standard</td><td style="padding:8px 0;">Open standard (<span class="mono">agentskills.io</span>)</td></tr>
-        </table>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon" style="font-size:36px;">📋</span>
-        <h3>Custom Instructions</h3>
-        <table style="width:100%; font-size:14px; border-collapse:collapse;">
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border); width:110px;">Purpose</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Define coding standards &amp; guidelines</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Supported IDE's and GitHub.com only</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Content</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Instructions only</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Scope</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Always applied (or via glob patterns)</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0;">Standard</td><td style="padding:8px 0;">IDE-specific</td></tr>
-        </table>
-      </div>
-      <div class="vs-badge">VS</div>
-    </div>
-  </div>
-  <div class="slide-notes">Skills are portable and task-specific; custom instructions are always-on guidelines. They complement each other perfectly.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 4: How to Create Skills ─────────────────────────── -->
-<section class="slide" data-slide="3" data-section="skills" data-title="How to Create Skills">
-  <div class="content">
-    <h2 class="slide-title">How to Create Skills</h2>
-    <p class="slide-subtitle">Simple file-based structure</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div>
-        <div class="icon-row">
-          <div class="icon">📁</div>
-          <div class="row-content">
-            <h4>Directory-Based</h4>
-            <p>Stored in supported directories with a <span class="mono">SKILL.md</span> file as the entry point</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🏠</div>
-          <div class="row-content">
-            <h4>Personal Skills</h4>
-            <p>Store in <span class="mono">~/.copilot/skills/</span> or <span class="mono">~/.claude/skills/</span> (legacy)</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">📦</div>
-          <div class="row-content">
-            <h4>Rich Resources</h4>
-            <p>Optionally add scripts, examples, or other resources to the skill directory</p>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="background:var(--bg-tertiary); font-family:var(--font-mono); font-size:13px; line-height:2.2; color:var(--text-muted);">
-        <div style="color:var(--accent-blue);">my-skill/</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--code-orange);">SKILL.md</span></div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">scripts/</span></div>
-        <div style="padding-left:40px;">│   └── validate.sh</div>
-        <div style="padding-left:20px;">├── <span style="color:var(--text);">examples/</span></div>
-        <div style="padding-left:40px;">│   └── sample.ts</div>
-        <div style="padding-left:20px;">└── <span style="color:var(--text);">docs/</span></div>
-        <div style="padding-left:40px;">    └── reference.md</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 5: How Copilot Uses Skills ─────────────────────────── -->
-<section class="slide" data-slide="4" data-section="skills" data-title="How Copilot Uses Skills">
-  <div class="content">
-    <h2 class="slide-title">How Copilot Uses Skills</h2>
-    <p class="slide-subtitle">Three progressive levels of engagement</p>
-    <div style="max-width:700px; width:100%; margin:0 auto;">
-      <div class="tier tier-1">
-        <span class="tier-label" style="color:var(--accent);">Level 1</span>
-        <h3>🔍 Skill Discovery</h3>
-        <p>Copilot reads <strong>name and description</strong> from YAML frontmatter. Lightweight metadata helps decide relevance to your prompt.</p>
-      </div>
-      <div class="tier tier-2">
-        <span class="tier-label" style="color:var(--accent-blue);">Level 2</span>
-        <h3>📖 Instructions Loading</h3>
-        <p>When request matches skill description, loads the <span class="mono">SKILL.md</span> body into context. Detailed instructions become available.</p>
-      </div>
-      <div class="tier tier-3">
-        <span class="tier-label" style="color:var(--success);">Level 3</span>
-        <h3>📂 Resource Access</h3>
-        <p>Access additional files — scripts, examples, documentation — <strong>only as needed</strong>. Maximum context efficiency.</p>
-      </div>
-    </div>
-    <div class="note-bar">✨ Skills are automatically activated based on your prompt — no manual selection needed.</div>
-  </div>
-  <div class="slide-notes">Learn more at agentskills.io — Skills are progressively loaded to keep context windows efficient.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 6: Custom Instructions Overview ─────────────────────────── -->
-<section class="slide" data-slide="5" data-section="skills" data-title="Custom Instructions">
-  <div class="content">
-    <h2 class="slide-title">Custom Instructions Overview</h2>
-    <p class="slide-subtitle">Three ways to customize Copilot behavior</p>
-    <div class="columns col-3">
-      <div class="card card-accent">
-        <span class="card-icon">⚙️</span>
-        <h3>Custom Instructions</h3>
-        <p>Specify instructions and preferences for <strong>any conversation</strong>. Always applied as global context.</p>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">📝</span>
-        <h3>Prompt Files</h3>
-        <p>Save common prompt instructions in Markdown files (<span class="mono">*.prompt.md</span>). Reusable and version-controlled.</p>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">🤖</span>
-        <h3>Custom Agents</h3>
-        <p>Specific instructions and tools the LLM follows when replying. Purpose-built AI experiences.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 7: Prompt File Techniques ─────────────────────────── -->
-<section class="slide" data-slide="6" data-section="skills" data-title="Prompt Files">
-  <div class="content">
-    <h2 class="slide-title">Prompt File Techniques</h2>
-    <p class="slide-subtitle">Key principles for effective prompt files</p>
-    <div style="max-width:700px; width:100%;">
-      <div class="icon-row">
-        <div class="icon">📎</div>
-        <div class="row-content">
-          <h4>Reference Other Files</h4>
-          <p>Link to the files and resources the task should use as context</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">🎯</div>
-        <div class="row-content">
-          <h4>Single, Clear Purpose</h4>
-          <p>Each prompt file should do one thing well — avoid overloading</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">📋</div>
-        <div class="row-content">
-          <h4>Describe WHAT and HOW</h4>
-          <p>Include both the objective and the approach to achieve it</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">🔗</div>
-        <div class="row-content">
-          <h4>Modular System</h4>
-          <p>Connect to your broader workflow — prompt files compose together</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 8: Custom Agents ─────────────────────────── -->
-<section class="slide" data-slide="7" data-section="skills" data-title="Custom Agents">
-  <div class="content">
-    <h2 class="slide-title">Custom Agents</h2>
-    <p class="slide-subtitle">Build purpose-specific AI assistants</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">💬</div>
-          <div class="row-content">
-            <h4>Description as Placeholder</h4>
-            <p>Description appears as placeholder text in the chat input</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔧</div>
-          <div class="row-content">
-            <h4>Configure Tools</h4>
-            <p>Specify which tools or tool sets are available</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🧠</div>
-          <div class="row-content">
-            <h4>Select AI Model</h4>
-            <p>Choose a particular model for each agent</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">📄</div>
-          <div class="row-content">
-            <h4>Markdown Instructions</h4>
-            <p>Instructions field supports full Markdown with links</p>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; min-height:200px;">
-        <div style="font-size:48px;">🏗️</div>
-        <h3 style="color:var(--text-title);">Purpose-Built Experiences</h3>
-        <div class="tool-pills" style="margin-top:8px;">
-          <span class="pill">Code Review</span>
-          <span class="pill blue">Architecture</span>
-          <span class="pill">Testing</span>
-          <span class="pill blue">Documentation</span>
-          <span class="pill">Migration</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 9: Copilot Spaces ─────────────────────────── -->
-<section class="slide" data-slide="8" data-section="skills" data-title="Copilot Spaces">
-  <div class="content">
-    <h2 class="slide-title">Copilot Spaces</h2>
-    <p class="slide-subtitle">Persistent, shareable AI workspaces with memory</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">📌</div>
-          <div class="row-content">
-            <h4>Attach Context</h4>
-            <p>Attach repositories, files, and instructions to create a reusable Copilot workspace</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">💾</div>
-          <div class="row-content">
-            <h4>Persistent Memory</h4>
-            <p>Spaces remember your attached context across conversations — no need to re-explain your project</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔗</div>
-          <div class="row-content">
-            <h4>Shareable</h4>
-            <p>Share Spaces with teammates for consistent AI-assisted workflows across your organization</p>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="display:flex; flex-direction:column; gap:16px; align-items:center; text-align:center; justify-content:center; min-height:200px;">
-        <div style="font-size:48px;">🌌</div>
-        <h3 style="color:var(--text-title);">Create a Space</h3>
-        <ul class="clean" style="text-align:left; width:100%; margin-top:4px;">
-          <li>Select repos &amp; files as context</li>
-          <li>Add custom instructions</li>
-          <li>Share with your team</li>
-        </ul>
-        <div class="note-bar" style="margin-top:8px; width:100%; text-align:left;">
-          Available in <strong>VS Code</strong> and <strong>GitHub.com</strong>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Copilot Spaces are like saved project workspaces with memory. Instead of re-explaining your codebase every conversation, attach repos and files once and share the Space with your team. Source: docs.github.com/en/copilot/using-github-copilot/copilot-spaces</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 10: Next Edit Suggestions ─────────────────────────── -->
-<section class="slide" data-slide="9" data-section="skills" data-title="Next Edit Suggestions">
-  <div class="content">
-    <h2 class="slide-title">Next Edit Suggestions <span class="muted" style="font-size:22px;">(NES)</span></h2>
-    <p class="slide-subtitle">Predictive editing — Copilot anticipates your next change</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">👁️</div>
-          <div class="row-content">
-            <h4>Watches Your Edits</h4>
-            <p>Copilot observes your changes and proactively suggests the next location that needs updating</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔁</div>
-          <div class="row-content">
-            <h4>Propagate Changes</h4>
-            <p>After renaming a variable, NES highlights the next occurrence and suggests the same change</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">⚡</div>
-          <div class="row-content">
-            <h4>One-Key Accept</h4>
-            <p>Accept the suggested next edit with <strong>Tab</strong> — keep your flow without breaking context</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-blue" style="text-align:center;">
-        <span class="card-icon" style="font-size:48px;">✨</span>
-        <h3>Ambient Completions</h3>
-        <p style="margin-top:12px;">NES works alongside inline completions — together they form Copilot's <strong>ambient editing layer</strong>: suggesting code as you type and predicting what you'll change next.</p>
-        <div class="note-bar blue-note" style="margin-top:16px; text-align:left;">
-          GA in <strong>VS Code</strong> &amp; <strong>Visual Studio</strong> &nbsp;·&nbsp; 🔵 Preview in <strong>JetBrains</strong>, <strong>Xcode</strong> &amp; <strong>Eclipse</strong>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Next Edit Suggestions is one of the most productivity-impacting completions features. It watches your edits and predicts where you need to make the same or similar change next — crucial for refactoring workflows. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-next-edit-suggestions-in-your-ide</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 11: Model Selection Guide ─────────────────────────── -->
-<section class="slide" data-slide="10" data-section="skills" data-title="Model Selection">
-  <div class="content">
-    <h2 class="slide-title">Model Selection Guide</h2>
-    <p class="slide-subtitle">Choose the right model for the task</p>
-    <div class="columns col-3" style="align-items:start;">
-      <div class="card card-accent">
-        <span class="card-icon">⚡</span>
-        <h3>Fast &amp; Focused</h3>
-        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
-        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">GPT-4o mini</span>
-          <span class="pill">o4-mini</span>
-          <span class="pill">Gemini 2.0 Flash</span>
-        </div>
-        <ul class="clean" style="margin-top:8px;">
-          <li>Code completion</li>
-          <li>Quick Q&amp;A</li>
-          <li>Simple refactors</li>
-        </ul>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">🧠</span>
-        <h3>Balanced</h3>
-        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
-        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill blue">GPT-4.1</span>
-          <span class="pill blue">Claude Sonnet 4.5</span>
-          <span class="pill blue">Gemini 2.5 Pro</span>
-        </div>
-        <ul class="clean" style="margin-top:8px;">
-          <li>Agent mode tasks</li>
-          <li>Code review</li>
-          <li>Multi-file edits</li>
-        </ul>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">🔭</span>
-        <h3>Deep Reasoning</h3>
-        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
-        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">o3</span>
-          <span class="pill">Claude 3.7 Sonnet</span>
-          <span class="pill">Claude Opus 4.5</span>
-        </div>
-        <ul class="clean" style="margin-top:8px;">
-          <li>Architecture decisions</li>
-          <li>Complex debugging</li>
-          <li>Extended thinking</li>
-        </ul>
-      </div>
-    </div>
-    <div class="note-bar" style="margin-top:20px;">
-      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
-    </div>
-  </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-4.1, Claude Sonnet 4.5, Gemini 2.5 Pro), and reasoning models like o3 or Claude Opus 4.5 for architecture and complex debugging. Extended thinking in Claude 3.7 Sonnet can significantly improve results for hard problems. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
-<section class="slide" data-section="skills" data-title="Vision & Multimodal">
-  <div class="content">
-    <h2 class="slide-title">Vision &amp; Multimodal Input</h2>
-    <p class="slide-subtitle">Attach images, mockups &amp; diagrams to Copilot Chat</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🖼️</div>
-          <div class="row-content">
-            <h4>Attach Images to Chat</h4>
-            <p>Drag and drop screenshots, UI mockups, or architecture diagrams directly into Copilot Chat</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🐛</div>
-          <div class="row-content">
-            <h4>Debug from Screenshots</h4>
-            <p>Paste a screenshot of an error or broken UI — Copilot analyzes it and suggests fixes</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🗂️</div>
-          <div class="row-content">
-            <h4>Design → Code</h4>
-            <p>Share a UI wireframe or Figma export and ask Copilot to generate the corresponding component code</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">👁️</span>
-        <h3>IDE Availability</h3>
-        <ul class="clean" style="margin-top:12px;">
-          <li>✅ <strong>Eclipse</strong> — GA</li>
-          <li>🔵 <strong>VS Code</strong> — Preview</li>
-          <li>🔵 <strong>JetBrains</strong> — Preview</li>
-          <li>🔵 <strong>Visual Studio</strong> — Preview</li>
-        </ul>
-        <div class="note-bar blue-note" style="margin-top:16px;">
-          Works with models that support vision (e.g. GPT-4.1, Claude Sonnet 4.5, Gemini 2.5 Pro)
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Vision/multimodal input lets you attach image files to Copilot Chat conversations. This is increasingly used for debugging visual issues, implementing UI mockups, and explaining complex architecture diagrams. GA in Eclipse; Preview in VS Code, JetBrains, and Visual Studio. Source: docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 12: Section - MCP ─────────────────────────── -->
-<section class="slide section-slide" data-slide="8" data-section="mcp" data-title="MCP">
-  <div class="glow-ring" style="top:30%; left:60%;"></div>
-  <div class="glow-ring" style="top:50%; left:35%; width:300px; height:300px; animation-delay:2s;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <h1 class="section-title">Model Context Protocol</h1>
-    <p class="section-tagline">Extend Copilot capabilities with an open standard</p>
-    <div class="columns col-3" style="max-width:700px; gap:32px; margin-top:40px;">
-      <div style="text-align:center;">
-        <div style="font-size:40px; margin-bottom:12px;">🔌</div>
-        <p style="font-size:14px; color:var(--text);">Extend Copilot<br>capabilities</p>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:40px; margin-bottom:12px;">🤝</div>
-        <p style="font-size:14px; color:var(--text);">Share context<br>with LLMs</p>
-      </div>
-      <div style="text-align:center;">
-        <div style="font-size:40px; margin-bottom:12px;">🛠️</div>
-        <p style="font-size:14px; color:var(--text);">Create new tools<br>&amp; services</p>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">MCP is an open standard — think of it like a USB-C port — a universal adapter for AI applications to connect to external tools and data sources.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 10: MCP Concepts 1 ─────────────────────────── -->
-<section class="slide" data-slide="9" data-section="mcp" data-title="Core Concepts 1">
-  <div class="content">
-    <h2 class="slide-title">Core MCP Concepts <span class="muted" style="font-size:20px;">Part 1</span></h2>
-    <p class="slide-subtitle">The three primary primitives</p>
-    <div class="columns col-3">
-      <div class="card card-accent" style="text-align:center;">
-        <span class="card-icon">📊</span>
-        <h3>Resources</h3>
-        <p>Servers expose <strong>data and content</strong> to the AI model. Files, databases, API responses — all accessible as resources.</p>
-      </div>
-      <div class="card card-blue" style="text-align:center;">
-        <span class="card-icon">💬</span>
-        <h3>Prompts</h3>
-        <p>Servers define <strong>reusable prompt templates</strong> and workflows. Standardized interactions for common tasks.</p>
-      </div>
-      <div class="card card-green" style="text-align:center;">
-        <span class="card-icon">🔧</span>
-        <h3>Tools</h3>
-        <p>LLMs <strong>interact with external systems</strong>, perform computations, and take actions in the real world.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 11: MCP Concepts 2 ─────────────────────────── -->
-<section class="slide" data-slide="10" data-section="mcp" data-title="Core Concepts 2">
-  <div class="content">
-    <h2 class="slide-title">Core MCP Concepts <span class="muted" style="font-size:20px;">Part 2</span></h2>
-    <p class="slide-subtitle">Supporting infrastructure</p>
-    <div class="columns col-3">
-      <div class="card card-orange" style="text-align:center;">
-        <span class="card-icon">🔄</span>
-        <h3>Sampling</h3>
-        <p>Servers request <strong>LLM completions</strong> through the client. Enables server-initiated AI interactions.</p>
-      </div>
-      <div class="card card-accent" style="text-align:center;">
-        <span class="card-icon">🌳</span>
-        <h3>Roots</h3>
-        <p>Define <strong>boundaries</strong> where servers can operate. Scoped access for security and context control.</p>
-      </div>
-      <div class="card card-blue" style="text-align:center;">
-        <span class="card-icon">🔀</span>
-        <h3>Transports</h3>
-        <p>The <strong>communication foundation</strong> between clients and servers. stdio, HTTP, and more.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 12: Generate Custom Instructions ─────────────────────────── -->
-<section class="slide" data-slide="11" data-section="mcp" data-title="Generate Instructions">
-  <div class="content">
-    <h2 class="slide-title">Generate Custom Instructions</h2>
-    <p class="slide-subtitle">Key techniques for effective instructions</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div class="card card-accent">
-        <span class="card-icon">✍️</span>
-        <h3>Write Short Statements</h3>
-        <p>Self-contained, clear, and actionable. Each instruction should stand on its own.</p>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">🏛️</span>
-        <h3>Coding Standards &amp; Patterns</h3>
-        <p>Focus on architectural patterns, naming conventions, and code organization preferences.</p>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">🔗</span>
-        <h3>Pair with Features</h3>
-        <p>Combine with code review, coding agent, and chat features for maximum impact.</p>
-      </div>
-      <div class="card card-orange">
-        <span class="card-icon">👥</span>
-        <h3>Team-Specific Standards</h3>
-        <p>Reflect your team's unique conventions, frameworks, and best practices.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 13: Copilot Extensions ─────────────────────────── -->
-<section class="slide" data-slide="12" data-section="mcp" data-title="Copilot Extensions">
-  <div class="content">
-    <h2 class="slide-title">Copilot Extensions</h2>
-    <p class="slide-subtitle">Third-party integrations via the GitHub Marketplace</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🏪</div>
-          <div class="row-content">
-            <h4>GitHub Marketplace</h4>
-            <p>Browse and install extensions from third-party vendors — no server setup required</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">💬</div>
-          <div class="row-content">
-            <h4>@extension-name in Chat</h4>
-            <p>Invoke extensions by name in Copilot Chat to bring external data and actions into context</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔌</div>
-          <div class="row-content">
-            <h4>Extensions vs MCP</h4>
-            <p>Extensions are <strong>installed via GitHub</strong> with OAuth permissions; MCP servers run <strong>locally or in your infra</strong></p>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; padding:28px;">
-        <div style="font-size:40px;">🛒</div>
-        <h3 style="color:var(--text-title);">Popular Extensions</h3>
-        <div class="tool-pills" style="margin-top:8px;">
-          <span class="pill">@datadog</span>
-          <span class="pill blue">@sentry</span>
-          <span class="pill">@docker</span>
-          <span class="pill blue">@atlassian</span>
-          <span class="pill">@azure</span>
-          <span class="pill blue">@hashicorp</span>
-        </div>
-        <div class="note-bar" style="margin-top:12px; width:100%; text-align:left;">
-          Find extensions at <span class="mono">github.com/marketplace</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Copilot Extensions are the third-party ecosystem — vendors build extensions that appear as @name in chat. Unlike MCP servers which you configure locally, Extensions are installed from the GitHub Marketplace and use OAuth for permissions. They're complementary to MCP — use Extensions for managed SaaS integrations and MCP for custom tooling.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 14: Knowledge Bases ─────────────────────────── -->
-<section class="slide" data-slide="13" data-section="mcp" data-title="Knowledge Bases">
-  <div class="content">
-    <h2 class="slide-title">Knowledge Bases</h2>
-    <p class="slide-subtitle">Enterprise: Index your internal docs for Copilot context</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🗂️</div>
-          <div class="row-content">
-            <h4>Index Internal Docs</h4>
-            <p>Connect wikis, documentation repos, and codebases as a searchable knowledge index</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🤖</div>
-          <div class="row-content">
-            <h4>Copilot Searches It</h4>
-            <p>Copilot automatically retrieves relevant content from your knowledge base during conversations</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔒</div>
-          <div class="row-content">
-            <h4>Enterprise &amp; Business</h4>
-            <p>Available on GitHub Copilot Enterprise/Business — managed in Organization or Enterprise settings</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">📚</span>
-        <h3>Use Cases</h3>
-        <ul class="clean" style="margin-top:12px;">
-          <li>Company coding standards wiki</li>
-          <li>Architecture decision records</li>
-          <li>Internal API documentation</li>
-          <li>Onboarding &amp; runbooks</li>
-          <li>Legacy codebase context</li>
-        </ul>
-        <div class="note-bar blue-note" style="margin-top:16px;">
-          Reduces hallucination on internal APIs &amp; frameworks
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Knowledge Bases are an Enterprise/Business feature that lets organizations index their internal documentation and codebases. Copilot can then reference this during conversations, reducing hallucinations on internal APIs and helping onboard new developers faster.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 15: GitHub Models ─────────────────────────── -->
-<section class="slide" data-slide="14" data-section="mcp" data-title="GitHub Models">
-  <div class="content">
-    <h2 class="slide-title">GitHub Models</h2>
-    <p class="slide-subtitle">Free AI model playground at github.com/marketplace/models</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🧪</div>
-          <div class="row-content">
-            <h4>Prompt Playground</h4>
-            <p>Test prompts against dozens of models side-by-side — GPT-4o, Llama, Mistral, Phi, and more</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">💻</div>
-          <div class="row-content">
-            <h4>Code Snippets</h4>
-            <p>Generate ready-to-use SDK code for any model and language — JavaScript, Python, C#, and more</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🆓</div>
-          <div class="row-content">
-            <h4>Free to Explore</h4>
-            <p>Included with GitHub — experiment with AI models without a separate API subscription</p>
-          </div>
-        </div>
-      </div>
-      <div class="card" style="text-align:center; padding:32px;">
-        <div style="font-size:48px; margin-bottom:16px;">🔬</div>
-        <h3 style="color:var(--text-title); margin-bottom:16px;">The GitHub AI Ecosystem</h3>
-        <div style="display:flex; flex-direction:column; gap:10px; text-align:left;">
-          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Copilot</span><span style="font-size:13px; color:var(--text-muted);">Integrated AI assistant</span></div>
-          <div style="display:flex; gap:10px; align-items:center;"><span class="pill blue">Models</span><span style="font-size:13px; color:var(--text-muted);">Model playground &amp; API</span></div>
-          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Extensions</span><span style="font-size:13px; color:var(--text-muted);">3rd-party marketplace</span></div>
-        </div>
-        <div class="note-bar" style="margin-top:16px; text-align:left;">
-          <span class="mono">github.com/marketplace/models</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">GitHub Models is a free model playground separate from Copilot. It's useful for prototyping prompts, comparing models, and generating API code snippets. Think of it as a sandbox for the AI models that power Copilot and other AI applications.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 16: Section - Coding Agent ─────────────────────────── -->
-<section class="slide section-slide" data-slide="12" data-section="coding-agent" data-title="Coding Agent">
-  <div class="glow-ring" style="top:35%; left:55%;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:64px; margin-bottom:20px;">🤖</div>
-    <h1 class="section-title">GitHub Copilot<br>Coding Agent</h1>
-    <p class="section-tagline">GitHub Copilot intermediate</p>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 14: What is the Coding Agent? ─────────────────────────── -->
-<section class="slide" data-slide="13" data-section="coding-agent" data-title="What is it?">
-  <div class="content">
-    <h2 class="slide-title">What is the Coding Agent?</h2>
-    <p class="slide-subtitle">An autonomous AI software development agent</p>
-    <div style="max-width:750px; width:100%;">
-      <div class="icon-row">
-        <div class="icon">🧠</div>
-        <div class="row-content">
-          <h4>AI-Powered Development</h4>
-          <p>Works autonomously on issues — plans, codes, tests, and iterates</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">⚡</div>
-        <div class="row-content">
-          <h4>Asynchronous Execution</h4>
-          <p>Operates in its own <strong>GitHub Actions-powered environment</strong> — no blocking your workflow</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">📋</div>
-        <div class="row-content">
-          <h4>Issue-Driven</h4>
-          <p>Assign it issues or tasks and continue working on other priorities</p>
-        </div>
-      </div>
-      <div class="icon-row">
-        <div class="icon">🔍</div>
-        <div class="row-content">
-          <h4>Deep Environment Access</h4>
-          <p>Full access to your VS Code environment — actively looks for what it needs</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 15: Agent Mode vs Coding Agent ─────────────────────────── -->
-<section class="slide" data-slide="14" data-section="coding-agent" data-title="Mode vs Agent">
-  <div class="content">
-    <h2 class="slide-title">Agent Mode vs Coding Agent vs Workspace</h2>
-    <p class="slide-subtitle">Three approaches to AI-assisted development</p>
-    <div class="columns col-3">
-      <div class="card card-accent">
-        <span class="card-icon" style="font-size:36px;">💻</span>
-        <h3>Agent Mode</h3>
-        <ul class="clean" style="margin-top:16px;">
-          <li>Iterates on code, runs tests locally</li>
-          <li><strong>Plan → Act → Observe</strong> workflow</li>
-          <li>Interactive — you're in the loop</li>
-          <li>Immediate feedback cycle</li>
-        </ul>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon" style="font-size:36px;">☁️</span>
-        <h3>Coding Agent</h3>
-        <ul class="clean" style="margin-top:16px;">
-          <li>Assign GitHub issues to Copilot</li>
-          <li>Reads <span class="mono">COPILOT.md</span> for project context</li>
-          <li>Works <strong>autonomously</strong> in GitHub Actions</li>
-          <li>Creates PRs when done</li>
-        </ul>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon" style="font-size:36px;">🗺️</span>
-        <h3>Copilot Workspace</h3>
-        <ul class="clean" style="margin-top:16px;">
-          <li>Start from an issue on GitHub.com</li>
-          <li>Collaborative plan + file tree diff</li>
-          <li>Review &amp; edit before committing</li>
-          <li>GA for Enterprise, browser-based</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Three distinct AI development modes: Agent Mode is interactive and local (great for iterating in your IDE), the Coding Agent is fully autonomous (assign issues, get PRs back), and Copilot Workspace is a collaborative planning experience on GitHub.com where you can shape the implementation before any code is committed.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 16: Custom Agents for Coding Agent ─────────────────────────── -->
-<section class="slide" data-slide="15" data-section="coding-agent" data-title="Custom Agents">
-  <div class="content">
-    <h2 class="slide-title">Custom Agents for the Coding Agent</h2>
-    <p class="slide-subtitle">Tailor autonomous behavior per workflow</p>
-    <div class="columns col-2" style="align-items:center;">
-      <div>
-        <div class="icon-row">
-          <div class="icon">🎯</div>
-          <div class="row-content">
-            <h4>Select or Create</h4>
-            <p>When assigning issues to Copilot, select or create a custom agent tailored to the task</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔄</div>
-          <div class="row-content">
-            <h4>Workflow-Specific</h4>
-            <p>Tailor agents to different workflows — e.g., Kubernetes architect, database migration specialist</p>
-          </div>
-        </div>
-      </div>
-      <div style="display:flex; flex-direction:column; gap:10px;">
-        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--accent);">
-          <div style="font-size:24px;">🏗️</div>
-          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Architecture Agent</div>
-        </div>
-        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--accent-blue);">
-          <div style="font-size:24px;">🐳</div>
-          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Kubernetes Agent</div>
-        </div>
-        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--success);">
-          <div style="font-size:24px;">🧪</div>
-          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Testing Agent</div>
-        </div>
-        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--code-orange);">
-          <div style="font-size:24px;">📝</div>
-          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Docs Agent</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 17: COPILOT.md Instructions ─────────────────────────── -->
-<section class="slide" data-slide="16" data-section="coding-agent" data-title="COPILOT.md">
-  <div class="content">
-    <h2 class="slide-title">COPILOT.md Instructions File</h2>
-    <p class="slide-subtitle">Configure autonomous agent behavior per repository</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">📄</div>
-          <div class="row-content">
-            <h4>Repository Root File</h4>
-            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the coding agent reads it automatically on every run</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔧</div>
-          <div class="row-content">
-            <h4>What to Include</h4>
-            <p>Testing commands, build steps, architecture overview, do/don't rules, and project-specific conventions</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🆚</div>
-          <div class="row-content">
-            <h4>vs copilot-instructions.md</h4>
-            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous coding agent</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-accent">
-        <h3>Example COPILOT.md</h3>
-        <div style="margin-top:12px; background:var(--bg-primary); border-radius:8px; padding:14px; font-family:var(--font-mono); font-size:12px; line-height:1.7; color:var(--text-muted);">
-          <div><span style="color:var(--accent);"># Project: MyApp</span></div>
-          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Build &amp; Test</span></div>
-          <div>- Run: <span style="color:var(--code-orange);">npm test</span></div>
-          <div>- Lint: <span style="color:var(--code-orange);">npm run lint</span></div>
-          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Architecture</span></div>
-          <div>- REST API in <span style="color:var(--code-orange);">src/api/</span></div>
-          <div>- React frontend in <span style="color:var(--code-orange);">src/ui/</span></div>
-          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Rules</span></div>
-          <div>- Never modify migration files</div>
-          <div>- Tests required for all PRs</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
-<section class="slide" data-slide="17" data-section="coding-agent" data-title="Code Review">
-  <div class="content">
-    <h2 class="slide-title">Copilot Code Review</h2>
-    <p class="slide-subtitle">AI-powered PR review — inline comments, suggestions &amp; summaries</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">💬</div>
-          <div class="row-content">
-            <h4>Inline PR Comments</h4>
-            <p>Copilot reviews pull requests on GitHub.com and leaves specific, actionable inline comments</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">✨</div>
-          <div class="row-content">
-            <h4>Suggested Changes</h4>
-            <p>One-click code suggestions — authors can accept, edit, or dismiss Copilot's proposed fixes</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">📋</div>
-          <div class="row-content">
-            <h4>Diff Summary</h4>
-            <p>Copilot summarizes what changed, why it matters, and highlights areas needing human attention</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-blue" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
-        <div style="font-size:48px;">🔍</div>
-        <h3 style="color:var(--text-title);">Enable Code Review</h3>
-        <ul class="clean" style="text-align:left; width:100%;">
-          <li>Org / Repo Settings → Copilot</li>
-          <li>Enable "Automatic code review"</li>
-          <li>Request review from <strong>Copilot</strong> on any PR</li>
-        </ul>
-        <div class="note-bar blue-note" style="width:100%; text-align:left; margin-top:8px;">
-          Works alongside human reviewers — catches issues early so humans can focus on design &amp; logic
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Copilot Code Review is enabled in repository or organization settings. Once enabled, you can request Copilot as a reviewer on any PR. It provides inline comments with suggested code changes that authors can accept with one click. It's designed to complement human review, not replace it.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE: Copilot PR Summaries ─────────────────────────── -->
-<section class="slide" data-section="coding-agent" data-title="PR Summaries">
-  <div class="content">
-    <h2 class="slide-title">Copilot PR Summaries</h2>
-    <p class="slide-subtitle">Auto-generate pull request descriptions from your diffs</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">✍️</div>
-          <div class="row-content">
-            <h4>Auto-Generate Descriptions</h4>
-            <p>Click the Copilot ✨ icon in the PR description field — Copilot analyzes your diffs and commits to draft a summary</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">📋</div>
-          <div class="row-content">
-            <h4>Highlights Key Changes</h4>
-            <p>Generates a structured overview with a brief summary and bullet-pointed highlights — reviewers get context fast</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🔄</div>
-          <div class="row-content">
-            <h4>Works Everywhere</h4>
-            <p>Available on GitHub.com, VS Code, Visual Studio, and the Copilot CLI — wherever you open a PR</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-blue" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
-        <div style="font-size:48px;">📝</div>
-        <h3 style="color:var(--text-title);">Workflow</h3>
-        <ul class="clean" style="text-align:left; width:100%;">
-          <li>Push your branch &amp; open a PR</li>
-          <li>Click ✨ in the description field</li>
-          <li>Review &amp; edit the draft</li>
-          <li>Submit — reviewers are up to speed</li>
-        </ul>
-        <div class="note-bar blue-note" style="width:100%; text-align:left; margin-top:8px;">
-          Available on paid plans (Pro, Business, Enterprise) &nbsp;·&nbsp; Not included in Copilot Free
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Copilot PR Summaries let you auto-generate a pull request description by clicking the sparkle icon in the PR description box. Copilot reads your diffs and commit history to produce a structured draft — saving time and improving reviewer context. Available on GitHub.com and in VS Code / Visual Studio. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-pull-requests</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 19: Copilot Autofix ─────────────────────────── -->
-<section class="slide" data-slide="18" data-section="coding-agent" data-title="Autofix">
-  <div class="content">
-    <h2 class="slide-title">Copilot Autofix</h2>
-    <p class="slide-subtitle">Automatic security vulnerability remediation</p>
-    <div class="columns col-2" style="align-items:start;">
-      <div style="display:flex; flex-direction:column; gap:12px;">
-        <div class="icon-row">
-          <div class="icon">🔒</div>
-          <div class="row-content">
-            <h4>Integrated with Code Scanning</h4>
-            <p>When GitHub Advanced Security detects a vulnerability, Copilot automatically generates a suggested fix</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">⚡</div>
-          <div class="row-content">
-            <h4>One-Click Remediation</h4>
-            <p>Suggested fixes appear as PR comments — developers can accept, edit, or reject with a single click</p>
-          </div>
-        </div>
-        <div class="icon-row">
-          <div class="icon">🛡️</div>
-          <div class="row-content">
-            <h4>Shift Left Security</h4>
-            <p>Fixes security issues at the PR stage before they reach production — developer-friendly and fast</p>
-          </div>
-        </div>
-      </div>
-      <div class="card card-orange" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center;">
-        <div style="font-size:48px;">🩹</div>
-        <h3 style="color:var(--text-title);">Supported Alerts</h3>
-        <div class="tool-pills" style="margin-top:8px; justify-content:center;">
-          <span class="pill">SQL Injection</span>
-          <span class="pill blue">XSS</span>
-          <span class="pill">Path Traversal</span>
-          <span class="pill blue">SSRF</span>
-          <span class="pill">Hardcoded Secrets</span>
-        </div>
-        <div class="note-bar" style="margin-top:12px; width:100%; text-align:left; border-left-color:var(--code-orange); background:rgba(240,136,62,0.1);">
-          Requires <strong>GitHub Advanced Security</strong> (GHAS)
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Copilot Autofix is integrated with GitHub Advanced Security's code scanning. When a CodeQL alert fires on a PR, Copilot generates a fix automatically. This dramatically reduces the time from detection to remediation and makes security accessible to developers who may not be security experts.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 20: Agent Architecture ─────────────────────────── -->
-<section class="slide" data-slide="16" data-section="coding-agent" data-title="Architecture">
-  <div class="content">
-    <h2 class="slide-title">Agent Architecture</h2>
-    <p class="slide-subtitle">Under the hood of agent mode</p>
-    <div style="max-width:800px; width:100%;">
-      <!-- Top row -->
-      <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:8px; align-items:center;">
-        <div class="arch-box" style="border-color:var(--text-muted);">🖥️ Machine</div>
-        <div style="color:var(--accent); font-size:20px;">→</div>
-        <div class="arch-box blue-border">📂 Workspace</div>
-        <div style="color:var(--accent); font-size:20px;">→</div>
-        <div class="arch-box accent-border">🤖 Copilot<br><span style="font-size:11px; color:var(--text-muted);">+ User</span></div>
-      </div>
-      <!-- Arrow down -->
-      <div class="arch-arrow">⬇</div>
-      <!-- LLM Loop -->
-      <div class="arch-box accent-border" style="padding:20px;">
-        <div style="font-size:15px; font-weight:700; color:var(--accent); margin-bottom:12px;">🔄 LLM Loop</div>
-        <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Prompt → Streamed Results → Tool Calls → Tool Results → Repeat</div>
-        <div class="tool-pills">
-          <span class="pill">run_in_terminal</span>
-          <span class="pill">edit_file</span>
-          <span class="pill">read_file</span>
-          <span class="pill blue">search</span>
-          <span class="pill blue">list_files</span>
-          <span class="pill">browser</span>
-        </div>
-      </div>
-      <!-- Arrow down -->
-      <div class="arch-arrow">⬇</div>
-      <!-- Bottom -->
-      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
-        <div class="arch-box" style="font-size:12px;">🌐 OS Context</div>
-        <div class="arch-box" style="font-size:12px;">🔧 Tool Call</div>
-        <div class="arch-box" style="font-size:12px;">📋 Tool Results</div>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">At its core, agent mode orchestrates tools using a system prompt. It parses requests, plans, executes, detects errors, and auto-corrects in a continuous loop.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 18: Section - Agent Management ─────────────────────────── -->
-<section class="slide section-slide" data-slide="17" data-section="agent-mgmt" data-title="Agent Management">
-  <div class="glow-ring" style="top:40%; left:50%;"></div>
-  <div style="text-align:center; position:relative; z-index:1;">
-    <div style="font-size:64px; margin-bottom:20px;">🎛️</div>
-    <h1 class="section-title">GitHub Copilot<br>Agent Management</h1>
-    <p class="section-tagline">Orchestrating AI agents for complex workflows</p>
-  </div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 19: Single vs Multi Session ─────────────────────────── -->
-<section class="slide" data-slide="18" data-section="agent-mgmt" data-title="Sessions">
-  <div class="content">
-    <h2 class="slide-title">Single vs Multiple Sessions</h2>
-    <p class="slide-subtitle">Choosing the right approach for your task</p>
-    <div class="columns col-2 comparison" style="position:relative;">
-      <div class="card card-accent">
-        <span class="card-icon" style="font-size:32px;">⚡</span>
-        <h3>Single-Session</h3>
-        <ul class="clean" style="margin-top:12px;">
-          <li>Ideal for tasks under 30 minutes</li>
-          <li>Clear scope, uninterrupted focus</li>
-          <li>Self-contained deliverables</li>
-          <li>Agent maintains full context</li>
-        </ul>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon" style="font-size:32px;">🔄</span>
-        <h3>Multi-Session</h3>
-        <ul class="clean" style="margin-top:12px;">
-          <li>Tasks exceeding context window limits</li>
-          <li>Require breaks between phases</li>
-          <li>Involve debugging cycles</li>
-          <li>Work persists through handoff documents</li>
-        </ul>
-      </div>
-      <div class="vs-badge" style="font-size:14px;">VS</div>
-    </div>
-  </div>
-  <div class="slide-notes">Think of single-session as a sprint and multi-session as a relay race. Each has its strengths depending on task complexity.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 20: Sequential Orchestration ─────────────────────────── -->
-<section class="slide" data-slide="19" data-section="agent-mgmt" data-title="Sequential">
-  <div class="content">
-    <h2 class="slide-title">Sequential Orchestration</h2>
-    <p class="slide-subtitle">Ordered pipelines where outputs feed inputs</p>
-    <div style="max-width:700px; width:100%;">
-      <div class="tier tier-1">
-        <span class="tier-label" style="color:var(--accent);">Pattern 1</span>
-        <h3>🔗 Linear Pipeline</h3>
-        <p><strong>Scout → Scribe → Builder</strong> — strict ordered execution. Each agent specializes in one phase.</p>
-      </div>
-      <div class="tier tier-2">
-        <span class="tier-label" style="color:var(--accent-blue);">Pattern 2</span>
-        <h3>📊 Dependency-Driven Order</h3>
-        <p>Each agent's output feeds the next. Data flows through the pipeline with clear input/output contracts.</p>
-      </div>
-      <div class="tier tier-3">
-        <span class="tier-label" style="color:var(--success);">Pattern 3</span>
-        <h3>🛡️ Quality Gates</h3>
-        <p>Ensure flawed outputs don't cascade. Validation checkpoints between each stage prevent error propagation.</p>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Sequential orchestration is your default when outputs feed inputs. Think assembly line — each station adds value.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 21: Parallel Orchestration ─────────────────────────── -->
-<section class="slide" data-slide="20" data-section="agent-mgmt" data-title="Parallel">
-  <div class="content">
-    <h2 class="slide-title">Parallel Orchestration</h2>
-    <p class="slide-subtitle">Maximize throughput with concurrent agents</p>
-    <div class="columns col-3">
-      <div class="card card-accent" style="text-align:center;">
-        <span class="card-icon">⚡</span>
-        <h3>Simultaneous Execution</h3>
-        <p>Reduces total time for independent tasks. Run multiple agents at once for maximum throughput.</p>
-      </div>
-      <div class="card card-blue" style="text-align:center;">
-        <span class="card-icon">🔍</span>
-        <h3>Independent Task ID</h3>
-        <p>Analyze inputs/outputs to identify parallelizable work. Not everything can run concurrently.</p>
-      </div>
-      <div class="card card-green" style="text-align:center;">
-        <span class="card-icon">🗺️</span>
-        <h3>Dependency Mapping</h3>
-        <p>Visual graph showing blocking relationships. Find the critical path and shorten it.</p>
-      </div>
-    </div>
-    <div style="margin-top:24px; text-align:center;">
-      <div style="display:inline-flex; gap:8px; align-items:center; font-size:14px;">
-        <span class="pill">Agent A</span>
-        <span class="pill">Agent B</span>
-        <span class="pill">Agent C</span>
-        <span style="color:var(--text-muted); font-size:20px;">⟹</span>
-        <span class="pill blue">Merge</span>
-        <span style="color:var(--text-muted); font-size:20px;">⟹</span>
-        <span class="pill" style="background:rgba(63,185,80,0.15); color:var(--success); border-color:rgba(63,185,80,0.3);">Result</span>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">Parallel orchestration is about finding the critical path and shortening it. Independent tasks should always run concurrently.</div>
-</section>
-
-<!-- ─────────────────────────── SLIDE 22: Workflows & Handoff ─────────────────────────── -->
-<section class="slide" data-slide="21" data-section="agent-mgmt" data-title="Handoffs">
-  <div class="content">
-    <h2 class="slide-title">Workflows &amp; Handoff Documents</h2>
-    <p class="slide-subtitle">Preserving context across sessions</p>
-    <div class="columns col-3">
-      <div class="card card-accent">
-        <span class="card-icon">📋</span>
-        <h3>Copy-Paste Ready Prompts</h3>
-        <p>Next session prompt should <strong>work immediately</strong>. No manual setup or context rebuilding required.</p>
-      </div>
-      <div class="card card-blue">
-        <span class="card-icon">🗂️</span>
-        <h3>Structured Context</h3>
-        <p>Clear sections for <strong>what's done</strong>, what's pending, and key decisions made along the way.</p>
-      </div>
-      <div class="card card-green">
-        <span class="card-icon">📦</span>
-        <h3>Explicit Artifact Tracking</h3>
-        <p>List every file <strong>created, modified, or deleted</strong> with explanations for each change.</p>
-      </div>
-    </div>
-  </div>
-  <div class="slide-notes">The handoff document is your insurance policy against context loss. Treat it as the single source of truth between sessions.</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 23: Section - CLI ─────────────────────────── -->
@@ -2663,8 +1525,1280 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 33: Thank You ─────────────────────────── -->
-<section class="slide section-slide" data-slide="32" data-section="cli-customize" data-title="Thank You">
+
+<!-- ─────────────────────────── SECTION: Skills & Instructions ─────────────────────────── -->
+<section class="slide section-slide" data-section="skills" data-title="Skills & Instructions">
+  <div class="glow-ring" style="top:30%; left:50%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">⚡</div>
+    <h1 class="section-title">GitHub Copilot<br>Skills &amp; Instructions</h1>
+    <p class="section-tagline" style="margin-bottom:32px;">Customize Copilot with skills, instructions, prompt files, and custom agents</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 3: Skills vs Instructions ─────────────────────────── -->
+<section class="slide" data-slide="2" data-section="skills" data-title="Skills vs Instructions">
+  <div class="content">
+    <h2 class="slide-title">Skills vs Custom Instructions</h2>
+    <p class="slide-subtitle">Two complementary customization approaches</p>
+    <div class="columns col-2 comparison" style="position:relative;">
+      <div class="card card-accent">
+        <span class="card-icon" style="font-size:36px;">⚡</span>
+        <h3>Agent Skills</h3>
+        <table style="width:100%; font-size:14px; border-collapse:collapse;">
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border); width:110px;">Purpose</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Teach specialized capabilities &amp; workflows</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">VS Code, Copilot CLI, &amp; coding agent</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Content</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Instructions, scripts, examples &amp; resources</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Scope</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Task-specific, loaded on-demand</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0;">Standard</td><td style="padding:8px 0;">Open standard (<span class="mono">agentskills.io</span>)</td></tr>
+        </table>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon" style="font-size:36px;">📋</span>
+        <h3>Custom Instructions</h3>
+        <table style="width:100%; font-size:14px; border-collapse:collapse;">
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border); width:110px;">Purpose</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Define coding standards &amp; guidelines</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Supported IDE's and GitHub.com only</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Content</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Instructions only</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Scope</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Always applied (or via glob patterns)</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0;">Standard</td><td style="padding:8px 0;">IDE-specific</td></tr>
+        </table>
+      </div>
+      <div class="vs-badge">VS</div>
+    </div>
+  </div>
+  <div class="slide-notes">Skills are portable and task-specific; custom instructions are always-on guidelines. They complement each other perfectly.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 4: How to Create Skills ─────────────────────────── -->
+<section class="slide" data-slide="3" data-section="skills" data-title="How to Create Skills">
+  <div class="content">
+    <h2 class="slide-title">How to Create Skills</h2>
+    <p class="slide-subtitle">Simple file-based structure</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div>
+        <div class="icon-row">
+          <div class="icon">📁</div>
+          <div class="row-content">
+            <h4>Directory-Based</h4>
+            <p>Stored in supported directories with a <span class="mono">SKILL.md</span> file as the entry point</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🏠</div>
+          <div class="row-content">
+            <h4>Personal Skills</h4>
+            <p>Store in <span class="mono">~/.copilot/skills/</span> or <span class="mono">~/.claude/skills/</span> (legacy)</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📦</div>
+          <div class="row-content">
+            <h4>Rich Resources</h4>
+            <p>Optionally add scripts, examples, or other resources to the skill directory</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--bg-tertiary); font-family:var(--font-mono); font-size:13px; line-height:2.2; color:var(--text-muted);">
+        <div style="color:var(--accent-blue);">my-skill/</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--code-orange);">SKILL.md</span></div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">scripts/</span></div>
+        <div style="padding-left:40px;">│   └── validate.sh</div>
+        <div style="padding-left:20px;">├── <span style="color:var(--text);">examples/</span></div>
+        <div style="padding-left:40px;">│   └── sample.ts</div>
+        <div style="padding-left:20px;">└── <span style="color:var(--text);">docs/</span></div>
+        <div style="padding-left:40px;">    └── reference.md</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 5: How Copilot Uses Skills ─────────────────────────── -->
+<section class="slide" data-slide="4" data-section="skills" data-title="How Copilot Uses Skills">
+  <div class="content">
+    <h2 class="slide-title">How Copilot Uses Skills</h2>
+    <p class="slide-subtitle">Three progressive levels of engagement</p>
+    <div style="max-width:700px; width:100%; margin:0 auto;">
+      <div class="tier tier-1">
+        <span class="tier-label" style="color:var(--accent);">Level 1</span>
+        <h3>🔍 Skill Discovery</h3>
+        <p>Copilot reads <strong>name and description</strong> from YAML frontmatter. Lightweight metadata helps decide relevance to your prompt.</p>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-label" style="color:var(--accent-blue);">Level 2</span>
+        <h3>📖 Instructions Loading</h3>
+        <p>When request matches skill description, loads the <span class="mono">SKILL.md</span> body into context. Detailed instructions become available.</p>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-label" style="color:var(--success);">Level 3</span>
+        <h3>📂 Resource Access</h3>
+        <p>Access additional files — scripts, examples, documentation — <strong>only as needed</strong>. Maximum context efficiency.</p>
+      </div>
+    </div>
+    <div class="note-bar">✨ Skills are automatically activated based on your prompt — no manual selection needed.</div>
+  </div>
+  <div class="slide-notes">Learn more at agentskills.io — Skills are progressively loaded to keep context windows efficient.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 6: Custom Instructions Overview ─────────────────────────── -->
+<section class="slide" data-slide="5" data-section="skills" data-title="Custom Instructions">
+  <div class="content">
+    <h2 class="slide-title">Custom Instructions Overview</h2>
+    <p class="slide-subtitle">Three ways to customize Copilot behavior</p>
+    <div class="columns col-3">
+      <div class="card card-accent">
+        <span class="card-icon">⚙️</span>
+        <h3>Custom Instructions</h3>
+        <p>Specify instructions and preferences for <strong>any conversation</strong>. Always applied as global context.</p>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">📝</span>
+        <h3>Prompt Files</h3>
+        <p>Save common prompt instructions in Markdown files (<span class="mono">*.prompt.md</span>). Reusable and version-controlled.</p>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">🤖</span>
+        <h3>Custom Agents</h3>
+        <p>Specific instructions and tools the LLM follows when replying. Purpose-built AI experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 7: Prompt File Techniques ─────────────────────────── -->
+<section class="slide" data-slide="6" data-section="skills" data-title="Prompt Files">
+  <div class="content">
+    <h2 class="slide-title">Prompt File Techniques</h2>
+    <p class="slide-subtitle">Key principles for effective prompt files</p>
+    <div style="max-width:700px; width:100%;">
+      <div class="icon-row">
+        <div class="icon">📎</div>
+        <div class="row-content">
+          <h4>Reference Other Files</h4>
+          <p>Link to the files and resources the task should use as context</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">🎯</div>
+        <div class="row-content">
+          <h4>Single, Clear Purpose</h4>
+          <p>Each prompt file should do one thing well — avoid overloading</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">📋</div>
+        <div class="row-content">
+          <h4>Describe WHAT and HOW</h4>
+          <p>Include both the objective and the approach to achieve it</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">🔗</div>
+        <div class="row-content">
+          <h4>Modular System</h4>
+          <p>Connect to your broader workflow — prompt files compose together</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 8: Custom Agents ─────────────────────────── -->
+<section class="slide" data-slide="7" data-section="skills" data-title="Custom Agents">
+  <div class="content">
+    <h2 class="slide-title">Custom Agents</h2>
+    <p class="slide-subtitle">Build purpose-specific AI assistants</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">💬</div>
+          <div class="row-content">
+            <h4>Description as Placeholder</h4>
+            <p>Description appears as placeholder text in the chat input</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔧</div>
+          <div class="row-content">
+            <h4>Configure Tools</h4>
+            <p>Specify which tools or tool sets are available</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🧠</div>
+          <div class="row-content">
+            <h4>Select AI Model</h4>
+            <p>Choose a particular model for each agent</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📄</div>
+          <div class="row-content">
+            <h4>Markdown Instructions</h4>
+            <p>Instructions field supports full Markdown with links</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; min-height:200px;">
+        <div style="font-size:48px;">🏗️</div>
+        <h3 style="color:var(--text-title);">Purpose-Built Experiences</h3>
+        <div class="tool-pills" style="margin-top:8px;">
+          <span class="pill">Code Review</span>
+          <span class="pill blue">Architecture</span>
+          <span class="pill">Testing</span>
+          <span class="pill blue">Documentation</span>
+          <span class="pill">Migration</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 9: Copilot Spaces ─────────────────────────── -->
+<section class="slide" data-slide="8" data-section="skills" data-title="Copilot Spaces">
+  <div class="content">
+    <h2 class="slide-title">Copilot Spaces</h2>
+    <p class="slide-subtitle">Persistent, shareable AI workspaces with memory</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">📌</div>
+          <div class="row-content">
+            <h4>Attach Context</h4>
+            <p>Attach repositories, files, and instructions to create a reusable Copilot workspace</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">💾</div>
+          <div class="row-content">
+            <h4>Persistent Memory</h4>
+            <p>Spaces remember your attached context across conversations — no need to re-explain your project</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔗</div>
+          <div class="row-content">
+            <h4>Shareable</h4>
+            <p>Share Spaces with teammates for consistent AI-assisted workflows across your organization</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="display:flex; flex-direction:column; gap:16px; align-items:center; text-align:center; justify-content:center; min-height:200px;">
+        <div style="font-size:48px;">🌌</div>
+        <h3 style="color:var(--text-title);">Create a Space</h3>
+        <ul class="clean" style="text-align:left; width:100%; margin-top:4px;">
+          <li>Select repos &amp; files as context</li>
+          <li>Add custom instructions</li>
+          <li>Share with your team</li>
+        </ul>
+        <div class="note-bar" style="margin-top:8px; width:100%; text-align:left;">
+          Available in <strong>VS Code</strong> and <strong>GitHub.com</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Spaces are like saved project workspaces with memory. Instead of re-explaining your codebase every conversation, attach repos and files once and share the Space with your team. Source: docs.github.com/en/copilot/using-github-copilot/copilot-spaces</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 10: Next Edit Suggestions ─────────────────────────── -->
+<section class="slide" data-slide="9" data-section="skills" data-title="Next Edit Suggestions">
+  <div class="content">
+    <h2 class="slide-title">Next Edit Suggestions <span class="muted" style="font-size:22px;">(NES)</span></h2>
+    <p class="slide-subtitle">Predictive editing — Copilot anticipates your next change</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">👁️</div>
+          <div class="row-content">
+            <h4>Watches Your Edits</h4>
+            <p>Copilot observes your changes and proactively suggests the next location that needs updating</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔁</div>
+          <div class="row-content">
+            <h4>Propagate Changes</h4>
+            <p>After renaming a variable, NES highlights the next occurrence and suggests the same change</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⚡</div>
+          <div class="row-content">
+            <h4>One-Key Accept</h4>
+            <p>Accept the suggested next edit with <strong>Tab</strong> — keep your flow without breaking context</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue" style="text-align:center;">
+        <span class="card-icon" style="font-size:48px;">✨</span>
+        <h3>Ambient Completions</h3>
+        <p style="margin-top:12px;">NES works alongside inline completions — together they form Copilot's <strong>ambient editing layer</strong>: suggesting code as you type and predicting what you'll change next.</p>
+        <div class="note-bar blue-note" style="margin-top:16px; text-align:left;">
+          GA in <strong>VS Code</strong> &amp; <strong>Visual Studio</strong> &nbsp;·&nbsp; 🔵 Preview in <strong>JetBrains</strong>, <strong>Xcode</strong> &amp; <strong>Eclipse</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Next Edit Suggestions is one of the most productivity-impacting completions features. It watches your edits and predicts where you need to make the same or similar change next — crucial for refactoring workflows. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-your-ide/using-next-edit-suggestions-in-your-ide</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 11: Model Selection Guide ─────────────────────────── -->
+<section class="slide" data-slide="10" data-section="skills" data-title="Model Selection">
+  <div class="content">
+    <h2 class="slide-title">Model Selection Guide</h2>
+    <p class="slide-subtitle">Choose the right model for the task</p>
+    <div class="columns col-3" style="align-items:start;">
+      <div class="card card-accent">
+        <span class="card-icon">⚡</span>
+        <h3>Fast &amp; Focused</h3>
+        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
+        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
+          <span class="pill">GPT-4o mini</span>
+          <span class="pill">o4-mini</span>
+          <span class="pill">Gemini 2.0 Flash</span>
+        </div>
+        <ul class="clean" style="margin-top:8px;">
+          <li>Code completion</li>
+          <li>Quick Q&amp;A</li>
+          <li>Simple refactors</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🧠</span>
+        <h3>Balanced</h3>
+        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
+        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
+          <span class="pill blue">GPT-5</span>
+          <span class="pill blue">GPT-4.1</span>
+          <span class="pill blue">Claude Sonnet 4</span>
+          <span class="pill blue">Gemini 2.5 Pro</span>
+        </div>
+        <ul class="clean" style="margin-top:8px;">
+          <li>Agent mode tasks</li>
+          <li>Code review</li>
+          <li>Multi-file edits</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">🔭</span>
+        <h3>Deep Reasoning</h3>
+        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
+        <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
+          <span class="pill">o3</span>
+          <span class="pill">Claude Sonnet 4.5</span>
+          <span class="pill">Claude Opus 4.5</span>
+        </div>
+        <ul class="clean" style="margin-top:8px;">
+          <li>Architecture decisions</li>
+          <li>Complex debugging</li>
+          <li>Extended thinking</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note-bar" style="margin-top:20px;">
+      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
+    </div>
+  </div>
+  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
+<section class="slide" data-section="skills" data-title="Vision & Multimodal">
+  <div class="content">
+    <h2 class="slide-title">Vision &amp; Multimodal Input</h2>
+    <p class="slide-subtitle">Attach images, mockups &amp; diagrams to Copilot Chat</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🖼️</div>
+          <div class="row-content">
+            <h4>Attach Images to Chat</h4>
+            <p>Drag and drop screenshots, UI mockups, or architecture diagrams directly into Copilot Chat</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🐛</div>
+          <div class="row-content">
+            <h4>Debug from Screenshots</h4>
+            <p>Paste a screenshot of an error or broken UI — Copilot analyzes it and suggests fixes</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🗂️</div>
+          <div class="row-content">
+            <h4>Design → Code</h4>
+            <p>Share a UI wireframe or Figma export and ask Copilot to generate the corresponding component code</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">👁️</span>
+        <h3>IDE Availability</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>✅ <strong>VS Code</strong> — GA</li>
+          <li>✅ <strong>JetBrains</strong> — GA</li>
+          <li>✅ <strong>Visual Studio</strong> — GA</li>
+          <li>✅ <strong>Eclipse</strong> — GA</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Works with models that support vision (e.g. GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Vision/multimodal input lets you attach image files to Copilot Chat conversations. This is increasingly used for debugging visual issues, implementing UI mockups, and explaining complex architecture diagrams. Now GA in VS Code, JetBrains, Visual Studio, and Eclipse. Source: docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 12: Section - MCP ─────────────────────────── -->
+<section class="slide section-slide" data-slide="8" data-section="mcp" data-title="MCP">
+  <div class="glow-ring" style="top:30%; left:60%;"></div>
+  <div class="glow-ring" style="top:50%; left:35%; width:300px; height:300px; animation-delay:2s;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <h1 class="section-title">Model Context Protocol</h1>
+    <p class="section-tagline">Extend Copilot capabilities with an open standard</p>
+    <div class="columns col-3" style="max-width:700px; gap:32px; margin-top:40px;">
+      <div style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:12px;">🔌</div>
+        <p style="font-size:14px; color:var(--text);">Extend Copilot<br>capabilities</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:12px;">🤝</div>
+        <p style="font-size:14px; color:var(--text);">Share context<br>with LLMs</p>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:40px; margin-bottom:12px;">🛠️</div>
+        <p style="font-size:14px; color:var(--text);">Create new tools<br>&amp; services</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">MCP is an open standard — think of it like a USB-C port — a universal adapter for AI applications to connect to external tools and data sources.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 10: MCP Concepts 1 ─────────────────────────── -->
+<section class="slide" data-slide="9" data-section="mcp" data-title="Core Concepts 1">
+  <div class="content">
+    <h2 class="slide-title">Core MCP Concepts <span class="muted" style="font-size:20px;">Part 1</span></h2>
+    <p class="slide-subtitle">The three primary primitives</p>
+    <div class="columns col-3">
+      <div class="card card-accent" style="text-align:center;">
+        <span class="card-icon">📊</span>
+        <h3>Resources</h3>
+        <p>Servers expose <strong>data and content</strong> to the AI model. Files, databases, API responses — all accessible as resources.</p>
+      </div>
+      <div class="card card-blue" style="text-align:center;">
+        <span class="card-icon">💬</span>
+        <h3>Prompts</h3>
+        <p>Servers define <strong>reusable prompt templates</strong> and workflows. Standardized interactions for common tasks.</p>
+      </div>
+      <div class="card card-green" style="text-align:center;">
+        <span class="card-icon">🔧</span>
+        <h3>Tools</h3>
+        <p>LLMs <strong>interact with external systems</strong>, perform computations, and take actions in the real world.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 11: MCP Concepts 2 ─────────────────────────── -->
+<section class="slide" data-slide="10" data-section="mcp" data-title="Core Concepts 2">
+  <div class="content">
+    <h2 class="slide-title">Core MCP Concepts <span class="muted" style="font-size:20px;">Part 2</span></h2>
+    <p class="slide-subtitle">Supporting infrastructure</p>
+    <div class="columns col-3">
+      <div class="card card-orange" style="text-align:center;">
+        <span class="card-icon">🔄</span>
+        <h3>Sampling</h3>
+        <p>Servers request <strong>LLM completions</strong> through the client. Enables server-initiated AI interactions.</p>
+      </div>
+      <div class="card card-accent" style="text-align:center;">
+        <span class="card-icon">🌳</span>
+        <h3>Roots</h3>
+        <p>Define <strong>boundaries</strong> where servers can operate. Scoped access for security and context control.</p>
+      </div>
+      <div class="card card-blue" style="text-align:center;">
+        <span class="card-icon">🔀</span>
+        <h3>Transports</h3>
+        <p>The <strong>communication foundation</strong> between clients and servers. stdio, HTTP, and more.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 12: Generate Custom Instructions ─────────────────────────── -->
+<section class="slide" data-slide="11" data-section="mcp" data-title="Generate Instructions">
+  <div class="content">
+    <h2 class="slide-title">Generate Custom Instructions</h2>
+    <p class="slide-subtitle">Key techniques for effective instructions</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div class="card card-accent">
+        <span class="card-icon">✍️</span>
+        <h3>Write Short Statements</h3>
+        <p>Self-contained, clear, and actionable. Each instruction should stand on its own.</p>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🏛️</span>
+        <h3>Coding Standards &amp; Patterns</h3>
+        <p>Focus on architectural patterns, naming conventions, and code organization preferences.</p>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">🔗</span>
+        <h3>Pair with Features</h3>
+        <p>Combine with code review, coding agent, and chat features for maximum impact.</p>
+      </div>
+      <div class="card card-orange">
+        <span class="card-icon">👥</span>
+        <h3>Team-Specific Standards</h3>
+        <p>Reflect your team's unique conventions, frameworks, and best practices.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 13: Copilot Extensions ─────────────────────────── -->
+<section class="slide" data-slide="12" data-section="mcp" data-title="Copilot Extensions">
+  <div class="content">
+    <h2 class="slide-title">Copilot Extensions</h2>
+    <p class="slide-subtitle">Third-party integrations via the GitHub Marketplace</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏪</div>
+          <div class="row-content">
+            <h4>GitHub Marketplace</h4>
+            <p>Browse and install extensions from third-party vendors — no server setup required</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">💬</div>
+          <div class="row-content">
+            <h4>@extension-name in Chat</h4>
+            <p>Invoke extensions by name in Copilot Chat to bring external data and actions into context</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔌</div>
+          <div class="row-content">
+            <h4>Extensions vs MCP</h4>
+            <p>Extensions are <strong>installed via GitHub</strong> with OAuth permissions; MCP servers run <strong>locally or in your infra</strong></p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center; padding:28px;">
+        <div style="font-size:40px;">🛒</div>
+        <h3 style="color:var(--text-title);">Popular Extensions</h3>
+        <div class="tool-pills" style="margin-top:8px;">
+          <span class="pill">@datadog</span>
+          <span class="pill blue">@sentry</span>
+          <span class="pill">@docker</span>
+          <span class="pill blue">@atlassian</span>
+          <span class="pill">@azure</span>
+          <span class="pill blue">@hashicorp</span>
+          <span class="pill">@mongodb</span>
+          <span class="pill blue">@sonarqube</span>
+        </div>
+        <div class="note-bar" style="margin-top:12px; width:100%; text-align:left;">
+          100+ extensions at <span class="mono">github.com/marketplace</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Extensions are the third-party ecosystem — vendors build extensions that appear as @name in chat. Unlike MCP servers which you configure locally, Extensions are installed from the GitHub Marketplace and use OAuth for permissions. They're complementary to MCP — use Extensions for managed SaaS integrations and MCP for custom tooling.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 14: Knowledge Bases ─────────────────────────── -->
+<section class="slide" data-slide="13" data-section="mcp" data-title="Knowledge Bases">
+  <div class="content">
+    <h2 class="slide-title">Knowledge Bases</h2>
+    <p class="slide-subtitle">Enterprise: Index your internal docs for Copilot context</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🗂️</div>
+          <div class="row-content">
+            <h4>Index Internal Docs</h4>
+            <p>Connect wikis, documentation repos, and codebases as a searchable knowledge index</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🤖</div>
+          <div class="row-content">
+            <h4>Copilot Searches It</h4>
+            <p>Copilot automatically retrieves relevant content from your knowledge base during conversations</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Enterprise &amp; Business</h4>
+            <p>Available on GitHub Copilot Enterprise/Business — managed in Organization or Enterprise settings</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🌐</div>
+          <div class="row-content">
+            <h4>Multi-Repository Context</h4>
+            <p>Enterprise: Copilot Chat can reference code across <strong>multiple repositories</strong> in a single conversation — spanning org-wide codebases</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">📚</span>
+        <h3>Use Cases</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Company coding standards wiki</li>
+          <li>Architecture decision records</li>
+          <li>Internal API documentation</li>
+          <li>Onboarding &amp; runbooks</li>
+          <li>Legacy codebase context</li>
+          <li>Cross-repo org-wide code context</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Reduces hallucination on internal APIs &amp; frameworks
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Knowledge Bases are an Enterprise/Business feature that lets organizations index their internal documentation and codebases. Copilot can then reference this during conversations, reducing hallucinations on internal APIs and helping onboard new developers faster. Enterprise also supports multi-repository context — Copilot Chat can reference code across multiple repositories in a single conversation, enabling org-wide codebase awareness. Source: docs.github.com/en/copilot/using-github-copilot/asking-github-copilot-questions-in-your-ide</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 15: GitHub Models ─────────────────────────── -->
+<section class="slide" data-slide="14" data-section="mcp" data-title="GitHub Models">
+  <div class="content">
+    <h2 class="slide-title">GitHub Models</h2>
+    <p class="slide-subtitle">Free AI model playground at github.com/marketplace/models</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🧪</div>
+          <div class="row-content">
+            <h4>Prompt Playground</h4>
+            <p>Test prompts against dozens of models side-by-side — GPT-4o, Llama, Mistral, Phi, and more</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">💻</div>
+          <div class="row-content">
+            <h4>Code Snippets</h4>
+            <p>Generate ready-to-use SDK code for any model and language — JavaScript, Python, C#, and more</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🆓</div>
+          <div class="row-content">
+            <h4>Free to Explore</h4>
+            <p>Included with GitHub — experiment with AI models without a separate API subscription</p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="text-align:center; padding:32px;">
+        <div style="font-size:48px; margin-bottom:16px;">🔬</div>
+        <h3 style="color:var(--text-title); margin-bottom:16px;">The GitHub AI Ecosystem</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; text-align:left;">
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Copilot</span><span style="font-size:13px; color:var(--text-muted);">Integrated AI assistant</span></div>
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill blue">Models</span><span style="font-size:13px; color:var(--text-muted);">Model playground &amp; API</span></div>
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Extensions</span><span style="font-size:13px; color:var(--text-muted);">3rd-party marketplace</span></div>
+        </div>
+        <div class="note-bar" style="margin-top:16px; text-align:left;">
+          <span class="mono">github.com/marketplace/models</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">GitHub Models is a free model playground separate from Copilot. It's useful for prototyping prompts, comparing models, and generating API code snippets. Think of it as a sandbox for the AI models that power Copilot and other AI applications.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: GitHub Spark ─────────────────────────── -->
+<section class="slide" data-section="mcp" data-title="GitHub Spark">
+  <div class="content">
+    <h2 class="slide-title">GitHub Spark ✨</h2>
+    <p class="slide-subtitle">Build and share micro-apps with natural language — no full-stack required</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">💬</div>
+          <div class="row-content">
+            <h4>Natural Language to App</h4>
+            <p>Describe what you want to build — Spark generates a fully functional micro-app using AI</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🚀</div>
+          <div class="row-content">
+            <h4>Instant Hosting</h4>
+            <p>Apps are hosted on GitHub infrastructure — share a link immediately, no deployment steps</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Iterative Refinement</h4>
+            <p>Refine your app through conversation — ask Spark to change behavior, add features, or tweak the UI</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-accent" style="text-align:center; padding:28px;">
+        <div style="font-size:48px; margin-bottom:16px;">✨</div>
+        <h3 style="color:var(--text-title); margin-bottom:16px;">Part of GitHub's AI Ecosystem</h3>
+        <div style="display:flex; flex-direction:column; gap:10px; text-align:left;">
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Copilot</span><span style="font-size:13px; color:var(--text-muted);">Developer AI assistant</span></div>
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill blue">Models</span><span style="font-size:13px; color:var(--text-muted);">Model playground &amp; API</span></div>
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Spark</span><span style="font-size:13px; color:var(--text-muted);">Natural language micro-apps</span></div>
+        </div>
+        <div class="note-bar" style="margin-top:16px; text-align:left;">
+          <span class="mono">githubnext.com/projects/github-spark</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">GitHub Spark (GitHub Next) is an AI-powered platform for building and sharing micro-apps using natural language — no full-stack coding required. It's distinct from Copilot but part of the broader GitHub AI story. Developers describe the app they want; Spark generates, hosts, and lets them share it instantly. Useful for prototyping, internal tools, and demos. Source: githubnext.com/projects/github-spark</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 16: Section - Coding Agent ─────────────────────────── -->
+<section class="slide section-slide" data-slide="12" data-section="coding-agent" data-title="Coding Agent">
+  <div class="glow-ring" style="top:35%; left:55%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">🤖</div>
+    <h1 class="section-title">GitHub Copilot<br>Coding Agent</h1>
+    <p class="section-tagline">GitHub Copilot intermediate</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 14: What is the Coding Agent? ─────────────────────────── -->
+<section class="slide" data-slide="13" data-section="coding-agent" data-title="What is it?">
+  <div class="content">
+    <h2 class="slide-title">What is the Coding Agent?</h2>
+    <p class="slide-subtitle">An autonomous AI software development agent</p>
+    <div style="max-width:750px; width:100%;">
+      <div class="icon-row">
+        <div class="icon">🧠</div>
+        <div class="row-content">
+          <h4>AI-Powered Development</h4>
+          <p>Works autonomously on issues — plans, codes, tests, and iterates</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">⚡</div>
+        <div class="row-content">
+          <h4>Asynchronous Execution</h4>
+          <p>Operates in its own <strong>GitHub Actions-powered environment</strong> — no blocking your workflow</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">📋</div>
+        <div class="row-content">
+          <h4>Issue-Driven</h4>
+          <p>Assign it issues or tasks and continue working on other priorities</p>
+        </div>
+      </div>
+      <div class="icon-row">
+        <div class="icon">🔍</div>
+        <div class="row-content">
+          <h4>Deep Environment Access</h4>
+          <p>Full access to your VS Code environment — actively looks for what it needs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot in GitHub Actions ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot in Actions">
+  <div class="content">
+    <h2 class="slide-title">Copilot in GitHub Actions</h2>
+    <p class="slide-subtitle">Run Copilot agent tasks as native CI/CD pipeline steps</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">⚙️</div>
+          <div class="row-content">
+            <h4>First-Class Job Step</h4>
+            <p>Use <code>uses: github/copilot-action</code> in any workflow to run Copilot as a native Actions step — not a side-car or gh-aw wrapper</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔁</div>
+          <div class="row-content">
+            <h4>Event-Driven Automation</h4>
+            <p>Trigger Copilot tasks on <code>push</code>, <code>pull_request</code>, <code>issue_comment</code>, <code>schedule</code>, and more</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛠️</div>
+          <div class="row-content">
+            <h4>CI/CD Integration</h4>
+            <p>Automate code review, documentation generation, test creation, and triage tasks as part of your existing pipelines</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">📋</span>
+        <h3>Example Use Cases</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Auto-review PRs on open</li>
+          <li>Generate release notes on tag</li>
+          <li>Triage new issues with labels</li>
+          <li>Create tests for changed files</li>
+          <li>Update docs on merge to main</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Distinct from gh-aw — native Actions, no extra tooling needed
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot in GitHub Actions lets you run Copilot as a first-class job step directly in CI/CD pipelines. Unlike the gh-aw platform which orchestrates full agentic workflows, this integration uses a standard GitHub Actions step to trigger Copilot for specific automation tasks like code review, documentation, and issue triage. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-github-actions</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 15: Agent Mode vs Coding Agent ─────────────────────────── -->
+<section class="slide" data-slide="14" data-section="coding-agent" data-title="Mode vs Agent">
+  <div class="content">
+    <h2 class="slide-title">Agent Mode vs Coding Agent vs Workspace</h2>
+    <p class="slide-subtitle">Three approaches to AI-assisted development</p>
+    <div class="columns col-3">
+      <div class="card card-accent">
+        <span class="card-icon" style="font-size:36px;">💻</span>
+        <h3>Agent Mode</h3>
+        <ul class="clean" style="margin-top:16px;">
+          <li>Iterates on code, runs tests locally</li>
+          <li><strong>Plan → Act → Observe</strong> workflow</li>
+          <li>Interactive — you're in the loop</li>
+          <li>Immediate feedback cycle</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon" style="font-size:36px;">☁️</span>
+        <h3>Coding Agent</h3>
+        <ul class="clean" style="margin-top:16px;">
+          <li>Assign GitHub issues to Copilot</li>
+          <li>Reads <span class="mono">COPILOT.md</span> for project context</li>
+          <li>Works <strong>autonomously</strong> in GitHub Actions</li>
+          <li>Creates PRs when done</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon" style="font-size:36px;">🗺️</span>
+        <h3>Copilot Workspace</h3>
+        <ul class="clean" style="margin-top:16px;">
+          <li>Start from an issue on GitHub.com</li>
+          <li>Collaborative plan + file tree diff</li>
+          <li>Review &amp; edit before committing</li>
+          <li>GA for Enterprise, browser-based</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Three distinct AI development modes: Agent Mode is interactive and local (great for iterating in your IDE), the Coding Agent is fully autonomous (assign issues, get PRs back), and Copilot Workspace is a collaborative planning experience on GitHub.com where you can shape the implementation before any code is committed.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 16: Custom Agents for Coding Agent ─────────────────────────── -->
+<section class="slide" data-slide="15" data-section="coding-agent" data-title="Custom Agents">
+  <div class="content">
+    <h2 class="slide-title">Custom Agents for the Coding Agent</h2>
+    <p class="slide-subtitle">Tailor autonomous behavior per workflow</p>
+    <div class="columns col-2" style="align-items:center;">
+      <div>
+        <div class="icon-row">
+          <div class="icon">🎯</div>
+          <div class="row-content">
+            <h4>Select or Create</h4>
+            <p>When assigning issues to Copilot, select or create a custom agent tailored to the task</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Workflow-Specific</h4>
+            <p>Tailor agents to different workflows — e.g., Kubernetes architect, database migration specialist</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--accent);">
+          <div style="font-size:24px;">🏗️</div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Architecture Agent</div>
+        </div>
+        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--accent-blue);">
+          <div style="font-size:24px;">🐳</div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Kubernetes Agent</div>
+        </div>
+        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--success);">
+          <div style="font-size:24px;">🧪</div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Testing Agent</div>
+        </div>
+        <div class="card" style="padding:16px; text-align:center; border-left:3px solid var(--code-orange);">
+          <div style="font-size:24px;">📝</div>
+          <div style="font-size:14px; font-weight:600; color:var(--text-title); margin-top:6px;">Docs Agent</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 17: COPILOT.md Instructions ─────────────────────────── -->
+<section class="slide" data-slide="16" data-section="coding-agent" data-title="COPILOT.md">
+  <div class="content">
+    <h2 class="slide-title">COPILOT.md Instructions File</h2>
+    <p class="slide-subtitle">Configure autonomous agent behavior per repository</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">📄</div>
+          <div class="row-content">
+            <h4>Repository Root File</h4>
+            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the coding agent reads it automatically on every run</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔧</div>
+          <div class="row-content">
+            <h4>What to Include</h4>
+            <p>Testing commands, build steps, architecture overview, do/don't rules, and project-specific conventions</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🆚</div>
+          <div class="row-content">
+            <h4>vs copilot-instructions.md</h4>
+            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous coding agent</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-accent">
+        <h3>Example COPILOT.md</h3>
+        <div style="margin-top:12px; background:var(--bg-primary); border-radius:8px; padding:14px; font-family:var(--font-mono); font-size:12px; line-height:1.7; color:var(--text-muted);">
+          <div><span style="color:var(--accent);"># Project: MyApp</span></div>
+          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Build &amp; Test</span></div>
+          <div>- Run: <span style="color:var(--code-orange);">npm test</span></div>
+          <div>- Lint: <span style="color:var(--code-orange);">npm run lint</span></div>
+          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Architecture</span></div>
+          <div>- REST API in <span style="color:var(--code-orange);">src/api/</span></div>
+          <div>- React frontend in <span style="color:var(--code-orange);">src/ui/</span></div>
+          <div style="margin-top:8px;"><span style="color:var(--accent-blue);">## Rules</span></div>
+          <div>- Never modify migration files</div>
+          <div>- Tests required for all PRs</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
+<section class="slide" data-slide="17" data-section="coding-agent" data-title="Code Review">
+  <div class="content">
+    <h2 class="slide-title">Copilot Code Review</h2>
+    <p class="slide-subtitle">AI-powered PR review — inline comments, suggestions &amp; summaries</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">💬</div>
+          <div class="row-content">
+            <h4>Inline PR Comments</h4>
+            <p>Copilot reviews pull requests on GitHub.com and leaves specific, actionable inline comments</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">✨</div>
+          <div class="row-content">
+            <h4>Suggested Changes</h4>
+            <p>One-click code suggestions — authors can accept, edit, or dismiss Copilot's proposed fixes</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📋</div>
+          <div class="row-content">
+            <h4>Diff Summary</h4>
+            <p>Copilot summarizes what changed, why it matters, and highlights areas needing human attention</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <div style="font-size:48px;">🔍</div>
+        <h3 style="color:var(--text-title);">Enable Code Review</h3>
+        <ul class="clean" style="text-align:left; width:100%;">
+          <li>Org / Repo Settings → Copilot</li>
+          <li>Enable "Automatic code review"</li>
+          <li>Request review from <strong>Copilot</strong> on any PR</li>
+        </ul>
+        <div class="note-bar blue-note" style="width:100%; text-align:left; margin-top:8px;">
+          Works alongside human reviewers — catches issues early so humans can focus on design &amp; logic
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Code Review is enabled in repository or organization settings. Once enabled, you can request Copilot as a reviewer on any PR. It provides inline comments with suggested code changes that authors can accept with one click. It's designed to complement human review, not replace it.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot PR Summaries ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="PR Summaries">
+  <div class="content">
+    <h2 class="slide-title">Copilot PR Summaries</h2>
+    <p class="slide-subtitle">Auto-generate pull request descriptions from your diffs</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">✍️</div>
+          <div class="row-content">
+            <h4>Auto-Generate Descriptions</h4>
+            <p>Click the Copilot ✨ icon in the PR description field — Copilot analyzes your diffs and commits to draft a summary</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📋</div>
+          <div class="row-content">
+            <h4>Highlights Key Changes</h4>
+            <p>Generates a structured overview with a brief summary and bullet-pointed highlights — reviewers get context fast</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Works Everywhere</h4>
+            <p>Available on GitHub.com, VS Code, Visual Studio, and the Copilot CLI — wherever you open a PR</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <div style="font-size:48px;">📝</div>
+        <h3 style="color:var(--text-title);">Workflow</h3>
+        <ul class="clean" style="text-align:left; width:100%;">
+          <li>Push your branch &amp; open a PR</li>
+          <li>Click ✨ in the description field</li>
+          <li>Review &amp; edit the draft</li>
+          <li>Submit — reviewers are up to speed</li>
+        </ul>
+        <div class="note-bar blue-note" style="width:100%; text-align:left; margin-top:8px;">
+          Available on paid plans (Pro, Business, Enterprise) &nbsp;·&nbsp; Not included in Copilot Free
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot PR Summaries let you auto-generate a pull request description by clicking the sparkle icon in the PR description box. Copilot reads your diffs and commit history to produce a structured draft — saving time and improving reviewer context. Available on GitHub.com and in VS Code / Visual Studio. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-for-pull-requests</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 19: Copilot Autofix ─────────────────────────── -->
+<section class="slide" data-slide="18" data-section="coding-agent" data-title="Autofix">
+  <div class="content">
+    <h2 class="slide-title">Copilot Autofix</h2>
+    <p class="slide-subtitle">Automatic security vulnerability remediation</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Integrated with Code Scanning</h4>
+            <p>When GitHub Advanced Security detects a vulnerability, Copilot automatically generates a suggested fix</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⚡</div>
+          <div class="row-content">
+            <h4>One-Click Remediation</h4>
+            <p>Suggested fixes appear as PR comments — developers can accept, edit, or reject with a single click</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Shift Left Security</h4>
+            <p>Fixes security issues at the PR stage before they reach production — developer-friendly and fast</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-orange" style="text-align:center; display:flex; flex-direction:column; gap:12px; align-items:center;">
+        <div style="font-size:48px;">🩹</div>
+        <h3 style="color:var(--text-title);">Supported Alerts</h3>
+        <div class="tool-pills" style="margin-top:8px; justify-content:center;">
+          <span class="pill">SQL Injection</span>
+          <span class="pill blue">XSS</span>
+          <span class="pill">Path Traversal</span>
+          <span class="pill blue">SSRF</span>
+          <span class="pill">Hardcoded Secrets</span>
+        </div>
+        <div class="note-bar" style="margin-top:12px; width:100%; text-align:left; border-left-color:var(--code-orange); background:rgba(240,136,62,0.1);">
+          Requires <strong>GitHub Advanced Security</strong> (GHAS)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Autofix is integrated with GitHub Advanced Security's code scanning. When a CodeQL alert fires on a PR, Copilot generates a fix automatically. This dramatically reduces the time from detection to remediation and makes security accessible to developers who may not be security experts.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 20: Agent Architecture ─────────────────────────── -->
+<section class="slide" data-slide="16" data-section="coding-agent" data-title="Architecture">
+  <div class="content">
+    <h2 class="slide-title">Agent Architecture</h2>
+    <p class="slide-subtitle">Under the hood of agent mode</p>
+    <div style="max-width:800px; width:100%;">
+      <!-- Top row -->
+      <div style="display:grid; grid-template-columns:1fr auto 1fr auto 1fr; gap:8px; align-items:center;">
+        <div class="arch-box" style="border-color:var(--text-muted);">🖥️ Machine</div>
+        <div style="color:var(--accent); font-size:20px;">→</div>
+        <div class="arch-box blue-border">📂 Workspace</div>
+        <div style="color:var(--accent); font-size:20px;">→</div>
+        <div class="arch-box accent-border">🤖 Copilot<br><span style="font-size:11px; color:var(--text-muted);">+ User</span></div>
+      </div>
+      <!-- Arrow down -->
+      <div class="arch-arrow">⬇</div>
+      <!-- LLM Loop -->
+      <div class="arch-box accent-border" style="padding:20px;">
+        <div style="font-size:15px; font-weight:700; color:var(--accent); margin-bottom:12px;">🔄 LLM Loop</div>
+        <div style="font-size:13px; color:var(--text-muted); margin-bottom:12px;">Prompt → Streamed Results → Tool Calls → Tool Results → Repeat</div>
+        <div class="tool-pills">
+          <span class="pill">run_in_terminal</span>
+          <span class="pill">edit_file</span>
+          <span class="pill">read_file</span>
+          <span class="pill blue">search</span>
+          <span class="pill blue">list_files</span>
+          <span class="pill">browser</span>
+        </div>
+      </div>
+      <!-- Arrow down -->
+      <div class="arch-arrow">⬇</div>
+      <!-- Bottom -->
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:8px;">
+        <div class="arch-box" style="font-size:12px;">🌐 OS Context</div>
+        <div class="arch-box" style="font-size:12px;">🔧 Tool Call</div>
+        <div class="arch-box" style="font-size:12px;">📋 Tool Results</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">At its core, agent mode orchestrates tools using a system prompt. It parses requests, plans, executes, detects errors, and auto-corrects in a continuous loop.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 18: Section - Agent Management ─────────────────────────── -->
+<section class="slide section-slide" data-slide="17" data-section="agent-mgmt" data-title="Agent Management">
+  <div class="glow-ring" style="top:40%; left:50%;"></div>
+  <div style="text-align:center; position:relative; z-index:1;">
+    <div style="font-size:64px; margin-bottom:20px;">🎛️</div>
+    <h1 class="section-title">GitHub Copilot<br>Agent Management</h1>
+    <p class="section-tagline">Orchestrating AI agents for complex workflows</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 19: Single vs Multi Session ─────────────────────────── -->
+<section class="slide" data-slide="18" data-section="agent-mgmt" data-title="Sessions">
+  <div class="content">
+    <h2 class="slide-title">Single vs Multiple Sessions</h2>
+    <p class="slide-subtitle">Choosing the right approach for your task</p>
+    <div class="columns col-2 comparison" style="position:relative;">
+      <div class="card card-accent">
+        <span class="card-icon" style="font-size:32px;">⚡</span>
+        <h3>Single-Session</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Ideal for tasks under 30 minutes</li>
+          <li>Clear scope, uninterrupted focus</li>
+          <li>Self-contained deliverables</li>
+          <li>Agent maintains full context</li>
+        </ul>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon" style="font-size:32px;">🔄</span>
+        <h3>Multi-Session</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Tasks exceeding context window limits</li>
+          <li>Require breaks between phases</li>
+          <li>Involve debugging cycles</li>
+          <li>Work persists through handoff documents</li>
+        </ul>
+      </div>
+      <div class="vs-badge" style="font-size:14px;">VS</div>
+    </div>
+  </div>
+  <div class="slide-notes">Think of single-session as a sprint and multi-session as a relay race. Each has its strengths depending on task complexity.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 20: Sequential Orchestration ─────────────────────────── -->
+<section class="slide" data-slide="19" data-section="agent-mgmt" data-title="Sequential">
+  <div class="content">
+    <h2 class="slide-title">Sequential Orchestration</h2>
+    <p class="slide-subtitle">Ordered pipelines where outputs feed inputs</p>
+    <div style="max-width:700px; width:100%;">
+      <div class="tier tier-1">
+        <span class="tier-label" style="color:var(--accent);">Pattern 1</span>
+        <h3>🔗 Linear Pipeline</h3>
+        <p><strong>Scout → Scribe → Builder</strong> — strict ordered execution. Each agent specializes in one phase.</p>
+      </div>
+      <div class="tier tier-2">
+        <span class="tier-label" style="color:var(--accent-blue);">Pattern 2</span>
+        <h3>📊 Dependency-Driven Order</h3>
+        <p>Each agent's output feeds the next. Data flows through the pipeline with clear input/output contracts.</p>
+      </div>
+      <div class="tier tier-3">
+        <span class="tier-label" style="color:var(--success);">Pattern 3</span>
+        <h3>🛡️ Quality Gates</h3>
+        <p>Ensure flawed outputs don't cascade. Validation checkpoints between each stage prevent error propagation.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Sequential orchestration is your default when outputs feed inputs. Think assembly line — each station adds value.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 21: Parallel Orchestration ─────────────────────────── -->
+<section class="slide" data-slide="20" data-section="agent-mgmt" data-title="Parallel">
+  <div class="content">
+    <h2 class="slide-title">Parallel Orchestration</h2>
+    <p class="slide-subtitle">Maximize throughput with concurrent agents</p>
+    <div class="columns col-3">
+      <div class="card card-accent" style="text-align:center;">
+        <span class="card-icon">⚡</span>
+        <h3>Simultaneous Execution</h3>
+        <p>Reduces total time for independent tasks. Run multiple agents at once for maximum throughput.</p>
+      </div>
+      <div class="card card-blue" style="text-align:center;">
+        <span class="card-icon">🔍</span>
+        <h3>Independent Task ID</h3>
+        <p>Analyze inputs/outputs to identify parallelizable work. Not everything can run concurrently.</p>
+      </div>
+      <div class="card card-green" style="text-align:center;">
+        <span class="card-icon">🗺️</span>
+        <h3>Dependency Mapping</h3>
+        <p>Visual graph showing blocking relationships. Find the critical path and shorten it.</p>
+      </div>
+    </div>
+    <div style="margin-top:24px; text-align:center;">
+      <div style="display:inline-flex; gap:8px; align-items:center; font-size:14px;">
+        <span class="pill">Agent A</span>
+        <span class="pill">Agent B</span>
+        <span class="pill">Agent C</span>
+        <span style="color:var(--text-muted); font-size:20px;">⟹</span>
+        <span class="pill blue">Merge</span>
+        <span style="color:var(--text-muted); font-size:20px;">⟹</span>
+        <span class="pill" style="background:rgba(63,185,80,0.15); color:var(--success); border-color:rgba(63,185,80,0.3);">Result</span>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Parallel orchestration is about finding the critical path and shortening it. Independent tasks should always run concurrently.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE 22: Workflows & Handoff ─────────────────────────── -->
+<section class="slide" data-slide="21" data-section="agent-mgmt" data-title="Handoffs">
+  <div class="content">
+    <h2 class="slide-title">Workflows &amp; Handoff Documents</h2>
+    <p class="slide-subtitle">Preserving context across sessions</p>
+    <div class="columns col-3">
+      <div class="card card-accent">
+        <span class="card-icon">📋</span>
+        <h3>Copy-Paste Ready Prompts</h3>
+        <p>Next session prompt should <strong>work immediately</strong>. No manual setup or context rebuilding required.</p>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🗂️</span>
+        <h3>Structured Context</h3>
+        <p>Clear sections for <strong>what's done</strong>, what's pending, and key decisions made along the way.</p>
+      </div>
+      <div class="card card-green">
+        <span class="card-icon">📦</span>
+        <h3>Explicit Artifact Tracking</h3>
+        <p>List every file <strong>created, modified, or deleted</strong> with explanations for each change.</p>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">The handoff document is your insurance policy against context loss. Treat it as the single source of truth between sessions.</div>
+</section>
+
+<!-- ─────────────────────────── Thank You ─────────────────────────── -->
+<section class="slide section-slide" data-section="closing" data-title="Thank You">
   <div class="glow-ring" style="top:30%; left:45%;"></div>
   <div class="glow-ring" style="top:50%; left:60%; width:250px; height:250px; animation-delay:1.5s;"></div>
   <div style="text-align:center; position:relative; z-index:1;">
@@ -2683,6 +2817,7 @@ body.overview #dot-tooltip { display: none; }
   </div>
   <div class="slide-notes">Thank you for attending! Check out agentskills.io for the open standard and github.com/copilot for the latest features.</div>
 </section>
+
 
 </div><!-- end slides-wrapper -->
 
@@ -2711,12 +2846,13 @@ body.overview #dot-tooltip { display: none; }
     intro: 'Intro',
     agenda: 'Agenda',
     overview: 'Overview',
+    cli: 'CLI',
+    'cli-customize': 'Customizing CLI',
     skills: 'Skills & Instructions',
     mcp: 'MCP',
     'coding-agent': 'Coding Agent',
     'agent-mgmt': 'Agent Mgmt',
-    cli: 'CLI',
-    'cli-customize': 'Customizing CLI'
+    closing: 'Closing'
   };
 
   // Parsed section structure: [ { key, name, slides: [{index, title}] } ]
@@ -3059,99 +3195,151 @@ body.overview #dot-tooltip { display: none; }
   window.addEventListener('hashchange', handleHash);
 
   // Initialize
-  // ─── Agenda loader ───
+  // ─── Agenda loader with timezone support ───
   (function loadAgenda() {
+    var baseTz = 'America/Chicago';
+    var agendaData = null;
+
+    function formatTime24(h24, m) {
+      var suffix = h24 >= 12 ? 'PM' : 'AM';
+      var h12 = h24 % 12 || 12;
+      return h12 + ':' + (m < 10 ? '0' : '') + m + ' ' + suffix;
+    }
+
+    var offsetCache = {};
+    function getOffsetMinutes(tz) {
+      if (tz in offsetCache) return offsetCache[tz];
+      // Find UTC offset for a timezone using Intl.DateTimeFormat.formatToParts
+      var d = new Date(Date.UTC(2026, 5, 15, 12, 0, 0)); // June 15 noon UTC
+      var parts = new Intl.DateTimeFormat('en-US', {
+        timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23'
+      }).formatToParts(d);
+      var h = 0, m = 0;
+      parts.forEach(function(p) {
+        if (p.type === 'hour') h = parseInt(p.value, 10);
+        if (p.type === 'minute') m = parseInt(p.value, 10);
+      });
+      offsetCache[tz] = (h * 60 + m) - 720; // minutes from UTC
+      return offsetCache[tz];
+    }
+
+    function convertTime(timeStr, fromTz, toTz) {
+      var parts = timeStr.split(':');
+      var totalMin = parseInt(parts[0], 10) * 60 + parseInt(parts[1], 10);
+      totalMin += getOffsetMinutes(toTz) - getOffsetMinutes(fromTz);
+      if (totalMin < 0) totalMin += 1440;
+      if (totalMin >= 1440) totalMin -= 1440;
+      return formatTime24(Math.floor(totalMin / 60), totalMin % 60);
+    }
+
+    function blockTimeStr(block, tz) {
+      return convertTime(block.start, baseTz, tz) + ' – ' + convertTime(block.end, baseTz, tz);
+    }
+
+    function renderAgenda(tz) {
+      var tabsEl = document.getElementById('agenda-tabs');
+      var daysEl = document.getElementById('agenda-days');
+      if (!tabsEl || !daysEl || !agendaData) return;
+      tabsEl.innerHTML = '';
+      daysEl.innerHTML = '';
+
+      agendaData.days.forEach(function(day, idx) {
+        var tab = document.createElement('div');
+        tab.className = 'agenda-tab' + (idx === 0 ? ' active' : '');
+        tab.textContent = day.name;
+        tab.addEventListener('click', function() {
+          tabsEl.querySelectorAll('.agenda-tab').forEach(function(t) { t.classList.remove('active'); });
+          daysEl.querySelectorAll('.agenda-day').forEach(function(d) { d.classList.remove('active'); });
+          tab.classList.add('active');
+          document.getElementById('agenda-day-' + idx).classList.add('active');
+        });
+        tabsEl.appendChild(tab);
+
+        var dayDiv = document.createElement('div');
+        dayDiv.className = 'agenda-day' + (idx === 0 ? ' active' : '');
+        dayDiv.id = 'agenda-day-' + idx;
+
+        if (day.subtitle) {
+          var sub = document.createElement('div');
+          sub.className = 'agenda-day-subtitle';
+          sub.textContent = day.subtitle;
+          dayDiv.appendChild(sub);
+        }
+
+        day.blocks.forEach(function(block) {
+          var item = document.createElement('div');
+          item.className = 'agenda-item type-' + block.type;
+
+          var icon = document.createElement('div');
+          icon.className = 'agenda-icon';
+          icon.textContent = block.icon || '';
+
+          var time = document.createElement('div');
+          time.className = 'agenda-time';
+          time.textContent = blockTimeStr(block, tz);
+
+          var details = document.createElement('div');
+          details.className = 'agenda-details';
+
+          var title = document.createElement('div');
+          title.className = 'agenda-title';
+          title.textContent = block.title;
+          details.appendChild(title);
+
+          if (block.description) {
+            var desc = document.createElement('div');
+            desc.className = 'agenda-desc';
+            desc.textContent = block.description;
+            details.appendChild(desc);
+          }
+
+          if (block.labUrl) {
+            var link = document.createElement('a');
+            link.className = 'agenda-link';
+            link.href = block.labUrl;
+            link.target = '_blank';
+            link.innerHTML = '🔗 Open Lab Repository';
+            details.appendChild(link);
+          }
+
+          if (block.section) {
+            var secLink = document.createElement('div');
+            secLink.className = 'agenda-section-link';
+            secLink.innerHTML = '→ Jump to slides';
+            secLink.addEventListener('click', function() {
+              var target = document.querySelector('.slide[data-section="' + block.section + '"]');
+              if (target) {
+                var allSlides = Array.from(document.querySelectorAll('.slide'));
+                var targetIdx = allSlides.indexOf(target);
+                if (targetIdx >= 0) goToSlide(targetIdx);
+              }
+            });
+            details.appendChild(secLink);
+          }
+
+          item.appendChild(icon);
+          item.appendChild(time);
+          item.appendChild(details);
+          dayDiv.appendChild(item);
+        });
+
+        daysEl.appendChild(dayDiv);
+      });
+    }
+
+    var tzSelect = document.getElementById('agenda-tz');
+    if (tzSelect) {
+      tzSelect.addEventListener('change', function() {
+        renderAgenda(tzSelect.value);
+      });
+    }
+
     fetch('agenda.json')
       .then(function(r) { return r.json(); })
       .then(function(data) {
-        var tabsEl = document.getElementById('agenda-tabs');
-        var daysEl = document.getElementById('agenda-days');
-        if (!tabsEl || !daysEl) return;
-
-        data.days.forEach(function(day, idx) {
-          // Tab
-          var tab = document.createElement('div');
-          tab.className = 'agenda-tab' + (idx === 0 ? ' active' : '');
-          tab.textContent = day.name;
-          tab.addEventListener('click', function() {
-            tabsEl.querySelectorAll('.agenda-tab').forEach(function(t) { t.classList.remove('active'); });
-            daysEl.querySelectorAll('.agenda-day').forEach(function(d) { d.classList.remove('active'); });
-            tab.classList.add('active');
-            document.getElementById('agenda-day-' + idx).classList.add('active');
-          });
-          tabsEl.appendChild(tab);
-
-          // Day content
-          var dayDiv = document.createElement('div');
-          dayDiv.className = 'agenda-day' + (idx === 0 ? ' active' : '');
-          dayDiv.id = 'agenda-day-' + idx;
-
-          if (day.subtitle) {
-            var sub = document.createElement('div');
-            sub.className = 'agenda-day-subtitle';
-            sub.textContent = day.subtitle;
-            dayDiv.appendChild(sub);
-          }
-
-          day.blocks.forEach(function(block) {
-            var item = document.createElement('div');
-            item.className = 'agenda-item type-' + block.type;
-
-            var icon = document.createElement('div');
-            icon.className = 'agenda-icon';
-            icon.textContent = block.icon || '';
-
-            var time = document.createElement('div');
-            time.className = 'agenda-time';
-            time.textContent = block.time;
-
-            var details = document.createElement('div');
-            details.className = 'agenda-details';
-
-            var title = document.createElement('div');
-            title.className = 'agenda-title';
-            title.textContent = block.title;
-            details.appendChild(title);
-
-            if (block.description) {
-              var desc = document.createElement('div');
-              desc.className = 'agenda-desc';
-              desc.textContent = block.description;
-              details.appendChild(desc);
-            }
-
-            if (block.labUrl) {
-              var link = document.createElement('a');
-              link.className = 'agenda-link';
-              link.href = block.labUrl;
-              link.target = '_blank';
-              link.innerHTML = '🔗 Open Lab Repository';
-              details.appendChild(link);
-            }
-
-            if (block.section) {
-              var secLink = document.createElement('div');
-              secLink.className = 'agenda-section-link';
-              secLink.innerHTML = '→ Jump to slides';
-              secLink.addEventListener('click', function() {
-                var target = document.querySelector('.slide[data-section="' + block.section + '"]');
-                if (target) {
-                  var allSlides = Array.from(document.querySelectorAll('.slide'));
-                  var targetIdx = allSlides.indexOf(target);
-                  if (targetIdx >= 0) goToSlide(targetIdx);
-                }
-              });
-              details.appendChild(secLink);
-            }
-
-            item.appendChild(icon);
-            item.appendChild(time);
-            item.appendChild(details);
-            dayDiv.appendChild(item);
-          });
-
-          daysEl.appendChild(dayDiv);
-        });
+        baseTz = data.baseTz || 'America/Chicago';
+        agendaData = data;
+        renderAgenda(tzSelect ? tzSelect.value : baseTz);
       })
       .catch(function(err) {
         console.warn('Could not load agenda.json:', err);
