@@ -41,10 +41,19 @@ safe-outputs:
 network:
   allowed:
     - defaults
+    - github.com
+    - www.github.com
+    - api.github.com
     - github.blog
     - www.github.blog
+    - microsoft.com
+    - www.microsoft.com
     - devblogs.microsoft.com
+    - techcommunity.microsoft.com
+    - visualstudio.microsoft.com
+    - docs.microsoft.com
     - learn.microsoft.com
+    - aka.ms
     - docs.github.com
     - code.visualstudio.com
     - github.github.com
