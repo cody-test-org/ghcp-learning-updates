@@ -25,6 +25,7 @@ tools:
   github:
     toolsets: [repos, issues, pull_requests]
   web-fetch:
+  web-search:
 
 safe-outputs:
   create-pull-request:
@@ -38,7 +39,6 @@ safe-outputs:
     close-older-issues: true
 
 network:
-  firewall: true
   allowed:
     - defaults
     - github.blog
