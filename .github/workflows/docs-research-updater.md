@@ -25,6 +25,7 @@ tools:
   github:
     toolsets: [repos, issues, pull_requests]
   web-fetch:
+  web-search:
 
 safe-outputs:
   create-pull-request:
@@ -38,17 +39,27 @@ safe-outputs:
     close-older-issues: true
 
 network:
-  firewall: true
   allowed:
     - defaults
+    - github.com
+    - www.github.com
+    - api.github.com
     - github.blog
     - www.github.blog
+    - microsoft.com
+    - www.microsoft.com
     - devblogs.microsoft.com
+    - techcommunity.microsoft.com
+    - visualstudio.microsoft.com
+    - docs.microsoft.com
     - learn.microsoft.com
+    - aka.ms
     - docs.github.com
     - code.visualstudio.com
     - github.github.com
     - githubnext.com
+    - centralus-2.in.applicationinsights.azure.com
+    - westus-0.in.applicationinsights.azure.com
 
 engine: copilot
 
