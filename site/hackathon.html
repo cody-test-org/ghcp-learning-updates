@@ -1183,7 +1183,7 @@ body.overview #dot-tooltip { display: none; }
           <li>Async — fire and forget</li>
           <li>Powers the Coding Agent</li>
           <li>Server-side orchestration layer</li>
-          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
+          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">crush</span> engines</li>
         </ul>
       </div>
       <div class="vs-badge">→</div>
@@ -1192,7 +1192,7 @@ body.overview #dot-tooltip { display: none; }
       💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
     </div>
   </div>
-  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
+  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and crush (Crush AI) engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Note: crush replaced opencode as the Crush AI engine in v0.69.0. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions (v0.69.0): team reviewers for PRs, dynamic branch configuration, update-branch support, crush engine, domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
