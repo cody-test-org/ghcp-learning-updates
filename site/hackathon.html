@@ -1183,7 +1183,7 @@ body.overview #dot-tooltip { display: none; }
           <li>Async — fire and forget</li>
           <li>Powers the Coding Agent</li>
           <li>Server-side orchestration layer</li>
-          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
+          <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">gemini</span>, <span class="mono">crush</span> engines</li>
         </ul>
       </div>
       <div class="vs-badge">→</div>
@@ -1192,7 +1192,7 @@ body.overview #dot-tooltip { display: none; }
       💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
     </div>
   </div>
-  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
+  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), gemini (Google Gemini CLI), and crush (experimental, OpenAI-compatible, replaced opencode in v0.69.0) engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations, Custom Safe Outputs for third-party integrations (Slack, Jira, Notion). Sources: github.com/github/gh-aw/blob/main/docs/src/content/docs/reference/engines.md, github.com/github/gh-aw/releases/tag/v0.69.0</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
@@ -1241,6 +1241,7 @@ body.overview #dot-tooltip { display: none; }
             <span class="pill blue">create-discussion</span>
             <span class="pill blue">remove-labels</span>
             <span class="pill blue">append-only-comments</span>
+            <span class="pill blue">custom-jobs</span>
           </div>
         </div>
         <div class="card card-accent">
@@ -1250,12 +1251,13 @@ body.overview #dot-tooltip { display: none; }
             <li>Auditable write operations</li>
             <li>PRs auto-close with <span class="mono">expires</span></li>
             <li>DIFC proxy for full audit trail</li>
+            <li>Custom jobs for Slack, Jira, Notion</li>
           </ul>
         </div>
       </div>
     </div>
   </div>
-  <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Source: github.com/github/gh-aw — scratchpad/safe-outputs-specification.md</div>
+  <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Built-in output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. Custom Safe Outputs (custom-jobs, scripts, and action wrappers) extend the model to third-party integrations — Slack, Jira, Notion, Discord — while preserving the same security separation. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Sources: github.com/github/gh-aw/blob/main/docs/src/content/docs/reference/safe-outputs.md, github.com/github/gh-aw/blob/main/docs/src/content/docs/reference/custom-safe-outputs.md</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 27: Section - Customizing CLI ─────────────────────────── -->
