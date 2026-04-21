@@ -862,34 +862,45 @@ body.overview #dot-tooltip { display: none; }
   <div class="content">
     <h2 class="slide-title">GitHub Copilot Plans</h2>
     <p class="slide-subtitle">From free to enterprise — a tier for every developer</p>
-    <div class="columns col-4" style="align-items:start; gap:16px;">
+    <div class="columns" style="grid-template-columns: repeat(5, 1fr); align-items:start; gap:12px;">
       <div class="card" style="border-color:var(--border);">
         <span class="card-icon">🆓</span>
         <h3>Free</h3>
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Included with any GitHub account</p>
-        <ul class="clean" style="font-size:13px;">
-          <li>2,000 code completions/mo</li>
-          <li>50 chat messages/mo</li>
-          <li>VS Code &amp; JetBrains</li>
-          <li>GPT-4o, Claude 3.5 Sonnet</li>
+        <ul class="clean" style="font-size:12px;">
+          <li>2,000 completions/mo</li>
+          <li>50 premium requests/mo</li>
+          <li>All supported IDEs</li>
+          <li>GPT-5 mini, Claude Haiku</li>
         </ul>
       </div>
       <div class="card card-accent">
         <span class="card-icon">⚡</span>
         <h3>Pro</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — unlimited completions</p>
-        <ul class="clean" style="font-size:13px;">
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — for individuals</p>
+        <ul class="clean" style="font-size:12px;">
           <li>Unlimited completions</li>
-          <li>All models in picker</li>
-          <li>Agent mode &amp; MCP</li>
+          <li>300 premium requests/mo</li>
+          <li>Cloud agent &amp; MCP</li>
           <li>All supported IDEs</li>
+        </ul>
+      </div>
+      <div class="card card-orange">
+        <span class="card-icon">🚀</span>
+        <h3>Pro+</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$39/mo — for AI power users</p>
+        <ul class="clean" style="font-size:12px;">
+          <li>Everything in Pro</li>
+          <li>1,500 premium requests/mo</li>
+          <li>All models incl. advanced</li>
+          <li>Third-party agents (Claude, Codex)</li>
         </ul>
       </div>
       <div class="card card-blue">
         <span class="card-icon">🏢</span>
         <h3>Business</h3>
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$19/user/mo — team controls</p>
-        <ul class="clean" style="font-size:13px;">
+        <ul class="clean" style="font-size:12px;">
           <li>Everything in Pro</li>
           <li>Policy &amp; model controls</li>
           <li>Audit logs</li>
@@ -900,18 +911,18 @@ body.overview #dot-tooltip { display: none; }
         <span class="card-icon">🔒</span>
         <h3>Enterprise</h3>
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$39/user/mo — org-wide</p>
-        <ul class="clean" style="font-size:13px;">
+        <ul class="clean" style="font-size:12px;">
           <li>Everything in Business</li>
           <li>Custom fine-tuning (GA)</li>
-          <li>Coding Agent (GA)</li>
+          <li>Cloud agent (GA)</li>
           <li>Multi-repo context</li>
           <li>Advanced security controls</li>
         </ul>
       </div>
     </div>
-    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em> &nbsp;·&nbsp; 🏢 GHES customers have a separate feature availability timeline — check <em>docs.github.com/en/enterprise-server</em></div>
+    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons! &nbsp;·&nbsp; <strong>Pro+</strong> unlocks third-party agents (Claude &amp; Codex) and 1,500 premium requests/mo &nbsp;·&nbsp; <em>github.com/features/copilot/plans</em></div>
   </div>
-  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models (now GA), multi-repo context, and the Coding Agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+  <div class="slide-notes">Five plans as of April 2026: Free (2,000 completions, 50 premium requests/mo), Pro ($10/mo, 300 premium requests), Pro+ ($39/mo individual, 1,500 premium requests, all models, third-party agents), Business ($19/user/mo, org policy controls), Enterprise ($39/user/mo, custom fine-tuning, cloud agent). Key Pro+ differentiator: third-party coding agents (Anthropic Claude and OpenAI Codex) are Pro+ only. Note: new sign-ups for Pro, Pro+, and student plans were temporarily paused starting April 20, 2026. Source: github.com/features/copilot/plans</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
@@ -1854,9 +1865,9 @@ body.overview #dot-tooltip { display: none; }
         <h3>Fast &amp; Focused</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">GPT-4o mini</span>
-          <span class="pill">o4-mini</span>
-          <span class="pill">Gemini 2.0 Flash</span>
+          <span class="pill">GPT-5 mini</span>
+          <span class="pill">Claude Haiku 4.5</span>
+          <span class="pill">Gemini 3 Flash</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Code completion</li>
@@ -1869,9 +1880,9 @@ body.overview #dot-tooltip { display: none; }
         <h3>Balanced</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill blue">GPT-5</span>
           <span class="pill blue">GPT-4.1</span>
-          <span class="pill blue">Claude Sonnet 4</span>
+          <span class="pill blue">Claude Sonnet 4.5</span>
+          <span class="pill blue">Claude Sonnet 4.6</span>
           <span class="pill blue">Gemini 2.5 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
@@ -1885,9 +1896,10 @@ body.overview #dot-tooltip { display: none; }
         <h3>Deep Reasoning</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">o3</span>
-          <span class="pill">Claude Sonnet 4.5</span>
-          <span class="pill">Claude Opus 4.5</span>
+          <span class="pill">GPT-5.4</span>
+          <span class="pill">Claude Opus 4.6</span>
+          <span class="pill">Claude Opus 4.7</span>
+          <span class="pill">Gemini 3.1 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Architecture decisions</li>
@@ -1897,10 +1909,10 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
     <div class="note-bar" style="margin-top:20px;">
-      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
+      💡 Select models per conversation via the <strong>model picker</strong> or use <strong>Auto</strong> — Copilot picks the best available model dynamically. Available in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com. Also available: GPT-5.2, GPT-5.3-Codex, Grok Code Fast 1, Qwen2.5 &amp; more.
     </div>
   </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+  <div class="slide-notes">Model picker updated April 2026. Fast tier: GPT-5 mini, Claude Haiku 4.5, Gemini 3 Flash. Balanced: GPT-4.1, Claude Sonnet 4.5/4.6, Gemini 2.5 Pro. Deep reasoning: GPT-5.4, Claude Opus 4.6/4.7, Gemini 3.1 Pro. New in 2026: Grok Code Fast 1 (xAI), Qwen2.5 (Alibaba), Raptor mini (coming soon), GPT-5.2 for multi-step debugging. "Auto" model selection picks the best available model dynamically and gives a 10% premium request discount on paid plans. Source: docs.github.com/en/copilot/reference/ai-models/model-comparison</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
@@ -2259,8 +2271,8 @@ body.overview #dot-tooltip { display: none; }
   <div class="glow-ring" style="top:35%; left:55%;"></div>
   <div style="text-align:center; position:relative; z-index:1;">
     <div style="font-size:64px; margin-bottom:20px;">🤖</div>
-    <h1 class="section-title">GitHub Copilot<br>Coding Agent</h1>
-    <p class="section-tagline">GitHub Copilot intermediate</p>
+    <h1 class="section-title">GitHub Copilot<br>Cloud Agent</h1>
+    <p class="section-tagline">GitHub Copilot intermediate <span style="font-size:14px; color:var(--text-muted);">(formerly Copilot Coding Agent)</span></p>
   </div>
 </section>
 
@@ -2446,7 +2458,7 @@ body.overview #dot-tooltip { display: none; }
           <div class="icon">📄</div>
           <div class="row-content">
             <h4>Repository Root File</h4>
-            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the coding agent reads it automatically on every run</p>
+            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the cloud agent reads it automatically on every run</p>
           </div>
         </div>
         <div class="icon-row">
@@ -2460,7 +2472,7 @@ body.overview #dot-tooltip { display: none; }
           <div class="icon">🆚</div>
           <div class="row-content">
             <h4>vs copilot-instructions.md</h4>
-            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous coding agent</p>
+            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous cloud agent</p>
           </div>
         </div>
       </div>
@@ -2481,7 +2493,112 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
   </div>
-  <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+  <div class="slide-notes">COPILOT.md is the primary configuration file for the cloud agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Third-party Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-party Coding Agents</h2>
+    <p class="slide-subtitle">Anthropic Claude &amp; OpenAI Codex as autonomous coding agents — <span class="mono" style="font-size:14px; color:var(--code-orange);">Pro+ / Business / Enterprise</span></p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🤝</div>
+          <div class="row-content">
+            <h4>Same workflow, different engine</h4>
+            <p>Assign issues or create PRs using third-party agents exactly like Copilot cloud agent — from Issues, the Agents tab, PR comments, or VS Code</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔀</div>
+          <div class="row-content">
+            <h4>Choose your model</h4>
+            <p>Select from Anthropic's Opus and Sonnet families or OpenAI's Codex models per task — or use <strong>Auto</strong> for best available</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Same security model</h4>
+            <p>Third-party agents are subject to the same policy controls, network isolation, and security protections as Copilot cloud agent</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-blue">
+          <span class="card-icon" style="font-size:28px;">🔵</span>
+          <h3>Anthropic Claude</h3>
+          <p style="font-size:13px; margin-bottom:8px;">Available models:</p>
+          <div class="tool-pills" style="justify-content:flex-start;">
+            <span class="pill blue">Claude Opus 4.5/4.6/4.7</span>
+            <span class="pill blue">Claude Sonnet 4.5/4.6</span>
+            <span class="pill blue">Auto</span>
+          </div>
+        </div>
+        <div class="card card-accent">
+          <span class="card-icon" style="font-size:28px;">🟢</span>
+          <h3>OpenAI Codex</h3>
+          <p style="font-size:13px; margin-bottom:8px;">Available models:</p>
+          <div class="tool-pills" style="justify-content:flex-start;">
+            <span class="pill">GPT-5.2-Codex</span>
+            <span class="pill">GPT-5.3-Codex</span>
+            <span class="pill">GPT-5.4</span>
+            <span class="pill">Auto</span>
+          </div>
+        </div>
+        <div class="note-bar" style="margin-top:4px;">🔒 Third-party agents require Pro+ for individuals — or Business/Enterprise with policy enabled</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Third-party coding agents (public preview as of April 2026) let you assign tasks to Anthropic Claude or OpenAI Codex on GitHub — same workflow as Copilot cloud agent. Available from: the Agents tab (github.com/copilot/agents), Issues, PR comments (@AGENT_NAME), GitHub Mobile, and VS Code. Requires Pro+ for individual users, or Business/Enterprise plans with the policy enabled. Both agents use GitHub Actions minutes + premium requests (1 session = 1 premium request). Source: docs.github.com/en/copilot/concepts/agents/about-third-party-agents</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span style="font-size:14px; color:var(--accent-blue);">🔵 Preview</span></h2>
+    <p class="slide-subtitle">Persistent, repository-level knowledge that improves over time</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🧠</div>
+          <div class="row-content">
+            <h4>Learns Your Codebase</h4>
+            <p>As Copilot cloud agent and code review work on your repo, they store <strong>memories</strong> — tightly scoped facts about patterns, conventions, and code structure</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔁</div>
+          <div class="row-content">
+            <h4>Shared Across Features</h4>
+            <p>What cloud agent learns, code review can use — and vice versa. Memories are repository-scoped and validated against the current codebase</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🗑️</div>
+          <div class="row-content">
+            <h4>Auto-Expiry &amp; Auditable</h4>
+            <p>Memories expire after <strong>28 days</strong> unless revalidated. Repo owners can review and delete memories at any time</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-accent">
+        <span class="card-icon">💡</span>
+        <h3>Benefits</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Fewer repeated explanations in prompts</li>
+          <li>Less manual maintenance of instruction files</li>
+          <li>Improves PR review quality over time</li>
+          <li>Catches cross-file conventions automatically</li>
+        </ul>
+        <div class="note-bar" style="margin-top:16px;">
+          On by default for <strong>Pro/Pro+</strong> individuals &nbsp;·&nbsp; Off by default for <strong>Business/Enterprise</strong> (admin-enabled)
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) lets Copilot build persistent knowledge of a repository — things it discovers while working, like "this project uses a custom error wrapper" or "settings in file A must stay in sync with file B." Memories are stored with code citations, validated against the current branch before use, and auto-deleted after 28 days. Used by Copilot cloud agent, code review, and Copilot CLI. Repo owners can review and manage memories in repository settings. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
@@ -2853,7 +2970,7 @@ body.overview #dot-tooltip { display: none; }
     'cli-customize': 'Customizing CLI',
     skills: 'Skills & Instructions',
     mcp: 'MCP',
-    'coding-agent': 'Coding Agent',
+    'coding-agent': 'Cloud Agent',
     'agent-mgmt': 'Agent Mgmt',
     closing: 'Closing'
   };
