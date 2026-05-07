@@ -847,7 +847,7 @@ body.overview #dot-tooltip { display: none; }
           <tr><td>PR summaries</td><td class="mx-yes">✅</td><td class="mx-yes">✅</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Text completions</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Copilot Spaces</td><td class="mx-yes">✅</td><td class="mx-na">—</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
-          <tr><td>Copilot Coding Agent</td><td class="mx-yes">✅</td><td class="mx-yes">✅ <span style="font-size:10px;color:var(--text-muted)">(delegate)</span></td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
+          <tr><td>Copilot Cloud Agent</td><td class="mx-yes">✅</td><td class="mx-yes">✅ <span style="font-size:10px;color:var(--text-muted)">(delegate)</span></td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
           <tr><td>Issues &amp; Discussions</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-no">⚪</td><td class="mx-yes">✅</td></tr>
         </tbody>
       </table>
@@ -862,16 +862,16 @@ body.overview #dot-tooltip { display: none; }
   <div class="content">
     <h2 class="slide-title">GitHub Copilot Plans</h2>
     <p class="slide-subtitle">From free to enterprise — a tier for every developer</p>
-    <div class="columns col-4" style="align-items:start; gap:16px;">
+    <div class="columns col-3" style="align-items:start; gap:16px;">
       <div class="card" style="border-color:var(--border);">
         <span class="card-icon">🆓</span>
         <h3>Free</h3>
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Included with any GitHub account</p>
         <ul class="clean" style="font-size:13px;">
           <li>2,000 code completions/mo</li>
-          <li>50 chat messages/mo</li>
+          <li>Monthly premium requests</li>
           <li>VS Code &amp; JetBrains</li>
-          <li>GPT-4o, Claude 3.5 Sonnet</li>
+          <li>Core model access</li>
         </ul>
       </div>
       <div class="card card-accent">
@@ -880,9 +880,20 @@ body.overview #dot-tooltip { display: none; }
         <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — unlimited completions</p>
         <ul class="clean" style="font-size:13px;">
           <li>Unlimited completions</li>
-          <li>All models in picker</li>
+          <li>Premium requests included</li>
           <li>Agent mode &amp; MCP</li>
           <li>All supported IDEs</li>
+        </ul>
+      </div>
+      <div class="card card-orange">
+        <span class="card-icon">🚀</span>
+        <h3>Pro+</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Power-user tier</p>
+        <ul class="clean" style="font-size:13px;">
+          <li>Everything in Pro</li>
+          <li>Larger premium request allowance</li>
+          <li>Full access to all chat models</li>
+          <li>Includes GitHub Spark access</li>
         </ul>
       </div>
       <div class="card card-blue">
@@ -903,7 +914,7 @@ body.overview #dot-tooltip { display: none; }
         <ul class="clean" style="font-size:13px;">
           <li>Everything in Business</li>
           <li>Custom fine-tuning (GA)</li>
-          <li>Coding Agent (GA)</li>
+          <li>Cloud Agent (GA)</li>
           <li>Multi-repo context</li>
           <li>Advanced security controls</li>
         </ul>
@@ -911,7 +922,7 @@ body.overview #dot-tooltip { display: none; }
     </div>
     <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em> &nbsp;·&nbsp; 🏢 GHES customers have a separate feature availability timeline — check <em>docs.github.com/en/enterprise-server</em></div>
   </div>
-  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models (now GA), multi-repo context, and the Coding Agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+  <div class="slide-notes">GitHub Copilot plans now include Free, Pro, Pro+, Business, and Enterprise. Free includes monthly premium requests and core model access. Pro+ adds a larger premium request allowance, full model access in chat, and GitHub Spark access for individual power users. Business and Enterprise add organization controls, governance, and advanced features like the Copilot cloud agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
@@ -1087,7 +1098,7 @@ body.overview #dot-tooltip { display: none; }
       </div>
       <div class="feature-item">
         <span class="fi-code">/delegate</span>
-        <span class="fi-desc">Async handoff to cloud coding agent</span>
+        <span class="fi-desc">Async handoff to Copilot cloud agent</span>
       </div>
       <div class="feature-item">
         <span class="fi-code">--yolo</span>
@@ -1181,7 +1192,7 @@ body.overview #dot-tooltip { display: none; }
           <li>GitHub Actions-hosted agent runner</li>
           <li>Event-triggered, runs in cloud</li>
           <li>Async — fire and forget</li>
-          <li>Powers the Coding Agent</li>
+          <li>Powers the Copilot cloud agent</li>
           <li>Server-side orchestration layer</li>
           <li>Supports <span class="mono">copilot</span>, <span class="mono">claude</span>, <span class="mono">codex</span>, <span class="mono">opencode</span> engines</li>
         </ul>
@@ -1192,7 +1203,7 @@ body.overview #dot-tooltip { display: none; }
       💡 <strong>/delegate</strong> from the CLI agent hands off tasks to the gh-aw cloud platform — bridging interactive and autonomous execution &nbsp;·&nbsp; Install: <span class="mono">gh extension install github/gh-aw</span> (moved from <span class="mono">githubnext/gh-aw</span> in Feb 2026)
     </div>
   </div>
-  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Coding Agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
+  <div class="slide-notes">The gh-aw (GitHub Agentic Workflows) platform is the server-side orchestration layer running in GitHub Actions. When you use /delegate in the CLI, you're handing off to gh-aw. The Copilot cloud agent you assign issues to also runs on gh-aw. The local CLI is for interactive work; gh-aw is for cloud-native, event-triggered autonomous workflows. Multi-engine support: gh-aw compiles the same workflow for copilot (GitHub Copilot CLI), claude (Claude Code), codex (OpenAI Codex CLI), and opencode engines — the underlying AI differs but the workflow structure, Safe Outputs security model, and MCP tool access are identical. Install: gh extension install github/gh-aw (moved from githubnext/gh-aw in v0.40.1, Feb 2026). Recent additions: domain blocklist (network.blocked frontmatter), MemoryOps for shared memory across runs, skip-if-check-failing pre-activation gate, create-discussion and remove-labels safe outputs, DIFC proxy for auditable operations.</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 26b: gh-aw Safe Outputs Architecture ─────────────────────────── -->
@@ -1548,7 +1559,7 @@ body.overview #dot-tooltip { display: none; }
         <h3>Agent Skills</h3>
         <table style="width:100%; font-size:14px; border-collapse:collapse;">
           <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border); width:110px;">Purpose</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Teach specialized capabilities &amp; workflows</td></tr>
-          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">VS Code, Copilot CLI, &amp; coding agent</td></tr>
+          <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Portability</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">VS Code, Copilot CLI, &amp; cloud agent</td></tr>
           <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Content</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Instructions, scripts, examples &amp; resources</td></tr>
           <tr><td style="color:var(--text-muted); padding:8px 0; border-bottom:1px solid var(--border);">Scope</td><td style="padding:8px 0; border-bottom:1px solid var(--border);">Task-specific, loaded on-demand</td></tr>
           <tr><td style="color:var(--text-muted); padding:8px 0;">Standard</td><td style="padding:8px 0;">Open standard (<span class="mono">agentskills.io</span>)</td></tr>
@@ -1857,6 +1868,7 @@ body.overview #dot-tooltip { display: none; }
           <span class="pill">GPT-4o mini</span>
           <span class="pill">o4-mini</span>
           <span class="pill">Gemini 2.0 Flash</span>
+          <span class="pill">GPT-5.4 nano</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Code completion</li>
@@ -1872,6 +1884,8 @@ body.overview #dot-tooltip { display: none; }
           <span class="pill blue">GPT-5</span>
           <span class="pill blue">GPT-4.1</span>
           <span class="pill blue">Claude Sonnet 4</span>
+          <span class="pill blue">Claude Sonnet 4.5</span>
+          <span class="pill blue">Claude Sonnet 4.6</span>
           <span class="pill blue">Gemini 2.5 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
@@ -1886,8 +1900,10 @@ body.overview #dot-tooltip { display: none; }
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
           <span class="pill">o3</span>
-          <span class="pill">Claude Sonnet 4.5</span>
           <span class="pill">Claude Opus 4.5</span>
+          <span class="pill">Claude Opus 4.6</span>
+          <span class="pill">Claude Opus 4.7</span>
+          <span class="pill">GPT-5.3-Codex</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Architecture decisions</li>
@@ -1897,10 +1913,10 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
     <div class="note-bar" style="margin-top:20px;">
-      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
+      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com. Use <strong>Auto</strong> to let Copilot choose the best model for each task. <span style="color:var(--text-muted);">GPT-5.4 nano is currently a Pro+ Codex extension option.</span>
     </div>
   </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash, GPT-5.4 nano), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4/4.5/4.6, Gemini 2.5 Pro), and deep reasoning models like o3, Claude Opus 4.5/4.6/4.7, or GPT-5.3-Codex for architecture and complex debugging. Auto model selection can pick the best available model automatically for the task. Source: docs.github.com/en/copilot/concepts/agents/about-third-party-agents#ai-models-for-third-party-agents</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
@@ -2044,7 +2060,7 @@ body.overview #dot-tooltip { display: none; }
       <div class="card card-green">
         <span class="card-icon">🔗</span>
         <h3>Pair with Features</h3>
-        <p>Combine with code review, coding agent, and chat features for maximum impact.</p>
+        <p>Combine with code review, cloud agent, and chat features for maximum impact.</p>
       </div>
       <div class="card card-orange">
         <span class="card-icon">👥</span>
@@ -2212,28 +2228,28 @@ body.overview #dot-tooltip { display: none; }
 <section class="slide" data-section="mcp" data-title="GitHub Spark">
   <div class="content">
     <h2 class="slide-title">GitHub Spark ✨</h2>
-    <p class="slide-subtitle">Build and share micro-apps with natural language — no full-stack required</p>
+    <p class="slide-subtitle">Build and deploy full-stack apps with natural language, visual tools, or code</p>
     <div class="columns col-2" style="align-items:start;">
       <div style="display:flex; flex-direction:column; gap:12px;">
         <div class="icon-row">
           <div class="icon">💬</div>
           <div class="row-content">
             <h4>Natural Language to App</h4>
-            <p>Describe what you want to build — Spark generates a fully functional micro-app using AI</p>
+            <p>Describe what you want to build — Spark generates a TypeScript/React full-stack app with integrated data and AI features</p>
           </div>
         </div>
         <div class="icon-row">
           <div class="icon">🚀</div>
           <div class="row-content">
             <h4>Instant Hosting</h4>
-            <p>Apps are hosted on GitHub infrastructure — share a link immediately, no deployment steps</p>
+            <p>Deploy with one click to GitHub-managed runtime, with built-in GitHub authentication</p>
           </div>
         </div>
         <div class="icon-row">
           <div class="icon">🔄</div>
           <div class="row-content">
             <h4>Iterative Refinement</h4>
-            <p>Refine your app through conversation — ask Spark to change behavior, add features, or tweak the UI</p>
+            <p>Iterate through prompts, visual controls, and code edits, then sync to repos and Codespaces</p>
           </div>
         </div>
       </div>
@@ -2243,31 +2259,34 @@ body.overview #dot-tooltip { display: none; }
         <div style="display:flex; flex-direction:column; gap:10px; text-align:left;">
           <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Copilot</span><span style="font-size:13px; color:var(--text-muted);">Developer AI assistant</span></div>
           <div style="display:flex; gap:10px; align-items:center;"><span class="pill blue">Models</span><span style="font-size:13px; color:var(--text-muted);">Model playground &amp; API</span></div>
-          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Spark</span><span style="font-size:13px; color:var(--text-muted);">Natural language micro-apps</span></div>
+          <div style="display:flex; gap:10px; align-items:center;"><span class="pill">Spark</span><span style="font-size:13px; color:var(--text-muted);">Natural language full-stack apps</span></div>
+        </div>
+        <div class="note-bar blue-note" style="margin-top:12px; text-align:left;">
+          Requires Copilot <strong>Pro+</strong> or <strong>Enterprise</strong>
         </div>
         <div class="note-bar" style="margin-top:16px; text-align:left;">
-          <span class="mono">githubnext.com/projects/github-spark</span>
+          <span class="mono">github.com/spark</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="slide-notes">GitHub Spark (GitHub Next) is an AI-powered platform for building and sharing micro-apps using natural language — no full-stack coding required. It's distinct from Copilot but part of the broader GitHub AI story. Developers describe the app they want; Spark generates, hosts, and lets them share it instantly. Useful for prototyping, internal tools, and demos. Source: githubnext.com/projects/github-spark</div>
+  <div class="slide-notes">GitHub Spark is now documented as a full Copilot feature at github.com/spark. It builds TypeScript/React full-stack apps with data storage, AI features, and GitHub authentication built in. You can iterate using natural language, visual controls, or code, then deploy with one click to GitHub-managed runtime. Access requires Copilot Pro+ or Copilot Enterprise. Source: docs.github.com/en/copilot/tutorials/spark/build-apps-with-spark</div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 16: Section - Coding Agent ─────────────────────────── -->
-<section class="slide section-slide" data-slide="12" data-section="coding-agent" data-title="Coding Agent">
+<!-- ─────────────────────────── SLIDE 16: Section - Cloud Agent ─────────────────────────── -->
+<section class="slide section-slide" data-slide="12" data-section="coding-agent" data-title="Cloud Agent">
   <div class="glow-ring" style="top:35%; left:55%;"></div>
   <div style="text-align:center; position:relative; z-index:1;">
     <div style="font-size:64px; margin-bottom:20px;">🤖</div>
-    <h1 class="section-title">GitHub Copilot<br>Coding Agent</h1>
+    <h1 class="section-title">GitHub Copilot<br>Cloud Agent</h1>
     <p class="section-tagline">GitHub Copilot intermediate</p>
   </div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 14: What is the Coding Agent? ─────────────────────────── -->
+<!-- ─────────────────────────── SLIDE 14: What is the Cloud Agent? ─────────────────────────── -->
 <section class="slide" data-slide="13" data-section="coding-agent" data-title="What is it?">
   <div class="content">
-    <h2 class="slide-title">What is the Coding Agent?</h2>
+    <h2 class="slide-title">What is the Cloud Agent?</h2>
     <p class="slide-subtitle">An autonomous AI software development agent</p>
     <div style="max-width:750px; width:100%;">
       <div class="icon-row">
@@ -2350,10 +2369,10 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Copilot in GitHub Actions lets you run Copilot as a first-class job step directly in CI/CD pipelines. Unlike the gh-aw platform which orchestrates full agentic workflows, this integration uses a standard GitHub Actions step to trigger Copilot for specific automation tasks like code review, documentation, and issue triage. Source: docs.github.com/en/copilot/using-github-copilot/using-github-copilot-in-github-actions</div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 15: Agent Mode vs Coding Agent ─────────────────────────── -->
+<!-- ─────────────────────────── SLIDE 15: Agent Mode vs Cloud Agent ─────────────────────────── -->
 <section class="slide" data-slide="14" data-section="coding-agent" data-title="Mode vs Agent">
   <div class="content">
-    <h2 class="slide-title">Agent Mode vs Coding Agent vs Workspace</h2>
+    <h2 class="slide-title">Agent Mode vs Cloud Agent vs Workspace</h2>
     <p class="slide-subtitle">Three approaches to AI-assisted development</p>
     <div class="columns col-3">
       <div class="card card-accent">
@@ -2368,7 +2387,7 @@ body.overview #dot-tooltip { display: none; }
       </div>
       <div class="card card-blue">
         <span class="card-icon" style="font-size:36px;">☁️</span>
-        <h3>Coding Agent</h3>
+        <h3>Cloud Agent</h3>
         <ul class="clean" style="margin-top:16px;">
           <li>Assign GitHub issues to Copilot</li>
           <li>Reads <span class="mono">COPILOT.md</span> for project context</li>
@@ -2388,13 +2407,13 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
   </div>
-  <div class="slide-notes">Three distinct AI development modes: Agent Mode is interactive and local (great for iterating in your IDE), the Coding Agent is fully autonomous (assign issues, get PRs back), and Copilot Workspace is a collaborative planning experience on GitHub.com where you can shape the implementation before any code is committed.</div>
+  <div class="slide-notes">Three distinct AI development modes: Agent Mode is interactive and local (great for iterating in your IDE), the Copilot cloud agent is fully autonomous (assign issues, get PRs back), and Copilot Workspace is a collaborative planning experience on GitHub.com where you can shape the implementation before any code is committed.</div>
 </section>
 
-<!-- ─────────────────────────── SLIDE 16: Custom Agents for Coding Agent ─────────────────────────── -->
+<!-- ─────────────────────────── SLIDE 16: Custom Agents for Cloud Agent ─────────────────────────── -->
 <section class="slide" data-slide="15" data-section="coding-agent" data-title="Custom Agents">
   <div class="content">
-    <h2 class="slide-title">Custom Agents for the Coding Agent</h2>
+    <h2 class="slide-title">Custom Agents for the Cloud Agent</h2>
     <p class="slide-subtitle">Tailor autonomous behavior per workflow</p>
     <div class="columns col-2" style="align-items:center;">
       <div>
@@ -2435,6 +2454,105 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Third-Party Coding Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-Party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-Party Coding Agents (Preview)</h2>
+    <p class="slide-subtitle">Run Anthropic Claude and OpenAI Codex agents alongside the Copilot cloud agent</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🌐</div>
+          <div class="row-content">
+            <h4>New Agents Hub</h4>
+            <p>Start sessions from <span class="mono">github.com/copilot/agents</span> on the new Agents tab</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🧩</div>
+          <div class="row-content">
+            <h4>Where You Can Use Them</h4>
+            <p>Assign issues, mention <span class="mono">@AGENT_NAME</span> in PR comments, use GitHub Mobile, or delegate from VS Code</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Same Security Model</h4>
+            <p>Third-party agents use the same security protections and policy controls as the Copilot cloud agent</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <h3>Available Agents</h3>
+        <div style="margin-top:12px; display:flex; flex-direction:column; gap:12px;">
+          <div>
+            <div style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent-blue); font-weight:700;">Anthropic Claude</div>
+            <div class="tool-pills" style="justify-content:flex-start; margin-top:8px;">
+              <span class="pill blue">Opus 4.5 / 4.6 / 4.7</span>
+              <span class="pill blue">Sonnet 4.5 / 4.6</span>
+              <span class="pill blue">Auto</span>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--accent-blue); font-weight:700;">OpenAI Codex</div>
+            <div class="tool-pills" style="justify-content:flex-start; margin-top:8px;">
+              <span class="pill blue">GPT-5.2-Codex</span>
+              <span class="pill blue">GPT-5.3-Codex</span>
+              <span class="pill blue">GPT-5.4 / 5.4 nano</span>
+              <span class="pill blue">Auto</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">GitHub now supports third-party coding agents in public preview. Anthropic Claude and OpenAI Codex agents can be used from github.com/copilot/agents, issues, pull request comments, GitHub Mobile, and VS Code delegation flows. They follow the same security and policy model as the Copilot cloud agent. Source: docs.github.com/en/copilot/concepts/agents/about-third-party-agents</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory (Preview)</h2>
+    <p class="slide-subtitle">Persistent repository learning to reduce repeated context setup</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🧠</div>
+          <div class="row-content">
+            <h4>Repository-Scoped Memory</h4>
+            <p>Copilot builds repository-specific memories that are automatically validated against the current codebase</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⏳</div>
+          <div class="row-content">
+            <h4>Auto-Expiry</h4>
+            <p>Memories are automatically deleted after 28 days to keep context fresh</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🗑️</div>
+          <div class="row-content">
+            <h4>Owner Controls</h4>
+            <p>Repository owners can review and delete stored memories at any time</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-green">
+        <h3>Availability &amp; Consumers</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Used by cloud agent, code review, and Copilot CLI</li>
+          <li>Enabled by default for Pro and Pro+ individuals</li>
+          <li>Disabled by default for org/enterprise (admin-controlled)</li>
+          <li>Reduces repeated manual instruction prompts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory is in public preview and helps Copilot improve over time by retaining repository-scoped context. Memories are validated against code changes and expire after 28 days. It is enabled by default for Pro and Pro+ individual plans, while organizations control enablement for enterprise scenarios. Memory is used across Copilot cloud agent, code review, and Copilot CLI. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE 17: COPILOT.md Instructions ─────────────────────────── -->
 <section class="slide" data-slide="16" data-section="coding-agent" data-title="COPILOT.md">
   <div class="content">
@@ -2446,7 +2564,7 @@ body.overview #dot-tooltip { display: none; }
           <div class="icon">📄</div>
           <div class="row-content">
             <h4>Repository Root File</h4>
-            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the coding agent reads it automatically on every run</p>
+            <p>Place <span class="mono">COPILOT.md</span> in your repo root — the cloud agent reads it automatically on every run</p>
           </div>
         </div>
         <div class="icon-row">
@@ -2460,7 +2578,7 @@ body.overview #dot-tooltip { display: none; }
           <div class="icon">🆚</div>
           <div class="row-content">
             <h4>vs copilot-instructions.md</h4>
-            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous coding agent</p>
+            <p><span class="mono">.github/copilot-instructions.md</span> is for chat; <span class="mono">COPILOT.md</span> is the primary config for the autonomous cloud agent</p>
           </div>
         </div>
       </div>
@@ -2481,7 +2599,7 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
   </div>
-  <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+  <div class="slide-notes">COPILOT.md is the primary configuration file for the cloud agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
@@ -2853,7 +2971,7 @@ body.overview #dot-tooltip { display: none; }
     'cli-customize': 'Customizing CLI',
     skills: 'Skills & Instructions',
     mcp: 'MCP',
-    'coding-agent': 'Coding Agent',
+    'coding-agent': 'Cloud Agent',
     'agent-mgmt': 'Agent Mgmt',
     closing: 'Closing'
   };
