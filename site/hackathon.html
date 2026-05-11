@@ -1899,6 +1899,9 @@ body.overview #dot-tooltip { display: none; }
     <div class="note-bar" style="margin-top:20px;">
       💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
     </div>
+    <div class="note-bar" style="margin-top:8px; border-left-color:var(--success);">
+      ✨ <strong>Auto</strong> mode intelligently selects the best available model in real time — with a <strong>10% premium request discount</strong> on paid plans. GA in VS Code &amp; JetBrains.
+    </div>
   </div>
   <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
 </section>
@@ -2302,6 +2305,61 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Third-Party Coding Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-Party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-Party Coding Agents</h2>
+    <p class="slide-subtitle">Anthropic Claude &amp; OpenAI Codex — alongside Copilot cloud agent</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🔗</div>
+          <div class="row-content">
+            <h4>Works Alongside Copilot</h4>
+            <p>Use Anthropic Claude or OpenAI Codex agents in addition to Copilot cloud agent — subject to the same security protections</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📋</div>
+          <div class="row-content">
+            <h4>Assign Issues &amp; PRs</h4>
+            <p>Assign issues, mention <code>@AGENT_NAME</code> in PR comments, or kick off tasks from the Agents tab, GitHub Mobile, or VS Code</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🧠</div>
+          <div class="row-content">
+            <h4>Auto Model Selection</h4>
+            <p>Choose <strong>Auto</strong> to let each agent pick the best available model, or select a specific model like Claude Opus 4.7 or GPT-5.4</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-blue" style="text-align:center; padding:20px;">
+          <div style="font-size:36px; margin-bottom:8px;">🤖</div>
+          <h3 style="color:var(--text-title); margin-bottom:8px;">Anthropic Claude</h3>
+          <div class="tool-pills" style="justify-content:center; flex-wrap:wrap;">
+            <span class="pill">Claude Opus 4.5–4.7</span>
+            <span class="pill blue">Claude Sonnet 4.5–4.6</span>
+          </div>
+        </div>
+        <div class="card card-accent" style="text-align:center; padding:20px;">
+          <div style="font-size:36px; margin-bottom:8px;">⚡</div>
+          <h3 style="color:var(--text-title); margin-bottom:8px;">OpenAI Codex</h3>
+          <div class="tool-pills" style="justify-content:center; flex-wrap:wrap;">
+            <span class="pill">GPT-5.2/5.3-Codex</span>
+            <span class="pill blue">GPT-5.4 / GPT-5.4 nano</span>
+          </div>
+        </div>
+        <div class="note-bar" style="margin-top:4px;">
+          Consumed from <strong>GitHub Actions minutes</strong> + <strong>premium requests</strong>. Enable in user/org Copilot settings.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Third-party coding agents are in public preview. Anthropic Claude and OpenAI Codex can be assigned issues, mentioned in PR comments, or kicked off from the Agents tab — the same entry points as Copilot cloud agent. Each session consumes one premium request plus GitHub Actions minutes. Install via user or organization Copilot settings (requires enabling partner agent policies). Source: docs.github.com/en/copilot/concepts/agents/about-third-party-agents</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE: Copilot in GitHub Actions ─────────────────────────── -->
 <section class="slide" data-section="coding-agent" data-title="Copilot in Actions">
   <div class="content">
@@ -2482,6 +2540,60 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span class="muted" style="font-size:22px;">Public Preview</span></h2>
+    <p class="slide-subtitle">Persistent, repository-scoped AI knowledge that grows over time</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🧠</div>
+          <div class="row-content">
+            <h4>Learns Your Codebase</h4>
+            <p>Copilot deduces and stores "memories" as it works — like how your repo handles DB connections or which files must stay in sync</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔁</div>
+          <div class="row-content">
+            <h4>Cross-Feature Knowledge</h4>
+            <p>Memories created by the cloud agent are available to code review — and vice versa. One agent teaches, all agents learn</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">✅</div>
+          <div class="row-content">
+            <h4>Always Validated</h4>
+            <p>Each memory stores citations to source code. Before use, Copilot validates them against the current branch — stale memories are ignored</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Repository-Scoped</h4>
+            <p>Memories stay within the repository where they were created — never leak across repos. Auto-deleted after 28 days if unused</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-accent">
+        <span class="card-icon">💡</span>
+        <h3>Benefits</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Stop repeating context in every prompt</li>
+          <li>Reduce manual maintenance of instruction files</li>
+          <li>Copilot improves accuracy over time</li>
+          <li>Used by cloud agent, code review &amp; CLI</li>
+        </ul>
+        <div class="note-bar" style="margin-top:16px;">
+          <strong>Pro/Pro+:</strong> enabled by default &nbsp;·&nbsp; <strong>Business/Enterprise:</strong> must be enabled in org/enterprise settings
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory is a public preview feature that builds a persistent, validated knowledge base for each repository. Unlike custom instructions files that you write and maintain manually, memory is automatically deduced by Copilot as it works. A memory about database patterns found by the cloud agent is automatically available to code review — improving consistency across all Copilot features. Memories expire after 28 days unless re-validated. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
