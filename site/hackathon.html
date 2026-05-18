@@ -862,45 +862,58 @@ body.overview #dot-tooltip { display: none; }
   <div class="content">
     <h2 class="slide-title">GitHub Copilot Plans</h2>
     <p class="slide-subtitle">From free to enterprise — a tier for every developer</p>
-    <div class="columns col-4" style="align-items:start; gap:16px;">
-      <div class="card" style="border-color:var(--border);">
+    <div class="columns" style="grid-template-columns: repeat(5, 1fr); align-items:start; gap:12px;">
+      <div class="card" style="border-color:var(--border); padding:18px;">
         <span class="card-icon">🆓</span>
         <h3>Free</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">Included with any GitHub account</p>
-        <ul class="clean" style="font-size:13px;">
-          <li>2,000 code completions/mo</li>
-          <li>50 chat messages/mo</li>
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Included with any GitHub account</p>
+        <ul class="clean" style="font-size:12px;">
+          <li>2,000 completions/mo</li>
+          <li>50 premium requests/mo</li>
           <li>VS Code &amp; JetBrains</li>
           <li>GPT-4o, Claude 3.5 Sonnet</li>
         </ul>
       </div>
-      <div class="card card-accent">
+      <div class="card card-accent" style="padding:18px;">
         <span class="card-icon">⚡</span>
         <h3>Pro</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — unlimited completions</p>
-        <ul class="clean" style="font-size:13px;">
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">$10/mo — unlimited completions</p>
+        <ul class="clean" style="font-size:12px;">
           <li>Unlimited completions</li>
-          <li>All models in picker</li>
+          <li>300 premium requests/mo</li>
           <li>Agent mode &amp; MCP</li>
           <li>All supported IDEs</li>
+          <li>Coding agent</li>
         </ul>
       </div>
-      <div class="card card-blue">
+      <div class="card card-orange" style="padding:18px;">
+        <span class="card-icon">🚀</span>
+        <h3>Pro+</h3>
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">$39/mo — AI power users</p>
+        <ul class="clean" style="font-size:12px;">
+          <li>Everything in Pro</li>
+          <li>1,500 premium requests/mo</li>
+          <li>All models (full access)</li>
+          <li>Delegate to Claude &amp; Codex</li>
+          <li>Copilot Memory</li>
+        </ul>
+      </div>
+      <div class="card card-blue" style="padding:18px;">
         <span class="card-icon">🏢</span>
         <h3>Business</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$19/user/mo — team controls</p>
-        <ul class="clean" style="font-size:13px;">
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">$19/user/mo — team controls</p>
+        <ul class="clean" style="font-size:12px;">
           <li>Everything in Pro</li>
           <li>Policy &amp; model controls</li>
           <li>Audit logs</li>
           <li>Knowledge Bases</li>
         </ul>
       </div>
-      <div class="card card-green">
+      <div class="card card-green" style="padding:18px;">
         <span class="card-icon">🔒</span>
         <h3>Enterprise</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$39/user/mo — org-wide</p>
-        <ul class="clean" style="font-size:13px;">
+        <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">$39/user/mo — org-wide</p>
+        <ul class="clean" style="font-size:12px;">
           <li>Everything in Business</li>
           <li>Custom fine-tuning (GA)</li>
           <li>Coding Agent (GA)</li>
@@ -909,9 +922,9 @@ body.overview #dot-tooltip { display: none; }
         </ul>
       </div>
     </div>
-    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em> &nbsp;·&nbsp; 🏢 GHES customers have a separate feature availability timeline — check <em>docs.github.com/en/enterprise-server</em></div>
+    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. <strong>Pro+</strong> is for AI power users needing more requests &amp; advanced models. &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em></div>
   </div>
-  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models (now GA), multi-repo context, and the Coding Agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 premium requests per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker, 300 premium requests/mo, and all IDEs. Pro+ ($39/mo) is for AI power users — 1,500 premium requests/mo, full model access, and the ability to delegate to 3rd-party coding agents (Claude by Anthropic and OpenAI Codex). Business adds org-wide policy controls, audit logs, and Knowledge Bases ($19/user/mo). Enterprise adds fine-tuned models, multi-repo context, and advanced security ($39/user/mo). Source: github.com/features/copilot/plans</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
@@ -1321,51 +1334,79 @@ body.overview #dot-tooltip { display: none; }
   <div class="content">
     <h2 class="slide-title">Hooks Lifecycle</h2>
     <p class="slide-subtitle">When hooks fire during agent execution</p>
-    <div style="max-width:600px; width:100%; margin:0 auto;">
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--accent); font-weight:700;">PreToolUse</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — Before any tool call</span>
+    <div class="columns col-2" style="align-items:start; gap:24px; max-width:900px; margin:0 auto;">
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--success); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--success); font-weight:700;">sessionStart</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — When a session begins or resumes</span>
+          </div>
+        </div>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--accent); font-weight:700;">userPromptSubmitted</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — When a prompt is submitted</span>
+          </div>
+        </div>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--accent); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--accent); font-weight:700;">preToolUse</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — Before any tool call — <strong style="color:var(--accent);">can block</strong></span>
+          </div>
+        </div>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--accent-blue); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--accent-blue); font-weight:700;">postToolUse</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — After tool execution (success or fail)</span>
+          </div>
         </div>
       </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--accent-blue); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--accent-blue); font-weight:700;">PostToolUse</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — After tool execution</span>
+      <div style="display:flex; flex-direction:column; gap:6px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--code-orange); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--code-orange); font-weight:700;">agentStop</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — Main agent finishes responding</span>
+          </div>
         </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--success); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--success); font-weight:700;">Notification</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — On agent notifications</span>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--text-muted); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--text-muted); font-weight:700;">subagentStop</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — Subagent completes, before returning</span>
+          </div>
         </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px; margin-bottom:4px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--code-orange); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--code-orange); font-weight:700;">Stop</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — When agent stops/completes</span>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:var(--success); flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:var(--success); font-weight:700;">sessionEnd</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — When session completes or is terminated</span>
+          </div>
         </div>
-      </div>
-      <div style="width:2px; height:20px; background:var(--border); margin-left:6px;"></div>
-      <div style="display:flex; align-items:center; gap:16px;">
-        <div style="width:14px; height:14px; border-radius:50%; background:var(--text-muted); flex-shrink:0;"></div>
-        <div class="arch-box" style="flex:1; font-size:14px; padding:12px 16px;">
-          <span style="color:var(--text-muted); font-weight:700;">SubagentStop</span>
-          <span style="color:var(--text-muted); font-size:12px;"> — When subagent finishes</span>
+        <div style="width:2px; height:12px; background:var(--border); margin-left:5px;"></div>
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:12px; height:12px; border-radius:50%; background:#e05252; flex-shrink:0;"></div>
+          <div class="arch-box" style="flex:1; font-size:13px; padding:9px 14px;">
+            <span style="color:#e05252; font-weight:700;">errorOccurred</span>
+            <span style="color:var(--text-muted); font-size:11px;"> — On any agent execution error</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="note-bar" style="max-width:600px; margin:24px auto 0;">
-      Hooks return exit codes: <span class="mono">0</span> = allow, <span class="mono">non-0</span> = block the action
+    <div class="note-bar" style="max-width:900px; margin:16px auto 0;">
+      Config: <span class="mono">.github/hooks/*.json</span> (repo) or <span class="mono">~/.copilot/hooks/*.json</span> (personal) &nbsp;·&nbsp; <span class="mono">preToolUse</span> exit code <span class="mono">0</span> = allow, <span class="mono">non-0</span> = block
     </div>
   </div>
+  <div class="slide-notes">Hooks are configured in JSON files at .github/hooks/*.json (repo-level) or ~/.copilot/hooks/*.json (personal). There are 8 hook types: sessionStart (initialize on session begin), userPromptSubmitted (log prompts), preToolUse (most powerful — can approve or deny tool calls), postToolUse (log results), agentStop (cleanup after main agent), subagentStop (after subagent returns), sessionEnd (archive logs), and errorOccurred (error alerting). preToolUse is the key security gate — non-zero exit code blocks the tool call. Source: docs.github.com/en/copilot/concepts/agents/hooks</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 29: Hooks Use Cases 1 ─────────────────────────── -->
@@ -2482,6 +2523,55 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span class="pill" style="font-size:13px; background:rgba(88,166,255,0.15); color:var(--accent-blue); border-color:rgba(88,166,255,0.3); padding:3px 10px; vertical-align:middle;">Public Preview</span></h2>
+    <p class="slide-subtitle">Persistent knowledge that grows with your codebase — no repeated context-setting</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🗂️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Coding conventions, architectural decisions, build commands, and project-specific rules — discovered automatically and stored per repo</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Personal coding style and workflow patterns — stored per user, applied across all repos (Pro &amp; Pro+ only)</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Cross-Feature Sharing</h4>
+            <p>Facts discovered by the coding agent are available to code review, and vice versa — shared knowledge base</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🧠</span>
+        <h3>How It Works</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>Copilot discovers facts during normal usage</li>
+          <li>Facts stored with code citations for validation</li>
+          <li>Stale facts auto-deleted after 28 days</li>
+          <li>Used by cloud agent, code review &amp; CLI</li>
+          <li>Org/Enterprise: off by default, admin enables</li>
+          <li>Pro/Pro+: on by default, user can disable</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Reduces need to repeat context &amp; manually maintain custom instructions
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) lets Copilot build its own understanding of your repository over time. It stores two types: repository-level facts (coding conventions, build commands, architecture decisions) available to all collaborators, and user-level preferences (personal coding style) available only to that user across all repos. Facts are validated against current code before use — stale facts auto-expire after 28 days. Used by Copilot cloud agent, code review, and CLI. For Pro+/Pro: on by default. For Business/Enterprise: off by default, admin opt-in. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
