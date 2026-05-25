@@ -1157,6 +1157,70 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Remote Control ─────────────────────────── -->
+<section class="slide" data-section="cli" data-title="Remote Control">
+  <div class="content">
+    <h2 class="slide-title">Remote Control for CLI Sessions</h2>
+    <p class="slide-subtitle">Start on CLI or VS Code — monitor and steer from anywhere <span class="pill" style="font-size:11px; padding:2px 8px; background:rgba(63,185,80,0.15); color:var(--success); border-color:rgba(63,185,80,0.3);">GA May 2026</span></p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">📡</div>
+          <div class="row-content">
+            <h4>One Command to Go Remote</h4>
+            <p>Type <span class="mono">/remote on</span> in any CLI or VS Code session — it immediately becomes accessible from GitHub.com and GitHub Mobile</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👀</div>
+          <div class="row-content">
+            <h4>Real-Time Monitoring</h4>
+            <p>Watch the agent's plans, file reads, code changes, and terminal commands as they happen — from any device</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🎯</div>
+          <div class="row-content">
+            <h4>Steer Mid-Flight</h4>
+            <p>Send follow-up instructions, approve or deny permission requests, redirect the agent — all from your phone</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Private by Default</h4>
+            <p>Sessions are only visible to you — no one else can see or access your running sessions</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-accent" style="text-align:center; padding:20px;">
+          <div style="font-size:40px; margin-bottom:12px;">🔄</div>
+          <h3 style="color:var(--text-title); margin-bottom:12px;">Full Workflow, Any Device</h3>
+          <div style="display:flex; flex-direction:column; gap:6px; text-align:left; font-size:13px;">
+            <div><span class="mono" style="color:var(--accent);">/plan</span> &amp; scaffold in CLI</div>
+            <div><span class="mono" style="color:var(--accent);">/remote on</span> to monitor on mobile</div>
+            <div>📱 Steer with follow-up instructions</div>
+            <div>👀 Review proposed changes</div>
+            <div>✅ Create, review &amp; merge PR from phone</div>
+          </div>
+        </div>
+        <div class="card card-blue" style="text-align:center;">
+          <h3 style="font-size:14px; margin-bottom:8px;">Available In</h3>
+          <div class="tool-pills" style="justify-content:center; flex-wrap:wrap; gap:6px;">
+            <span class="pill">CLI</span>
+            <span class="pill blue">VS Code</span>
+            <span class="pill">JetBrains</span>
+            <span class="pill blue">GitHub.com</span>
+            <span class="pill">GitHub Mobile</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Remote control for CLI sessions became generally available on May 18, 2026. Use /remote on in a running Copilot CLI or VS Code session to instantly make it accessible from github.com or the GitHub Mobile app. You can monitor progress in real time, send steering instructions, approve permission requests, and even create and merge PRs from your phone. Also available in JetBrains. Sessions are private by default. Source: github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE 26: CLI Agent vs gh-aw ─────────────────────────── -->
 <section class="slide" data-slide="25" data-section="cli" data-title="gh-aw Platform">
   <div class="content">
@@ -2482,6 +2546,67 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory</h2>
+    <p class="slide-subtitle">Copilot learns and remembers your repository over time <span class="pill" style="font-size:11px; padding:2px 8px; background:rgba(88,166,255,0.15); color:var(--accent-blue); border-color:rgba(88,166,255,0.3);">Public Preview</span></p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏛️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Copilot stores coding conventions, architectural decisions, build commands, and project-specific rules — discovered automatically during agent and code review runs</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Personal coding style and workflow patterns, available across all repos — only for Copilot Pro / Pro+ users</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Cross-Feature Learning</h4>
+            <p>Facts discovered by the coding agent flow to code review, and vice versa — knowledge accumulates across interactions</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">⏱️</div>
+          <div class="row-content">
+            <h4>Auto-Expires</h4>
+            <p>Unused facts are deleted after 28 days — the timer resets each time a fact is validated and applied</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-accent">
+          <span class="card-icon">🛠️</span>
+          <h3>Where It's Used</h3>
+          <ul class="clean" style="margin-top:10px; font-size:13px;">
+            <li>☁️ Copilot Cloud Agent</li>
+            <li>🔍 Copilot Code Review</li>
+            <li>⌨️ Copilot CLI</li>
+          </ul>
+        </div>
+        <div class="card card-blue">
+          <span class="card-icon">⚙️</span>
+          <h3>Enabling Memory</h3>
+          <ul class="clean" style="margin-top:10px; font-size:13px;">
+            <li><strong>Pro / Pro+</strong>: On by default</li>
+            <li><strong>Business / Enterprise</strong>: Off by default — admin enables in org settings</li>
+            <li>Repo owners can review &amp; delete stored facts</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) lets Copilot build up knowledge of your repository over time. It stores repository-level facts (coding conventions, build commands, architecture) and user-level preferences (Pro/Pro+ only). Facts are shared across Copilot Cloud Agent, Code Review, and CLI — so knowledge discovered in one place improves results in others. Facts are validated against the current branch before use, and auto-deleted after 28 days if unused. Repository owners can manage stored facts in settings. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
