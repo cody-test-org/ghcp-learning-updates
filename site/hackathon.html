@@ -871,18 +871,19 @@ body.overview #dot-tooltip { display: none; }
           <li>2,000 code completions/mo</li>
           <li>50 chat messages/mo</li>
           <li>VS Code &amp; JetBrains</li>
-          <li>GPT-4o, Claude 3.5 Sonnet</li>
+          <li>Select models (GPT-4o, Claude 3.5+)</li>
         </ul>
       </div>
       <div class="card card-accent">
         <span class="card-icon">⚡</span>
-        <h3>Pro</h3>
-        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10/mo — unlimited completions</p>
+        <h3>Pro / Pro+ / Max</h3>
+        <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">$10–$39/mo — individual paid tiers</p>
         <ul class="clean" style="font-size:13px;">
           <li>Unlimited completions</li>
-          <li>All models in picker</li>
-          <li>Agent mode &amp; MCP</li>
-          <li>All supported IDEs</li>
+          <li>Copilot cloud agent included</li>
+          <li>Agent mode, MCP, all IDEs</li>
+          <li>Pro+/Max: premium models &amp; more AI credits</li>
+          <li>Max: priority access to new models</li>
         </ul>
       </div>
       <div class="card card-blue">
@@ -894,6 +895,7 @@ body.overview #dot-tooltip { display: none; }
           <li>Policy &amp; model controls</li>
           <li>Audit logs</li>
           <li>Knowledge Bases</li>
+          <li>Monthly AI credits pool</li>
         </ul>
       </div>
       <div class="card card-green">
@@ -903,15 +905,15 @@ body.overview #dot-tooltip { display: none; }
         <ul class="clean" style="font-size:13px;">
           <li>Everything in Business</li>
           <li>Custom fine-tuning (GA)</li>
-          <li>Coding Agent (GA)</li>
           <li>Multi-repo context</li>
-          <li>Advanced security controls</li>
+          <li>Larger AI credits pool</li>
+          <li>Priority access to new features</li>
         </ul>
       </div>
     </div>
-    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. Great for hackathons &amp; exploration! &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em> &nbsp;·&nbsp; 🏢 GHES customers have a separate feature availability timeline — check <em>docs.github.com/en/enterprise-server</em></div>
+    <div class="note-bar" style="margin-top:20px;">💡 <strong>Free tier</strong> is available to every GitHub user — no credit card required. &nbsp;·&nbsp; <strong>Individual tiers:</strong> Pro → Pro+ (premium models) → Max (highest AI credits) &nbsp;·&nbsp; <strong>Copilot cloud agent</strong> is available on Pro and above (not Enterprise-only) &nbsp;·&nbsp; <em>docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</em></div>
   </div>
-  <div class="slide-notes">GitHub Copilot Free launched December 2024 — every GitHub account gets 2,000 code completions and 50 chat messages per month at no cost. Pro ($10/mo) removes limits and unlocks the full model picker and all IDEs. Business adds org-wide policy controls, audit logs, and Knowledge Bases. Enterprise adds fine-tuned models (now GA), multi-repo context, and the Coding Agent. GHES (GitHub Enterprise Server) customers have a separate feature availability timeline. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
+  <div class="slide-notes">Plan tiers updated June 2026. Individual plans now span Free, Pro ($10/mo), Pro+ (higher AI credits + premium models), and Max (highest AI credits + priority access). Copilot cloud agent (coding agent) is included in Pro and above — not Enterprise-only as previously noted. Business ($19/user/mo) adds org-wide policy controls, audit logs, Knowledge Bases, and a shared AI credits pool. Enterprise ($39/user/mo) adds fine-tuned models, multi-repo context, a larger AI credits pool, and priority feature access. A Copilot Student plan is also available to verified students at no cost. Source: docs.github.com/en/copilot/about-github-copilot/subscription-plans-for-github-copilot</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot Extensibility Map ─────────────────────────── -->
@@ -1801,6 +1803,61 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Copilot Spaces are like saved project workspaces with memory. Instead of re-explaining your codebase every conversation, attach repos and files once and share the Space with your team. Source: docs.github.com/en/copilot/using-github-copilot/copilot-spaces</div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="skills" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span class="muted" style="font-size:18px;">🔵 Public Preview</span></h2>
+    <p class="slide-subtitle">Copilot learns your repo and coding style — and remembers it</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏛️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Stores coding conventions, architectural decisions, build commands, and project-specific rules — shared with all team members who have Memory enabled</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Captures your personal coding style and workflow patterns — available only in your Copilot interactions across repos</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">✅</div>
+          <div class="row-content">
+            <h4>Validated Before Use</h4>
+            <p>Facts are stored with citations. Copilot checks citations against the current branch before applying — stale facts don't affect behavior. Unused entries auto-delete after 28 days.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-blue" style="margin-bottom:16px;">
+          <h4 style="margin-bottom:10px;">🔌 Used By</h4>
+          <ul class="clean" style="font-size:13px;">
+            <li>✅ Copilot cloud agent</li>
+            <li>✅ Copilot code review</li>
+            <li>✅ Copilot CLI</li>
+          </ul>
+          <div class="note-bar blue-note" style="margin-top:12px;">
+            Facts discovered by one feature are shared with others — agent and code review share the same knowledge
+          </div>
+        </div>
+        <div class="card card-accent">
+          <h4 style="margin-bottom:10px;">💡 Why It Matters</h4>
+          <ul class="clean" style="font-size:13px;">
+            <li>Stop repeating context every session</li>
+            <li>Reduces need to maintain custom instruction files</li>
+            <li>Improves quality over time automatically</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) lets Copilot build its own understanding of your codebases and personal workflow. Two types: repository-level facts (shared with team, e.g. "tests must pass before merging", "use TypeScript strict mode") and user-level preferences (personal, e.g. your preferred coding style). Facts are validated against the current branch before use — stale citations are not applied. Enabled per user: on by default for individual plans; enterprise/org admins must enable it first. Users can view and delete their memories in GitHub settings. Unused memories auto-delete after 28 days. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE 10: Next Edit Suggestions ─────────────────────────── -->
 <section class="slide" data-slide="9" data-section="skills" data-title="Next Edit Suggestions">
   <div class="content">
@@ -2300,6 +2357,60 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
   </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Third-Party Coding Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-Party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-Party Coding Agents <span class="muted" style="font-size:18px;">🔵 Public Preview</span></h2>
+    <p class="slide-subtitle">Claude and OpenAI Codex as first-class GitHub coding agents</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🤝</div>
+          <div class="row-content">
+            <h4>Same Security Model</h4>
+            <p>Third-party agents run under the same security protections, mitigations, and limitations as Copilot cloud agent — security scanning, secret detection, and dependency checks</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">📍</div>
+          <div class="row-content">
+            <h4>Where to Use Them</h4>
+            <p>Assign via the <strong>Agents tab</strong> on GitHub.com, issues, PR comments (<span class="mono">@AGENT_NAME</span>), GitHub Mobile, or VS Code</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔄</div>
+          <div class="row-content">
+            <h4>Iterate via PR Comments</h4>
+            <p>Agent creates a PR → you review → leave comments to request changes → agent iterates autonomously</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card card-accent" style="margin-bottom:16px;">
+          <h4 style="margin-bottom:10px;">🟣 Anthropic Claude</h4>
+          <div class="tool-pills" style="justify-content:flex-start; flex-wrap:wrap; gap:6px;">
+            <span class="pill">Claude Opus 4.5</span>
+            <span class="pill">Claude Opus 4.6</span>
+            <span class="pill">Claude Sonnet 4.5</span>
+            <span class="pill">Claude Sonnet 4.6</span>
+          </div>
+        </div>
+        <div class="card card-blue">
+          <h4 style="margin-bottom:10px;">🟢 OpenAI Codex</h4>
+          <div class="tool-pills" style="justify-content:flex-start; flex-wrap:wrap; gap:6px;">
+            <span class="pill blue">GPT-5.3-Codex</span>
+            <span class="pill blue">GPT-5.4</span>
+            <span class="pill blue">GPT-5.4 nano</span>
+          </div>
+        </div>
+        <div class="note-bar" style="margin-top:12px;">Enable in user/org Copilot settings · GitHub App installed automatically</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Third-party coding agents (public preview) let you assign tasks to Anthropic Claude or OpenAI Codex coding agents directly on GitHub.com. They work the same way as Copilot cloud agent — you assign an issue or give a prompt, the agent creates a PR, and you review and iterate. Security protections are identical to Copilot: CodeQL code scanning, secret scanning, and dependency vulnerability checking run on all agent-generated code before the PR is finalized. Enable in your user or organization Copilot policies — a GitHub App is installed for each partner agent. Source: docs.github.com/en/copilot/concepts/agents/about-third-party-coding-agents</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Copilot in GitHub Actions ─────────────────────────── -->
