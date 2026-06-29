@@ -1121,6 +1121,10 @@ body.overview #dot-tooltip { display: none; }
         <span class="fi-code">LSP</span>
         <span class="fi-desc">Custom LSP integration</span>
       </div>
+      <div class="feature-item">
+        <span class="fi-code">/remote on</span>
+        <span class="fi-desc">Remote control from web &amp; mobile</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1155,6 +1159,61 @@ body.overview #dot-tooltip { display: none; }
       <strong>TL;DR:</strong> The CLI isn't just a chat window — it's a full agentic platform.
     </div>
   </div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Remote Control ─────────────────────────── -->
+<section class="slide" data-section="cli" data-title="Remote Control">
+  <div class="content">
+    <h2 class="slide-title">Remote Control for CLI Sessions</h2>
+    <p class="slide-subtitle">Start locally, steer from anywhere — GA May 2026</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">📱</div>
+          <div class="row-content">
+            <h4>Monitor from GitHub Mobile</h4>
+            <p>Use <span class="mono">/remote on</span> to make your CLI session accessible from github.com and the GitHub Mobile app in real time</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🎮</div>
+          <div class="row-content">
+            <h4>Steer Mid-Flight</h4>
+            <p>Send follow-up instructions, redirect Copilot, approve permission requests, and expand scope — all from your phone</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Private by Default</h4>
+            <p>Sessions are only visible to you — remote control is user-specific and does not expose sessions to anyone else</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">😴</div>
+          <div class="row-content">
+            <h4>Keep-Alive</h4>
+            <p>Use <span class="mono">/keep-alive on</span> to prevent your machine from sleeping while a remote session is active</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">⌨️</span>
+        <h3>How to Use</h3>
+        <ul class="clean" style="margin-top:16px; font-size:13px;">
+          <li><span class="mono">/remote on</span> — enable in an active session</li>
+          <li><span class="mono">copilot --remote</span> — enable at startup</li>
+          <li><span class="mono">/remote off</span> — end remote connection</li>
+          <li>QR code (Ctrl+E) for quick mobile access</li>
+          <li><span class="mono">remoteSessions: true</span> in settings.json to always-on</li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Also works in <strong>VS Code</strong> &amp; <strong>JetBrains</strong> — full end-to-end mobile workflow
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Remote control (GA May 2026) lets you monitor and steer a running Copilot CLI session from github.com or GitHub Mobile. Enable with /remote on in a session, or start with copilot --remote. The machine running the CLI must stay online — use /keep-alive to prevent sleep. The complete workflow: plan and start in CLI → /remote on → monitor in Mobile → steer with follow-up instructions → review the PR → merge. Source: docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/steer-remotely</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 26: CLI Agent vs gh-aw ─────────────────────────── -->
@@ -1854,9 +1913,10 @@ body.overview #dot-tooltip { display: none; }
         <h3>Fast &amp; Focused</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">GPT-4o mini</span>
-          <span class="pill">o4-mini</span>
-          <span class="pill">Gemini 2.0 Flash</span>
+          <span class="pill">GPT-5 mini</span>
+          <span class="pill">Claude Haiku 4.5</span>
+          <span class="pill">Gemini 3.5 Flash</span>
+          <span class="pill">MAI-Code-1-Flash</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Code completion</li>
@@ -1866,12 +1926,11 @@ body.overview #dot-tooltip { display: none; }
       </div>
       <div class="card card-blue">
         <span class="card-icon">🧠</span>
-        <h3>Balanced</h3>
-        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
+        <h3>Balanced / Agentic</h3>
+        <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for agent &amp; coding tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill blue">GPT-5</span>
-          <span class="pill blue">GPT-4.1</span>
-          <span class="pill blue">Claude Sonnet 4</span>
+          <span class="pill blue">GPT-5.3-Codex</span>
+          <span class="pill blue">Claude Sonnet 4.6</span>
           <span class="pill blue">Gemini 2.5 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
@@ -1885,22 +1944,23 @@ body.overview #dot-tooltip { display: none; }
         <h3>Deep Reasoning</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">o3</span>
-          <span class="pill">Claude Sonnet 4.5</span>
-          <span class="pill">Claude Opus 4.5</span>
+          <span class="pill">GPT-5.5</span>
+          <span class="pill">Claude Opus 4.7</span>
+          <span class="pill">Claude Fable 5</span>
+          <span class="pill">Gemini 3.1 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Architecture decisions</li>
           <li>Complex debugging</li>
-          <li>Extended thinking</li>
+          <li>Long-horizon tasks</li>
         </ul>
       </div>
     </div>
     <div class="note-bar" style="margin-top:20px;">
-      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
+      🤖 <strong>Auto</strong> (recommended) — intelligently routes each task to the optimal model with a 10% discount on AI credits &nbsp;·&nbsp; Model picker available in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
     </div>
   </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+  <div class="slide-notes">Model landscape updated June 2026. The recommended default is "Auto", which uses task optimization to route to the best model and provides a 10% discount on AI credits. Fast models: GPT-5 mini (reliable default), Claude Haiku 4.5 (fastest Anthropic), Gemini 3.5 Flash, MAI-Code-1-Flash (Microsoft). Agentic/balanced: GPT-5.3-Codex (purpose-built for agentic tasks), Claude Sonnet 4.6, Gemini 2.5 Pro. Deep reasoning: GPT-5.5, Claude Opus 4.7, Claude Fable 5 (long-horizon autonomous coding), Gemini 3.1 Pro. Source: docs.github.com/en/copilot/reference/ai-models/model-comparison</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
@@ -2435,6 +2495,57 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Third-party Coding Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-party Coding Agents</h2>
+    <p class="slide-subtitle">Claude &amp; OpenAI Codex alongside Copilot cloud agent — public preview</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🤝</div>
+          <div class="row-content">
+            <h4>Assign to Any Supported Agent</h4>
+            <p>Use the Agents tab, assign via GitHub Issues, or mention <span class="mono">@AGENT_NAME</span> in a PR comment to kick off a task</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Same Security Protections</h4>
+            <p>Third-party agents have the same security mitigations as Copilot cloud agent — CodeQL, secret scanning, and dependency vulnerability checks run on every PR</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🎯</div>
+          <div class="row-content">
+            <h4>Model Selection</h4>
+            <p>Choose which model powers each agent — or use <strong>Auto</strong> for intelligent model routing</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-accent">
+          <span class="card-icon">🔸</span>
+          <h3>Anthropic Claude</h3>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Models: Claude Opus 4.5–4.7, Claude Sonnet 4.5–4.6</p>
+          <div class="note-bar" style="margin-top:10px;">Best for: complex reasoning &amp; long-horizon tasks</div>
+        </div>
+        <div class="card card-blue">
+          <span class="card-icon">🔹</span>
+          <h3>OpenAI Codex</h3>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:8px;">Models: GPT-5.3-Codex, GPT-5.4, GPT-5.4 nano</p>
+          <div class="note-bar blue-note" style="margin-top:10px;">Best for: agentic software development</div>
+        </div>
+        <div class="note-bar" style="font-size:12px;">
+          🔧 Enable via account or org policies &nbsp;·&nbsp; Installs a GitHub App per agent
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Third-party coding agents (public preview) let you use Anthropic Claude and OpenAI Codex alongside Copilot cloud agent. They're available from the Agents tab on GitHub.com, via issue assignment, PR @mentions, and GitHub Mobile. All agents share the same security model — CodeQL, secret scanning, and dependency checks run on generated code before PRs are finalized. Enabling an agent installs a corresponding GitHub App. Source: docs.github.com/en/copilot/concepts/agents/about-third-party-coding-agents</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE 17: COPILOT.md Instructions ─────────────────────────── -->
 <section class="slide" data-slide="16" data-section="coding-agent" data-title="COPILOT.md">
   <div class="content">
@@ -2482,6 +2593,63 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory</h2>
+    <p class="slide-subtitle">Copilot builds its own understanding of your codebase over time — public preview</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏛️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Copilot learns and stores coding conventions, architectural decisions, build commands, and project-specific rules — shared across the team</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Personal coding style and workflow preferences — only available to the individual user who generated them</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">✅</div>
+          <div class="row-content">
+            <h4>Validated &amp; Self-Healing</h4>
+            <p>Facts are validated against the current codebase before use. Unused memories expire after 28 days to prevent stale context</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-accent">
+          <span class="card-icon">🔗</span>
+          <h3>Used By</h3>
+          <ul class="clean" style="margin-top:12px;">
+            <li>☁️ Copilot cloud agent</li>
+            <li>🔍 Copilot code review</li>
+            <li>⌨️ Copilot CLI</li>
+          </ul>
+          <div class="note-bar" style="margin-top:12px;">
+            Cross-feature: what cloud agent learns, code review can apply
+          </div>
+        </div>
+        <div class="card card-blue">
+          <span class="card-icon">💡</span>
+          <h3>Why It Matters</h3>
+          <ul class="clean" style="margin-top:12px; font-size:13px;">
+            <li>Reduces repeated context in prompts</li>
+            <li>Reduces manual maintenance of instructions files</li>
+            <li>Copilot improves with each interaction</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) allows Copilot to accumulate knowledge about a repository and user preferences across sessions. Repository-level facts (like coding conventions and build commands) are available to all team members with access. User-level preferences are personal and private. Facts are validated against the current codebase before use and expire after 28 days if unused. Used by Copilot cloud agent, code review, and CLI. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
