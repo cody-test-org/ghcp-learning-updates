@@ -1854,9 +1854,10 @@ body.overview #dot-tooltip { display: none; }
         <h3>Fast &amp; Focused</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for everyday tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">GPT-4o mini</span>
-          <span class="pill">o4-mini</span>
-          <span class="pill">Gemini 2.0 Flash</span>
+          <span class="pill">GPT-5 mini</span>
+          <span class="pill">Claude Haiku 4.5</span>
+          <span class="pill">Gemini 3 Flash</span>
+          <span class="pill">MAI-Code-1-Flash</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Code completion</li>
@@ -1866,12 +1867,11 @@ body.overview #dot-tooltip { display: none; }
       </div>
       <div class="card card-blue">
         <span class="card-icon">🧠</span>
-        <h3>Balanced</h3>
+        <h3>Balanced / Agentic</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for most agent tasks</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill blue">GPT-5</span>
-          <span class="pill blue">GPT-4.1</span>
-          <span class="pill blue">Claude Sonnet 4</span>
+          <span class="pill blue">GPT-5.3-Codex</span>
+          <span class="pill blue">Claude Sonnet 4.6</span>
           <span class="pill blue">Gemini 2.5 Pro</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
@@ -1885,9 +1885,9 @@ body.overview #dot-tooltip { display: none; }
         <h3>Deep Reasoning</h3>
         <p style="margin-bottom:12px; font-size:13px; color:var(--text-muted);">Best for complex problems</p>
         <div class="tool-pills" style="justify-content:flex-start; margin-bottom:8px;">
-          <span class="pill">o3</span>
-          <span class="pill">Claude Sonnet 4.5</span>
-          <span class="pill">Claude Opus 4.5</span>
+          <span class="pill">GPT-5.4</span>
+          <span class="pill">Claude Opus 4.7</span>
+          <span class="pill">Claude Fable 5</span>
         </div>
         <ul class="clean" style="margin-top:8px;">
           <li>Architecture decisions</li>
@@ -1897,10 +1897,10 @@ body.overview #dot-tooltip { display: none; }
       </div>
     </div>
     <div class="note-bar" style="margin-top:20px;">
-      💡 Select models per conversation via the <strong>model picker</strong> in VS Code, JetBrains, Visual Studio, Xcode &amp; GitHub.com
+      🤖 <strong>Auto</strong> mode intelligently routes each task to the optimal model — includes a <strong>10% cost discount</strong> on AI credits. Available in VS Code, GitHub.com &amp; Copilot CLI.
     </div>
   </div>
-  <div class="slide-notes">The model picker lets you choose the right model per conversation. Use fast models for completions and quick questions (GPT-4o mini, o4-mini, Gemini 2.0 Flash), balanced models for most agent tasks (GPT-5, GPT-4.1, Claude Sonnet 4, Gemini 2.5 Pro), and reasoning models like o3, Claude Sonnet 4.5, or Claude Opus 4.5 for architecture and complex debugging. GPT-5 is OpenAI's flagship model available in the Copilot model picker. Claude Sonnet 4 replaced Claude Sonnet 3.7 as the standard Sonnet model. Source: docs.github.com/en/copilot/using-github-copilot/ai-models/changing-the-ai-model-for-copilot-chat</div>
+  <div class="slide-notes">The model picker lets you choose the right model per conversation. Fast models (GPT-5 mini, Claude Haiku 4.5, Gemini 3 Flash, MAI-Code-1-Flash) are best for completions and quick questions. Balanced/Agentic models (GPT-5.3-Codex, Claude Sonnet 4.6, Gemini 2.5 Pro) handle most agent tasks. Deep reasoning models (GPT-5.4, Claude Opus 4.7, Claude Fable 5) are for architecture and complex debugging. The new Auto mode intelligently routes tasks to the optimal model and gives a 10% discount on AI credits. Extended capabilities like 1M token context windows and configurable reasoning levels are available for select models in VS Code and Copilot CLI. Source: docs.github.com/en/copilot/reference/ai-models/model-comparison</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE: Vision / Multimodal Input ─────────────────────────── -->
@@ -2623,6 +2623,55 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">Copilot Autofix is integrated with GitHub Advanced Security's code scanning. When a CodeQL alert fires on a PR, Copilot generates a fix automatically. This dramatically reduces the time from detection to remediation and makes security accessible to developers who may not be security experts.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span class="muted" style="font-size:18px;">Public Preview</span></h2>
+    <p class="slide-subtitle">Copilot learns your codebase and preferences over time</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏗️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Coding conventions, build commands, architectural decisions — stored per repo and shared with all contributors</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Personal coding style and workflow patterns — available only in your own Copilot interactions across repos</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">♻️</div>
+          <div class="row-content">
+            <h4>Validated &amp; Self-Maintaining</h4>
+            <p>Facts are checked against the current branch before use; stale entries auto-expire after 28 days</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">🧩</span>
+        <h3>Where It's Used</h3>
+        <ul class="clean" style="margin-top:12px;">
+          <li>✅ <strong>Copilot cloud agent</strong></li>
+          <li>✅ <strong>Copilot code review</strong></li>
+          <li>✅ <strong>Copilot CLI</strong></li>
+        </ul>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Reduces the need to repeatedly explain the same context in prompts
+        </div>
+        <div class="note-bar" style="margin-top:8px;">
+          Users can view &amp; delete their own preferences; org admins can manage memory for their users
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory (public preview) allows Copilot to build and retain knowledge about your repositories and personal preferences over time. Repository-level facts (coding conventions, architecture decisions, build commands) are shared with all repo contributors. User-level preferences (personal style) are private to each user. Facts are validated against the current codebase before being applied — stale facts auto-delete after 28 days. Available in cloud agent, code review, and CLI. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 20: Agent Architecture ─────────────────────────── -->
