@@ -1258,6 +1258,60 @@ body.overview #dot-tooltip { display: none; }
   <div class="slide-notes">Safe Outputs is gh-aw's core security architecture (spec v1.1.0). The AI agent runs with contents: read permission only and cannot directly write to GitHub resources. Instead, it emits structured NDJSON to an output file via MCP tools. After the agent job completes, separate execution jobs (with write permissions) process that file to perform the actual GitHub writes. This separation means a prompt injection attack — even a successful one — cannot cause unauthorized GitHub writes because the AI never has write permissions. Output types include create-issue, add-comment, create-pull-request (with optional expires date), create-discussion, remove-labels, and append-only-comments. The DIFC proxy (v0.64.x) adds Data Integrity and Flow Control for full auditability. Source: github.com/github/gh-aw — scratchpad/safe-outputs-specification.md</div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Remote Control ─────────────────────────── -->
+<section class="slide" data-section="cli" data-title="Remote Control">
+  <div class="content">
+    <h2 class="slide-title">Remote Control <span class="muted" style="font-size:22px;">(GA)</span></h2>
+    <p class="slide-subtitle">Monitor &amp; steer CLI sessions from anywhere — web or mobile</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">📱</div>
+          <div class="row-content">
+            <h4>Multi-Surface Continuity</h4>
+            <p>Start a session in VS Code or the CLI, hand off to <strong>GitHub.com</strong> or <strong>GitHub Mobile</strong> — one continuous workflow</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👁️</div>
+          <div class="row-content">
+            <h4>Monitor in Real Time</h4>
+            <p>See exactly what Copilot is doing — plans, files it's reading, changes it's making, and commands it's running</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">✏️</div>
+          <div class="row-content">
+            <h4>Steer Mid-Flight</h4>
+            <p>Send follow-up instructions, redirect the agent, or approve/deny permission requests from any device</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🔒</div>
+          <div class="row-content">
+            <h4>Private by Default</h4>
+            <p>Sessions are only visible to you — no one else can see or access your sessions</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-blue">
+        <span class="card-icon">⌨️</span>
+        <h3>Key Commands</h3>
+        <div style="margin-top:12px; font-family:var(--font-mono); font-size:13px; line-height:2.2; color:var(--text-muted);">
+          <div><span style="color:var(--accent);">/remote on</span> <span style="font-family:var(--font-sans); font-size:12px;">— enable in running session</span></div>
+          <div><span style="color:var(--accent);">copilot --remote</span> <span style="font-family:var(--font-sans); font-size:12px;">— start with remote enabled</span></div>
+          <div><span style="color:var(--accent);">/keep-alive</span> <span style="font-family:var(--font-sans); font-size:12px;">— prevent machine sleep</span></div>
+          <div><span style="color:var(--accent);">Ctrl+E</span> <span style="font-family:var(--font-sans); font-size:12px;">— toggle QR code for mobile</span></div>
+        </div>
+        <div class="note-bar blue-note" style="margin-top:16px;">
+          Also available in <strong>VS Code</strong> and <strong>JetBrains</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Remote control for GitHub Copilot CLI sessions is now GA (May 2026). Start a session at your desk, use /remote on, and continue monitoring or steering it from your phone or any browser. You can send instructions, approve/deny permission requests, and even open the resulting PR right from GitHub Mobile. Works with VS Code and JetBrains too. Source: github.blog/news-insights/product-news/take-your-local-github-sessions-anywhere/</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE 27: Section - Customizing CLI ─────────────────────────── -->
 <section class="slide section-slide" data-slide="25" data-section="cli-customize" data-title="Customizing CLI">
   <div class="glow-ring" style="top:35%; left:50%;"></div>
@@ -2302,6 +2356,60 @@ body.overview #dot-tooltip { display: none; }
   </div>
 </section>
 
+<!-- ─────────────────────────── SLIDE: Third-Party Coding Agents ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Third-Party Agents">
+  <div class="content">
+    <h2 class="slide-title">Third-Party Coding Agents <span class="muted" style="font-size:20px;">Preview</span></h2>
+    <p class="slide-subtitle">Anthropic Claude &amp; OpenAI Codex — alongside Copilot's own cloud agent</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏪</div>
+          <div class="row-content">
+            <h4>Same Workflow, More Choice</h4>
+            <p>Assign issues, mention <span class="mono">@AGENT_NAME</span> in PRs, or kick off tasks from the <strong>Agents tab</strong> on GitHub.com — just like Copilot's coding agent</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🛡️</div>
+          <div class="row-content">
+            <h4>Same Security Protections</h4>
+            <p>All generated code is scanned — CodeQL, secret scanning, and dependency checks against the GitHub Advisory Database</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🎯</div>
+          <div class="row-content">
+            <h4>Model Selection</h4>
+            <p>Pick specific models per agent session — or use <strong>Auto</strong> to let Copilot choose the best model for the task</p>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="card card-blue" style="padding:20px;">
+          <h4 style="margin-bottom:10px;">🤖 Anthropic Claude</h4>
+          <div class="tool-pills" style="justify-content:flex-start;">
+            <span class="pill blue">Claude Opus 4.5–4.7</span>
+            <span class="pill blue">Claude Sonnet 4.5–4.6</span>
+          </div>
+        </div>
+        <div class="card card-accent" style="padding:20px;">
+          <h4 style="margin-bottom:10px;">⚡ OpenAI Codex</h4>
+          <div class="tool-pills" style="justify-content:flex-start;">
+            <span class="pill">GPT-5.3-Codex</span>
+            <span class="pill">GPT-5.4</span>
+            <span class="pill">GPT-5.4 nano</span>
+          </div>
+        </div>
+        <div class="note-bar">
+          Enable in Copilot settings → <span class="mono">Allow [Claude/Codex] coding agent</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Third-party coding agents let you use Anthropic Claude and OpenAI Codex alongside GitHub's own Copilot coding agent. They work through the same interface — assign issues, use the Agents tab on GitHub.com, or mention @AGENT_NAME in PR comments. All generated code is automatically scanned for security issues. Available on Pro, Pro+, Business, and Enterprise plans. Source: docs.github.com/en/copilot/concepts/agents/about-third-party-coding-agents</div>
+</section>
+
 <!-- ─────────────────────────── SLIDE: Copilot in GitHub Actions ─────────────────────────── -->
 <section class="slide" data-section="coding-agent" data-title="Copilot in Actions">
   <div class="content">
@@ -2482,6 +2590,59 @@ body.overview #dot-tooltip { display: none; }
     </div>
   </div>
   <div class="slide-notes">COPILOT.md is the primary configuration file for the coding agent. It tells the agent how to build and test your project, the architecture layout, and any rules to follow. Without it, the agent has to discover everything by exploring — COPILOT.md makes it faster and safer.</div>
+</section>
+
+<!-- ─────────────────────────── SLIDE: Copilot Memory ─────────────────────────── -->
+<section class="slide" data-section="coding-agent" data-title="Copilot Memory">
+  <div class="content">
+    <h2 class="slide-title">Copilot Memory <span class="muted" style="font-size:20px;">Preview</span></h2>
+    <p class="slide-subtitle">Copilot learns your codebase &amp; preferences over time</p>
+    <div class="columns col-2" style="align-items:start;">
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <div class="icon-row">
+          <div class="icon">🏛️</div>
+          <div class="row-content">
+            <h4>Repository-Level Facts</h4>
+            <p>Stores coding conventions, architectural decisions, build commands, and project rules — available to all team members with access</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">👤</div>
+          <div class="row-content">
+            <h4>User-Level Preferences</h4>
+            <p>Stores your coding style and workflow patterns — private to you, applied across all your repos</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">♻️</div>
+          <div class="row-content">
+            <h4>Cross-Feature Sharing</h4>
+            <p>Facts captured by the coding agent can be used by code review, and vice versa — one shared memory across features</p>
+          </div>
+        </div>
+        <div class="icon-row">
+          <div class="icon">🗑️</div>
+          <div class="row-content">
+            <h4>Auto-Expiry</h4>
+            <p>Unused memories auto-delete after <strong>28 days</strong>. Repo owners &amp; users can manually delete their memories at any time</p>
+          </div>
+        </div>
+      </div>
+      <div class="card card-accent" style="text-align:center; display:flex; flex-direction:column; gap:16px; align-items:center; justify-content:center; min-height:200px;">
+        <div style="font-size:48px;">🧠</div>
+        <h3 style="color:var(--text-title);">Used By</h3>
+        <div class="tool-pills" style="margin-top:8px;">
+          <span class="pill">Coding Agent</span>
+          <span class="pill blue">Code Review</span>
+          <span class="pill">Copilot CLI</span>
+        </div>
+        <div class="note-bar" style="margin-top:12px; width:100%; text-align:left;">
+          On by default for individuals &nbsp;·&nbsp; Enterprise/Business: admin enables first
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-notes">Copilot Memory is currently in public preview. It automatically learns and stores facts about your repositories (coding conventions, architecture decisions, build commands) and personal preferences (coding style, workflow patterns). Memory is shared across features — what the coding agent learns can be used by code review and the CLI. Memories auto-expire after 28 days if unused. Source: docs.github.com/en/copilot/concepts/agents/copilot-memory</div>
 </section>
 
 <!-- ─────────────────────────── SLIDE 18: Copilot Code Review ─────────────────────────── -->
